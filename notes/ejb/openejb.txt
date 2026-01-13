@@ -1,0 +1,49 @@
+https://www.codota.com/code/java/classes/org.apache.openejb.jee.EjbJar
+
+https://tomee.apache.org/developer/testing/applicationcomposer/index.html
+http://tomee.apache.org/embedded-configuration.html
+http://tomee.apache.org/properties-listing.html
+
+https://rmannibucau.wordpress.com/2012/09/13/use-mockito-with-openejb/
+https://tomee.apache.org/examples-trunk/application-composer/
+https://openejb.apache.org/application-composer/getting-started.html
+https://openejb.apache.org/application-composer/advanced.html
+
+https://rmannibucau.wordpress.com/2016/02/04/a-single-tomee-applicationcomposer-instance-for-all-your-tests/
+https://github.com/apache/tomee/blob/master/server/openejb-ejbd/src/test/java/org/apache/openejb/JndiTest.java
+
+https://www.tomitribe.com/blog/testing-persistence-with-arquillian-on-tomee/
+
+
+http://tomee.apache.org/latest/docs/admin/configuration/log4j2.html
+http://tomee.apache.org/latest/docs/admin/configuration/containers.html
+http://tomee.apache.org/latest/docs/admin/configuration/resources.html
+http://tomee.apache.org/latest/docs/admin/configuration/server.html
+http://tomee.apache.org/latest/docs/admin/configuration/index.html
+
+https://stackoverflow.com/questions/12297364/howto-test-passivation-of-stateful-session-beans-in-integration-test-openejb
+http://tomee.apache.org/master/examples/simple-stateful-callbacks.html
+http://tomee.apache.org/master/examples/
+
+EJB Metatypes
+https://gist.github.com/dblevins/1339840/723f580e44694ab888764baf55a4ff1e3b2a8072
+
+@EJB MappedName functionality
+https://gist.github.com/dblevins/1650077
+"foo"
+Implied that foo is a deployment id. Each bean has a unique internal id, this is taken as that ID. The bean is looked up directly from the internal registry via this ID.
+"jndi:foo"
+Implied that foo is a JNDI name. This name will be looked up via new InitialContext().lookup("foo").
+"jndi:ext://bar/foo"
+Implied that foo is a JNDI name. This name will be looked up via a lookup on the InitialContext configured in the openejb.xml with the name bar. Essentially internalSuff.getInitialContext("bar").lookup("foo").
+this could perhaps be simplified as "jndi:bar:foo"
+
+https://cwiki.apache.org/confluence/display/OPENEJBx30/Index
+
+openejb.cdi.debug=true
+https://github.com/apache/tomee/blob/master/container/openejb-core/src/test/java/org/apache/openejb/OpenEjbContainerNoRestartTest.java
+https://github.com/apache/tomee/blob/master/server/openejb-ejbd/src/test/java/org/apache/openejb/JndiTest.java
+
+https://tomee.apache.org/refcard/refcard.html
+openejb.classloader.forced-load = my.pack1,my.pack2
+openejb.classloader.forced-skip = my.pack3,my.pack4

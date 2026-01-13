@@ -1,0 +1,14 @@
+
+https://www.altexsoft.com/blog/engineering/solution-architect-role/
+https://www.altexsoft.com/blog/backlog-grooming/
+https://www.altexsoft.com/blog/business/technical-documentation-in-software-development-types-best-practices-and-tools/
+https://www.altexsoft.com/blog/business/product-managers-vs-project-managers-difference-responsibilities-and-kpis/
+https://www.altexsoft.com/blog/business/15-key-product-management-metrics-and-kpis/
+https://www.altexsoft.com/blog/business/25-scrum-process-best-practices-that-set-your-agile-workflow-for-efficiency/
+
+https://www.altexsoft.com/blog/object-relational-mapping/
+https://www.altexsoft.com/blog/data-pipeline-components-and-types/
+https://www.altexsoft.com/blog/soap-vs-rest-vs-graphql-vs-rpc/
+https://www.altexsoft.com/blog/api-testing/
+https://www.altexsoft.com/blog/engineering/graphql-core-features-architecture-pros-and-cons/
+https://www.altexsoft.com/blog/engineering/code-refactoring-best-practices-when-and-when-not-to-do-it/

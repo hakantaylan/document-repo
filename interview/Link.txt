@@ -1,0 +1,6 @@
+﻿https://github.com/MrR0807/SpringCertification5.0
+
+https://github.com/inanc/book-notes/blob/master/mongodb-the-definitive-guide.markdown
+https://github.com/inanc/book-notes/blob/master/effective-tech-lead-notes.markdown
+
+https://github.com/winterbe/java8-tutorial

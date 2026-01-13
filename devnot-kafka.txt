@@ -1,0 +1,93 @@
+https://jack-vanlightly.com/blog/2018/9/14/how-to-lose-messages-on-a-kafka-cluster-part1
+https://jack-vanlightly.com/blog/2018/9/18/how-to-lose-messages-on-a-kafka-cluster-part-2
+
+https://levelup.gitconnected.com/how-to-ensure-idempotence-f436a42bf67d
+
+https://grapeup.com/blog/kafka-transactions-integrating-with-legacy-systems/
+https://github.com/vinsguru/vinsguru-blog-code-samples/tree/master/kafka-event-driven
+https://kafka-tutorials.confluent.io/
+https://blog.devgenius.io/transactional-integration-kafka-with-database-7eb5fc270bdc
+https://blog.devgenius.io/tricky-messaging-part-one-synchronous-transport-and-not-only-320edd7496f6
+https://blog.devgenius.io/tricky-messaging-part-two-business-processing-758638943ee3
+https://blog.devgenius.io/exceptions-and-retry-policy-in-kafka-6f0d3cf2c330
+https://blog.devgenius.io/some-detailed-differences-between-kafka-and-activemq-d40163cb2ac4
+https://progressivecoder.com/kafka-producer-example/ fire-forget/sync/async all examples
+
+https://github.com/LearningJournal/Apache-Kafka-For-Absolute-Beginners
+https://github.com/LearningJournal/Kafka-Streams-Master-Class
+https://newbedev.com/how-does-kafka-handle-network-partitions
+https://juplo.de/implementing-the-outbox-pattern-with-kafka-part-0-the-example/
+https://github.com/juplo/demos-kafka-polling-outbox
+https://github.com/juplo/demos-spring-data-jdbc
+
+https://github.com/conduktor/kafka-stack-docker-compose kafka docker files up-to-date
+https://github.com/confluentinc/cp-all-in-one/tree/7.3.0-post/cp-all-in-one-kraft
+
+https://www.atomiccommits.io/sensible-schema-evolution/
+https://docs.confluent.io/platform/current/schema-registry/avro.html
+
+https://purbon.substack.com/p/apache-kafka-kraft-101  pumba ile test etmiş
+
+https://medium.com/streamthoughts/apache-kafka-rebalance-protocol-or-the-magic-behind-your-streams-applications-e94baf68e4f2
+https://medium.com/streamthoughts/understanding-kafka-partition-assignment-strategies-and-how-to-write-your-own-custom-assignor-ebeda1fc06f3
+
+Multithread consumers
+https://www.confluent.io/blog/kafka-consumer-multi-threaded-messaging/
+https://github.com/inovatrend/mtc-demo
+
+https://docs.spring.io/spring-kafka/docs/3.0.6/reference/pdf/spring-kafka-reference.pdf
+https://sdbrett.com/post/2022-08-01-kafka-listeners/   ++++
+https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/ +++
+
+prioritization in kafka
+https://stackoverflow.com/questions/66005079/how-to-read-and-process-high-priority-messages-in-kafka-consumer
+https://www.confluent.io/blog/prioritize-messages-in-kafka/
+https://stackoverflow.com/questions/30655361/does-kafka-support-priority-for-topic-or-message/30686523
+https://stackoverflow.com/questions/66005079/how-to-read-and-process-high-priority-messages-in-kafka-consumer
+https://stackoverflow.com/questions/51774132/spring-kafka-prevent-consumer-to-connect-kafka-topic-during-build-in-spring-boo
+https://stackoverflow.com/questions/66366140/can-you-give-priority-to-a-single-topic-when-kafkalistener-listens-to-multiple-t
+https://github.com/riferrei/bucket-priority-pattern
+https://github.com/riferrei/prioritization-kafka
+https://github.com/riferrei/from-zero-to-hero-with-observability
+
+https://www.vinsguru.com/architectural-pattern-priority-queue-pattern-implementation-with-redis/
+https://www.baeldung.com/java-priority-blocking-queue
+
+https://yeralin.medium.com/priority-based-thread-pooling-in-spring-framework-d74b91b51dcb
+https://github.com/yeralin/priority-based-tasks-demo
+
+https://medium.com/clay-one/kafka-connect-cluster-an-introduction-26522e72a9af
+https://towardsdatascience.com/log-compacted-topics-in-apache-kafka-b1aa1e4665a7
+https://medium.com/swlh/exploit-apache-kafkas-message-format-to-save-storage-and-bandwidth-7e0c533edf26
+https://medium.com/@mousavi310/monitor-apache-kafka-using-grafana-and-prometheus-873c7a0005e2
+https://rmoff.net/2019/11/22/common-mistakes-made-when-configuring-multiple-kafka-connect-workers/
+
+https://medium.com/techwasti/idempotent-kafka-consumer-442f9aec991e
+https://medium.com/techwasti/kafka-idempotent-producer-46488b9d1431
+https://maheshwar-ligade.medium.com/kafka-connect-quickstart-b923e35554f4
+https://medium.com/@shesh.soft/kafka-idempotent-producer-and-consumer-25c52402ceb9
+
+https://medium.com/@milo.felipe/spring-boot-kafka-transactions-97a2f653b60a
+https://medium.com/@milo.felipe/it-does-provide-xa-like-guarantees-64820240c74e
+https://medium.com/@milo.felipe/spring-boot-kafka-transactions-producerfencedexception-6595623d1bd1
+http://www.kenansevindik.com/spring-uygulamalarinda-kafka-transaction-yonetimi/
+
+https://callistaenterprise.se/blogg/teknik/2021/04/25/application-integration-with-kafka-part-1/
+https://callistaenterprise.se/blogg/teknik/2021/05/05/application-integration-with-kafka-part-2/
+
+https://blog.devgenius.io/transactional-integration-kafka-with-database-7eb5fc270bdc ++++++++++
+https://blog.devgenius.io/tricky-messaging-part-one-synchronous-transport-and-not-only-320edd7496f6
+https://blog.devgenius.io/tricky-messaging-part-two-business-processing-758638943ee3
+https://rmoff.net/
+-------------------------------------------------------------------------------------------------
+https://piotrminkowski.com/2022/12/22/java-http-server-and-virtual-threads/
+
+https://blog.51cto.com/xichenguan/5804639
+https://dzone.com/articles/kafka-clients-at-most-once-at-least-once-exactly-o   +++++++++++++
+https://github.com/ajmalbabu/kafka-clients
+https://grapeup.com/blog/kafka-transactions-integrating-with-legacy-systems/   ++++++++++++++
+
+https://github.com/shawnsong/kubernetes-handbook/tree/master/load-balancer +++++++++++++++++++
+https://github.com/shawnsong/kubernetes-handbook
+
+https://daniel.arneam.com/blog/kafka/

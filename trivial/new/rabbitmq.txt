@@ -1,0 +1,121 @@
+https://docs.spring.io/spring-amqp/reference/html/amqp.html
+https://docs.spring.io/spring-amqp/reference/html/amqp.html#scoped-operations
+
+
+Using the Same Broker(s) for Multiple Test Classes
+You can use the same broker for multiple test classes with something similar to the following:
+
+public final class EmbeddedKafkaHolder {
+
+    private static EmbeddedKafkaBroker embeddedKafka = new EmbeddedKafkaBroker(1, false)
+            .brokerListProperty("spring.kafka.bootstrap-servers");
+
+    private static boolean started;
+
+    public static EmbeddedKafkaBroker getEmbeddedKafka() {
+        if (!started) {
+            try {
+                embeddedKafka.afterPropertiesSet();
+            }
+            catch (Exception e) {
+                throw new KafkaException("Embedded broker failed to start", e);
+            }
+            started = true;
+        }
+        return embeddedKafka;
+    }
+
+    private EmbeddedKafkaHolder() {
+        super();
+    }
+
+}
+
+This assumes a Spring Boot environment and the embedded broker replaces the bootstrap servers property.
+
+Then, in each test class, you can use something similar to the following:
+
+static {
+    EmbeddedKafkaHolder.getEmbeddedKafka().addTopics("topic1", "topic2");
+}
+
+private static final EmbeddedKafkaBroker broker = EmbeddedKafkaHolder.getEmbeddedKafka();
+
+If you are not using Spring Boot, you can obtain the bootstrap servers using broker.getBrokersAsString();
+JUnit5
+@EmbeddedKafka
+public class EmbeddedKafkaConditionTests {
+
+    @Test
+    public void test(EmbeddedKafkaBroker broker) {
+        String brokerList = broker.getBrokersAsString();
+        ...
+    }
+
+}
+
+
+https://medium.com/javarevisited/getting-started-with-rabbitmq-in-spring-boot-6323b9179247
+https://github.com/Ruhshan/rabbitmq-spring-demo
+https://medium.com/javarevisited/caching-made-easy-in-spring-boot-27d1a545905c 
+https://github.com/Ruhshan/spring-boot-caching-demo
+https://medium.com/javarevisited/what-are-the-new-features-of-springboot3-6ddba9af664
+ mvnw -Pnative native:compile
+2. ./target/demo2
+
+
+Verify if Exists in a String
+
+// 3. Verify if Exists in a String
+List<String> wordList = Arrays.asList("java", "jdk", "spring", "maven");
+String tweet = "This is an example tweet talking about java and maven.";
+wordList.stream().anyMatch(tweet::contains);
+
+4. Read in a File
+
+// 4. Read in a File
+ String fileText = new String(Files.readAllBytes(Paths.get("data.txt")));
+ List<String> fileLines = Files.readAllLines(Paths.get("data.txt"));
+
+5. Happy Birthday to You!
+
+// 5. Happy Birthday to You!
+IntStream.rangeClosed(1, 4)
+  .mapToObj(i -> MessageFormat.format("Happy Birthday {0}", (i == 3) ? "dear NAME" : "to You"))
+  .forEach(System.out::println);
+
+6. Filter list of numbers
+
+// 6. Filter list of numbers
+Map<Boolean, List<Integer>> passedFailedMap = Stream.of(49, 58, 76, 82, 88, 90)
+  .collect(Collectors.partitioningBy(i -> i > 60));
+
+
+https://howtoprogram.xyz/2016/09/25/spring-kafka-multi-threaded-message-consumption/
+
+https://www.upsolver.com/blog/kafka-versus-rabbitmq-architecture-performance-use-case
+https://www.logicmonitor.com/blog/rabbitmq-vs-kafka
+https://jack-vanlightly.com/blog/2017/12/4/rabbitmq-vs-kafka-part-1-messaging-topologies
+https://www.cloudamqp.com/blog/part1-rabbitmq-best-practice.html
+https://www.cloudamqp.com/blog/part2-rabbitmq-best-practice-for-high-performance.html
+https://www.cloudamqp.com/blog/part3-rabbitmq-best-practice-for-high-availability.html
+
+
+https://jack-vanlightly.com/blog/2017/12/4/rabbitmq-vs-kafka-part-1-messaging-topologies
+https://stiller.blog/2020/02/rabbitmq-vs-kafka-an-architects-dilemma-part-1
+https://stiller.blog/2020/02/rabbitmq-vs-kafka-an-architects-dilemma-part-2
+https://programming.vip/docs/rabbitmq-pull-mode-mass-consumption-message.html
+https://programming.vip/docs/there-should-be-no-more-detailed-tutorial-on-rabbitmq.html
+https://programming.vip/docs/rabbitmq-tutorial-implements-publishing-confirmation-publishconfirm.html
+https://programming.vip/docs/reliability-guarantee-of-rabbitmq-message-publishing.html
+https://www.rabbitmq.com/tutorials/tutorial-seven-java.html
+https://programming.vip/docs/rabbitmq-several-common-patterns-and-api-s.html
+https://danielw.cn/messaging-reliability-and-order
+
+https://medium.com/infobipdev/dont-panic-a-journey-to-the-land-of-spring-rabbitmq-861a6bb74442 ++++
+
+
+https://lifeinide.com/post/2017-12-29-spring-boot-rabbitmq-transactions/    güzel açıklama spring tx sync hakkında
+https://stackoverflow.com/questions/40749877/rabbitmq-sending-message-in-transaction
+
+https://zhuanlan.zhihu.com/p/398807488   service retry

@@ -1,0 +1,3 @@
+https://javabydeveloper.com/jpa-tutorials/
+https://javabydeveloper.com/basic-terminology-to-know-before-coding/   persistenceunit persistence context entitymanager
+https://thorben-janssen.com/jpa-persistence-xml/

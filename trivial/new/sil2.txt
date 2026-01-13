@@ -1,0 +1,39 @@
+https://github.com/mykidong/kafka-transaction-example
+https://gunju-ko.github.io/posts/
+http://www.kenansevindik.com/en/redis-transactions-in-spring-enabled-applications/
+
+https://stackoverflow.com/questions/35148506/spring-amqp-transaction-semantics açıklamayı oku gary'nin
+https://vladmihalcea.com/spring-transaction-best-practices/  
+https://gist.github.com/garyrussell/7af1dc149ffbf64b5c245e019dd4faf1 https://gist.github.com/garyrussell/d19cfd6a0e3545768707c9d0ad794856
+https://gist.github.com/garyrussell/b5ceb24d7fa985e684e5c923b5e4ef6d      https://gist.github.com/garyrussell/9673953
+https://gist.github.com/garyrussell/b49d2681284b89ddd907 https://gist.github.com/garyrussell/b49d2681284b89ddd90
+https://gist.github.com/garyrussell/6594677
+
+
+https://vladmihalcea.com/spring-transactional-annotation/
+https://vladmihalcea.com/read-write-read-only-transaction-routing-spring/
+https://vladmihalcea.com/spring-transaction-best-practices/
+https://github.com/vladmihalcea/spring-account-transfer.git
+
+
+https://www.cybertec-postgresql.com/en/postgresql-foreign-keys-and-insertion-order-in-sql/
+
+
+https://stackoverflow.com/users/1240763/gary-russell?tab=tags
+https://stackoverflow.com/users/1240763/gary-russell?tab=tags&sort=votes&page=2
+https://stackoverflow.com/questions/60762328/spring-jmslistener-start-stop-while-application-is-running/60763803#60763803
+https://stackoverflow.com/questions/48223952/spring-integration-and-jms-using-java-config/48229428#48229428
+
+netstat -a -o -n -b list open scokets
+
+https://www.cybertec-postgresql.com/en/postgresql-foreign-keys-and-insertion-order-in-sql/
+https://stackoverflow.com/questions/51279588/sort-tables-in-order-of-dependency-postgres
+
+https://javaee.github.io/jms-spec/pages/JMS20MeansLessCode +++
+https://jcs.ep.jhu.edu/ejava-javaee/coursedocs/content/html/async-jms20.html
+https://examples.javacodegeeks.com/java-development/enterprise-java/jms/jms-client-example/
+https://jstobigdata.com/jms/a-complete-jms-2-0-tutorial/ +++
+https://github.com/jstobigdata/jms-parent-app
+https://jstobigdata.com/maven/advanced-maven-tutorial/
+https://jstobigdata.com/rabbitmq/complete-rabbitmq-tutorial-in-java/ https://github.com/jstobigdata/rabbitmq-parent-project
+https://jstobigdata.com/docker/advanced-docker-tutorial/ https://github.com/jstobigdata/awesome-docker-examples

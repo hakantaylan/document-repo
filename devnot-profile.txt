@@ -1,0 +1,11 @@
+https://stackoverflow.com/questions/73898299/does-virtualization-add-delays-on-measuring-throughput-with-jmh-benchmarks-for-c
+https://jenkov.com/tutorials/java-performance/jmh.html
+https://medium.com/javarevisited/understanding-java-microbenchmark-harness-or-jmh-tool-5b9b90ccbe8d
+
+https://sangaibisi.medium.com/monitoring-jvm-and-applications-with-jdk-flight-recorder-e304409ed97
+
+https://github.com/thegreystone/jmc-tutorial
+https://www.waitingforcode.com/monitoring/java-flight-recorder/read
+https://www.waitingforcode.com/monitoring/java-mission-control-tool/read
+https://www.waitingforcode.com/monitoring/java-flight-recorder/read
+https://blog.devgenius.io/system-design-blueprint-the-ultimate-guide-e27b914bf8f1

@@ -1,0 +1,241 @@
+﻿Genel
+Process nedir? Bildiğin IPC yöntemleri nelerdir
+
+OOPnin temel özellikleri nedir?
+Polimorfizm nedir? Polimorfizmi elde etmenin yolları nelerdir?
+SOLID nedir? Kısaca açıkla
+
+Relation, Aggregation ve Composition nedir?
+
+What is the difference between Composition and Inheritance in OOP? (answer)
+Though both Composition and Inheritance allows you to reuse code, formerly is more flexible than later. Composition allows the class to get an additional feature at runtime, but Inheritance is static. You can not change the feature at runtime by substitution new implementation
+
+IOC (Invertion Of Control) nedir? Bildiğin IOC yöntemleri?
+Bildiğin tasarım örüntülerinden bahset. (Factory ve Singleton olmasın lütfen :) )
+
+Recursion nedir? Tail recursion nedir? Bir problemi recursive ve iterative yolla çözdüğümüzde memory açısından neler değişir. Hangisini ne zaman kullanmak daha iyidir?
+
+Java
+this ve super anahtar kelimeleri ne için kullanılır?
+Name four methods every Java class will have.
+public String toString();
+public Object clone();
+public boolean equals();
+public int hashCode();
+wait notify
+Java için neden platform independent programlama dili denir?
+Stack ve Heap nedir? Bir java programı kabaca nasıl çalışır? stackoverflow exception nedir? Hangi durumda atılır?
+== vs. equals
+Tell me about different Reference types available in Java, e.g. WeakReference, SoftReference or PhantomReference? and When should you use them?
+
+Memory leak nedir? Hangi durumlarda oluşur?
+Shallow Copy Deep Copy nedir? Java da örnek ver (clone() default impl. shallowdur.serialize/deserialize deep copy yapar)
+Marker Interface nedir? Javada bildiğin Marker Interface'leri say
+Serialization nedir?
+Refactoring nedir?
+
+Metod overloading ve metod overriding nedir?
+Java da static metodları override edebilir miyiz? overload edebilir miyiz?
+Java da constructorları override edebilir miyiz? overload edebilir miyiz?
+Javada çoklu kalıtım var mıdır? Diamond problemi nedir?
+Referance escape during object construction nedir? ******
+
+this ve super anahtar kelimeleri ne için kullanılır
+
+Javadaki istisna yapılarından bahset. İstisna hiyerarşisinden bahset. Exception, Error, Throwable nedir?
+
+syncronised anahtar kelimesi ne için kullanılır? Javada kaç çeşit senkronizasyon vardır
+Dead lock oluşturacağı kesin olan bir kod örneği yaz (Psudo kod olur)
+Context Switching nedir?
+Which is more preferred – Synchronized method or Synchronized block?
+
+Spring/SpringBoot
+Spring vs. SpringBoot SpringBoot nedir?
+Standalone apps which bootstraps themselfs (microservices)
+Autoconfiguration/Convetion Over Configuration
+Dependency management through spring-boot-starters and springboot maven plugin
+Utilities for monitoring/managing application  (spring-boot-devtools/spring-boot-starter-actuator)
+Test utilities through test slices
+
+
+
+spring'de kaç çeşit scope vardır?
+spring test slices
+Exception Hangling methodologies for Springboot Rest
+Bildiğin HTTP methodları say. Hangisi ne için kullanılır? 
+
+Javada bildiğin veri yapılarından bahset. (veya Java Collections framework'ünden bahset)  HashMap nasıl çalışır? Veriler hashmap'de nasıl tutulur?
+LinkedList ve ArrayList'i karşılaştır. Birinin diğerine göre avantaj ve dezavantajları nelerdir? Hangi durumda LinkedList hangi durumda ArrayList kullanmak daha avantajlıdır?
+
+Binary Tree'leri search etmek için hangi yaygın algoritmalar kullanılır?
+
+In BFS algorithm, Queue data structure is used.
+In DFS algorithm, Stack data structure is used.
+
+
+DOCKER
+Docker nasıl çalışır? cgroup, namespace
+CMD vs ENTRYPOINT
+EXPOSE vs. Pot mappinf PORTS vc. EXPOSE
+ 
+Swing'de bildiğin layout manager'lardan bahset. Bana BorderLayout'u anlat/ Gridbag layout'u anlat
+What is EDT thread in Swing?
+10 AWT and Swing Interview questions with AnswersAnswer : EDT stands for Event dispatcher thread. EDT is one of the most important thing to learn about Swing, Since Swing is single-threaded all GUI drawing and event handling is done in EDT thread and that's why its recommended not to perform any time consuming task e.g. connecting to database or opening network connection in Event Dispatcher thread or EDT thread. If you do that, it may lead to frozen or hung GUI. This question leads to several other questions in Java, e.g. If you can not open database connection in EDT thread than how will you open db connection with button click etc. well this can be done by spawning a new thread from button click and opening db connection there.
+
+What is difference between paint and repaint in Java Swing?
+
+Is Swing Thread safe in Java ?
+Answer: No, Swing is not thread-safe in Java. Swing components are not thread-safe they can not be modified from multiple threads. All swing components are designed to be updated by using Event dispatcher thread or EDT thread. See How to write thread-safe code in Java to know more about thread-safety.  By the way you can use invokeAndWait and invokeLater to safely update swing components as discussed in previous Swing interview question.
+
+
+How do you handle opening of the database, file, or network connection on a click of a button?
+This one is one of the easy Java swing interview questions. The interviewer is interested in whether you know the basic principle of Java GUI development or not. The answer is, you should not do this operation in EDT thread instead spawn a new thread from ActionListener or button and disable the button until operation gets completed to avoid resubmitting the request.
+
+The only condition is that your GUI should always be responsive no matter what happens on the network connection or database connection because these operations usually take time, particularly when you are running GUI on slow networks
+
+Design Patterns
+What is the difference between Abstraction and Encapsulation in Java?
+Even though both Abstraction and Encapsulation looks similar because both hide complexity and make the external interface simpler there is a subtle difference between them. Abstraction hides logical complexity while Encapsulation hides Physical Complexity.
+
+
+j2EE
+
+thin client thick client nedir?
+Kaç çeşit EJB vardır? Session Bean (StatelessL, Statefull, Singleton) ve MDB
+
+When to Use Session Beans
+Stateful session beans are appropriate if any of the following conditions are true.
+
+The bean’s state represents the interaction between the bean and a specific client.
+
+The bean needs to hold information about the client across method invocations.
+
+The bean mediates between the client and the other components of the application, presenting a simplified view to the client.
+
+Behind the scenes, the bean manages the work flow of several enterprise beans.
+
+To improve performance, you might choose a stateless session bean if it has any of these traits.
+
+The bean’s state has no data for a specific client.
+
+In a single method invocation, the bean performs a generic task for all clients. For example, you might use a stateless session bean to send an email that confirms an online order.
+
+The bean implements a web service.
+
+Singleton session beans are appropriate in the following circumstances.
+
+State needs to be shared across the application.
+
+A single enterprise bean needs to be accessed by multiple threads concurrently.
+
+The application needs an enterprise bean to perform tasks upon application startup and shutdown.
+
+The bean implements a web service.
+
+Bean'lerin lifecycle döngülerinden kısaca bahset
+Hangi EJB çeşitleri sadece istemci tarafında kullanılır (Session bean ve Singleton Bean)
+Application Exception nedir?
+
+RDMBS
+Normalizasyon nedir? Kaç çeşit mnormalizasyon vardır
+1NF to 5NF
+İlişkisel veritabanlarında transaction'ların ACID olarak kısaltılan özellikleri vardır. Bunlar nelerdir?
+İlişkisel veri tabanlarında veri tutarlılığını korumak için kullanılan kısıtlar nelerdir?
+NOT NULL: Prevents a column from having a NULL value.
+DEFAULT: Specifies a default value for a column where none is specified.
+PRIMARY KEY: Uniquely identifies rows/records within a database table.
+FOREIGN KEY: Uniquely identifies rows/records from external database tables.
+UNIQUE: Ensures all values are unique.
+CHECK: Checks values within a column against certain conditions.
+INDEX: Quickly creates and retrieves data from a database.
+
+What is the difference between CHAR and VARCHAR2 datatype in SQL?
+DELETE vs TRUNCATE
+TRUNCATE vs DROP
+What is the main difference between "BETWEEN" and "IN" condition operators?
+BETWEEN operator is used to display rows based on a range of values in a row whereas the IN condition operator is used to check for values contained in a specific set of values
+
+Hibernate'de polimorfik dataları kaç farklı şekilde map edebilirsin?
+N+1 Problemi nedir? Hibernate'de bunu nasıl aşarsın?
+Resolve N+1 SELECTs problem
+
+Hibernate'de Bag, Set, List veri tipleri nedir?
+
+(i) HQL fetch join
+
+"from MobileVendor mobileVendor join fetch mobileVendor.phoneModel PhoneModels"
+Corresponding SQL would be (assuming tables as follows: t_mobile_vendor for MobileVendor and t_phone_model for PhoneModel)
+
+SELECT * FROM t_mobile_vendor vendor LEFT OUTER JOIN t_phone_model model ON model.vendor_id=vendor.vendor_id
+(ii) Criteria query
+
+Criteria criteria = session.createCriteria(MobileVendor.class);
+criteria.setFetchMode("phoneModels", FetchMode.EAGER);
+In both cases, our query returns a list of MobileVendor objects with the phoneModels initialized. Only one query needs to be run to return all the PhoneModel and MobileVendor information required.
+
+1)pre-fetching in batches, this will reduce the N+1 problem to N/K + 1 problem where  K is the size of the batch
+2) subselect fetching strategy
+3) disabling lazy loading
+
+Sana yoğun şekilde DB'ye okuma yazma yapan bir sistemde yavaşlık problemi var desem. Kodda ve veritabanında perfomansı arttırmak için nerelere bakarsın? Nereleri kontrol edersin?
+
+
+Cascading nedir?
+
+
+
+Non-technical
+Mevcut işinde neden şikayetçisin ki Havelsan'ın mülakat çağrısını kabul ettin?
+Bilmediğin bir problemi çözmen bekleniyor. Bu problemi nasıl çözersin? İzleyeceğin adımlar neler olur?
+Kendinle ilgili kuvvetli ve zayıf(geliştirmeye açık) gördüğün yönlerin nelerdir?
+İşten fırsat bulduğun zamanlarda mesleğinle ilgili teknik siteleri takip eder misin? Hangileri?
+Bugüne kadar çalıştığım en iyi çalışma arkadaşı ve en kötü çalışma arkadaşını tarif et
+Bugüne kadar çalıştığım en iyi yöneticiyi ve en kötü yöneticiyi tarif et.
+Tipik bir çalışma günün/haftan nasıl geçer?
+
+Yeni veya birkaç senelik mezunsa mezuniyet notun neden daha yüksek değil?
+Okuldaki hocalarına / Eski patronuna sorsaydık seni nasıl tarif ederdi?
+Mesleğinle ilgili en hoşlandığın şey veya şeyler ne? Mesleğinle ilgili sevmediğin şeyler ne?
+Hayatında aldığın en zor karar neydi?
+Bugüne kadr yaşadığın en büyük pişmanlık neydi?
+
+Question 11: What has been the biggest disappointment in your life?
+
+Your response to the question “What has been the greatest disappointment in your life?” will help the interviewer determine know how easily you are discouraged.
+
+Sample Answer: If possible, tell about a personal disappointment i.e. the early death of a parent, child, or school friend. Believe it or not, it is okay to have not had a “greatest” disappointment.
+
+https://catherinescareercorner.com/2009/03/26/50-interview-questions-why-they-are-asked-and-how-to-answer/
+
+Test
+Bildiğin test türleri nedir? Testleri özelliklerine göre grupla
+White Box test nedir? Black Box test nedir?
+cyclomatic complexity nedir? Birim test ile ne ilişkisi vardır
+Birim test ve entegrasyon testi arasında ne fark vardır?
+Mocking framewrok kullandın mı? Mock nedir? Stub nedir?
+
+
+Analitic Thinking 
+Bir liste veya diziyi stack kullanarak nasıl ters sıralı hale getirirsin? (Psudo kod olur)
+*        *
+**      **
+***    ***
+****  ****
+**********
+Konsola yukarıdaki çıktıyı yazan programı implement et
+
+
+Yazılım geliştirirken kod kalitesi nasıl sağlanır ve korunur
+
+https://tests4geeks.com/java-interview-questions/
+
+I give you dependency injection for five-year-olds.
+When you go and get things out of the refrigerator for yourself, you can cause problems. You might leave the door open, you might get something Mommy or Daddy doesn't want you to have. You might even be looking for something we don't even have or which has expired.
+
+What you should be doing is stating a need, "I need something to drink with lunch," and then we will make sure you have something when you sit down to eat.
+
+https://elifboncuk.com/2018/03/01/mvc-mvp-mvvm/
+https://medium.com/@ankit.sinhal/mvc-mvp-and-mvvm-design-pattern-6e169567bbad
+
+SDLF adımları
+Bildiğin yazılım geliştirme modellerini anlat

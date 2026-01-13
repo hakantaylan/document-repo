@@ -1,0 +1,4 @@
+https://alexei-led.github.io/post/pumba_docker_netem/
+https://stackoverflow.com/questions/63795965/using-pumba-to-shutdown-the-container-connection-permanently
+https://stackoverflow.com/questions/46184132/simulating-network-failures-in-docker
+I had a similar issue on Windows and finally was able to resolve by turning off the WSL 2 based engine in Docker settings. Now all my tc qdisc... commands are working.

@@ -1,0 +1,12 @@
+﻿https://bowenli86.github.io/2016/12/29/tools/docker/Docker-Concept-Intro/
+https://bowenli86.github.io/2016/12/19/tools/mac/bash-profile-and-how-to-permenantly-set-environment-variables-on-Mac/
+
+https://phoenixnap.com/kb/bash-function
+
+https://www.youtube.com/watch?v=SfxHObbPlyk   lazygit
+sourcetree for macbook
+https://opensource.com/article/20/3/lazygit
+https://commandlinepoweruser.com/
+https://www.mokkapps.de/blog/boost-your-productivity-by-using-the-terminal-iterm-and-zsh/
+
+https://rmoff.net/2021/07/29/my-favourite-tools-on-the-mac-setting-up-a-new-mac/

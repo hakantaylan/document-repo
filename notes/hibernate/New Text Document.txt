@@ -1,0 +1,74 @@
+﻿OneToMany Add @JoinColumn to avoid a junction table
+Inefficient update'den kurtulmak için OneToMany relation'ı bidirectional tut ya da unidirectional ManyToOne ile tut
+@ManyToOne
+    @JoinColumn(name = “fk_order”)
+    private Order order;
+https://thorben-janssen.com/ultimate-guide-association-mappings-jpa-hibernate/#uniManyToOne
+
+ManyToMany'de List yerine Set kullan
+Geri kalan mantık diğerleriyle aynı
+
+https://github.com/mehmetozanguven/HibernateTutorial
+https://github.com/mehmetozanguven/spring-security-examples
+https://mehmetozanguven.github.io/java/2020/10/05/java-regex-in-one-post.html
+
+https://thorben-janssen.com/hibernate-logging-guide/
+
+https://programmingisterrible.com/
+https://gist.github.com/rponte/c4a562f422974fd272dfe0598ebd83f9   tef_ebooks-articles.md   oku
+
+https://gist.github.com/rponte/83c2542abf6fafd351ae0d2ff0646dae Java Thread pool ile ilgili ne varsa
+https://ewirch.github.io/2013/12/a-executor-is-not-a-thread.html
+https://ewirch.github.io/2014/01/java-polymorphism-and-equals.html
+https://github.com/Oleh-Dubravskyi/threadpoolservice
+http://dubravsky.com/b/synchronize-a-code-block-across-multiple-nodes-in-spring-framework
+http://dubravsky.com/b/keep-sorting-clean-and-obvious-in-java
+http://dubravsky.com/b/annotation-driven-development-in-java
+http://dubravsky.com/b/override-tostring-method-correctly-in-java
+http://dubravsky.com/b/how-to-use-dropwhile-and-takewhile-in-java-8
+http://dubravsky.com/b/how-to-fix-deadlocks-in-java
+https://gist.github.com/rponte/790fbda2a77307137b531c21905e0af0
+https://gist.github.com/juanplopes/03ce9a6544c5ce722c84
+https://gist.github.com/djspiewak/46b543800958cf61af6efa8e072bfd5c  thread pools
+https://gist.github.com/rponte/71db94383430eda06e3b114d8bc97685 TimeZone Rule in unit test
+
+https://blog.jooq.org/2016/12/09/a-beginners-guide-to-the-true-order-of-sql-operations/
+https://gist.github.com/rponte/55e102ea7f47f427ae417fc3344f923c
+https://blog.jooq.org/2020/03/03/better-understand-sql-by-adding-optional-parentheses/
+
+https://stackoverflow.com/questions/2001086/how-to-make-threadpoolexecutors-submit-method-block-if-it-is-saturated
+https://stackoverflow.com/questions/43874079/how-to-decide-on-the-threadpooltaskexecutor-pools-and-queue-sizes
+https://www.baeldung.com/java-queue-linkedblocking-concurrentlinked
+
+https://www.baeldung.com/java-testing-multithreaded
+https://stackify.com/java-thread-pools/
+
+https://thorben-janssen.com/standardized-schema-generation-data-loading-jpa-2-1/ 
+https://thorben-janssen.com/query-complex-jpa-hibernate/
+https://blog.jooq.org/2016/04/25/10-sql-tricks-that-you-didnt-think-were-possible/
+
+
+https://www.concretepage.com/hibernate/hibernate-make-entity-read-only-example-with-session-setdefaultreadonly-session-setreadonly-query-setreadonly-criteria-setreadonly-and-immutable-entity
+https://github.com/thjanssen/5CommonHibernateExceptions
+https://github.com/thjanssen/Hibernate5Streams
+
+https://github.com/thjanssen/HibernateTips/tree/master/CheckSQLStatementCount   kaç insert kaç fetch yapıldı
+https://thorben-janssen.com/avoid-cascadetype-delete-many-assocations/
+
+https://github.com/thjanssen/HibernateComplexProjects
+https://github.com/thjanssen/Talk-HibernateTipsAndTricks
+https://github.com/hantsy/ee7-sandbox/blob/master/jpa/entitygraph/src/main/java/com/hantsylabs/example/ee7/Resources.java
+http://hantsy.blogspot.com/2013/12/jpa-21-entity-graph.html
+
+https://vladmihalcea.com/map-multiple-jpa-entities-one-table-hibernate/
+https://thorben-janssen.com/mapping-definitions-jpa-hibernate-annotations-xml/
+
+https://en.wikibooks.org/wiki/Java_Persistence/Converting_hibernate_xml-mapping_to_JPA_annotations
+http://shengwangi.blogspot.com/2015/11/understand-persistence-context-collision.html
+https://www.javacodegeeks.com/2013/06/jpa-2-entitymanagers-transactions-and-everything-around-it.html
+https://blogs.oracle.com/enterprisetechtips/extended-persistence-context-in-stateful-session-beans
+http://sunmingtao.blogspot.com/2011/09/transaction-vs-extended-persistence.html
+https://www.baeldung.com/jpa-hibernate-persistence-context
+https://stackoverflow.com/questions/2547817/what-is-the-difference-between-transaction-scoped-persistence-context-and-extend
+
+https://www.byteslounge.com/tutorials/jpa-extended-persistence-context

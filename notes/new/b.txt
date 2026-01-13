@@ -1,0 +1,14 @@
+﻿http://www.everydayunittesting.com/2019/01/integration-testing-with-spring-profiles.html
+http://www.everydayunittesting.com/2014/09/from-legacy-code-to-testable-code-introduction.html
+http://www.everydayunittesting.com/category/anti-patterns
+http://www.everydayunittesting.com/2018/07/refactoring-kung-fu-part-i.html
+
+https://spring.io/blog/2016/05/31/zero-downtime-deployment-with-a-database
+https://github.com/spring-cloud-samples/zero-downtime-deployment
+
+
+
+https://blog.netgloo.com/2014/12/18/handling-entities-inheritance-with-spring-data-jpa/
+https://github.com/netgloo/spring-boot-samples/tree/master/spring-boot-springdatajpa-inheritance
+
+https://blog.netgloo.com/2014/09/28/spring-boot-enable-the-csrf-check-selectively-only-for-some-requests/

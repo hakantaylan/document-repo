@@ -1,0 +1,7 @@
+@Produces
+@Disposes
+alternate-descriptors test.ejb-jar.xml
+https://tomee.apache.org/examples-trunk/application-composer/README.html
+https://tomee.apache.org/examples-trunk/rest-example-with-application/README.html
+https://tomee.apache.org/examples-trunk/rest-on-ejb/README.html
+https://tomee.apache.org/examples-trunk/decorators/README.html

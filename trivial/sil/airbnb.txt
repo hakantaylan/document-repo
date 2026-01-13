@@ -1,0 +1,9 @@
+https://www.airbnb.com.tr/rooms/913530424271141438?adults=4&children=0&enable_m3_private_room=true&infants=0&pets=0&search_mode=regular_search&check_in=2024-06-01&check_out=2024-06-06&source_impression_id=p3_1716725367_W7yEq1HeyxzAV4Oj&previous_page_section_name=1000&federated_search_id=b6864cef-e295-41b4-9c82-fb0e0ad4ab6c
+
+https://www.airbnb.com.tr/rooms/53899731?adults=4&children=0&enable_m3_private_room=true&infants=0&pets=0&search_mode=regular_search&check_in=2024-06-01&check_out=2024-06-06&source_impression_id=p3_1716724934_maBwyHX6pHpDTviC&previous_page_section_name=1000&federated_search_id=e0191863-be5a-40cc-9799-3a8a1df1a42e
+
+https://www.airbnb.com.tr/rooms/606232266490094686?adults=3&search_mode=regular_search&check_in=2024-08-05&check_out=2024-08-11&source_impression_id=p3_1716723359_WGezX4EFtYWvtqM8&previous_page_section_name=1000&federated_search_id=4280b8dc-ca10-4154-bc51-1dad14af421d
+
+https://www.airbnb.com.tr/rooms/1015713495671481063?adults=3&search_mode=regular_search&check_in=2024-08-05&check_out=2024-08-11&source_impression_id=p3_1716723147_QFoUu7kykq01SrCK&previous_page_section_name=1000&federated_search_id=c27854a8-83c6-4e6c-bffa-b3ec201e321f
+
+https://www.airbnb.com.tr/rooms/857679553509054827?adults=3&search_mode=regular_search&check_in=2024-08-05&check_out=2024-08-11&source_impression_id=p3_1716723359_4NkOtqu6nrZQwA2X&previous_page_section_name=1000&federated_search_id=4280b8dc-ca10-4154-bc51-1dad14af421d

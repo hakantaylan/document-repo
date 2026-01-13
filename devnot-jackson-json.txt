@@ -1,0 +1,4 @@
+https://www.grabanotherbyte.com/en/jackson/2020/10/18/jackson-mixins.html
+https://www.grabanotherbyte.com/en/jackson/2020/11/13/jackson-builder-pattern.html
+https://stackoverflow.com/questions/39381474/cant-make-jackson-and-lombok-work-together
+https://github.com/marcos-lg/grabanotherbyte

@@ -1,0 +1,52 @@
+﻿https://res.cloudinary.com/snyk/image/upload/v1534422834/blog/Spring_Boot_Security_Cheat_Sheet.pdf
+https://dev.to/brianverm/10-java-security-best-practices-be8
+https://www.adevguide.com/all-spring-annotations-cheat-sheet/
+https://www.javagists.com/spring-boot-cheatsheet
+
+
+https://www.javagists.com/java-collection-interview-questions-and-answer
+https://www.javagists.com/spring-boot-exception-handling
+https://www.javagists.com/rest-api-interview-questions
+https://cheatsheetseries.owasp.org/cheatsheets/Injection_Prevention_in_Java_Cheat_Sheet.html
+https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html
+https://cheatsheetseries.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html
+
+https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html
+
+
+http://eriklievaart.com/cheat/java/spring/Spring-boot.html
+https://www.journaldev.com/8195/spring-boot-cli-setup-and-helloworld-example
+https://www.journaldev.com/18156/spring-boot-mongodb
+https://springframework.guru/docker-cheat-sheet-for-spring-devlopers/
+
+
+
+https://gist.github.com/thebigredgeek/230368bd92aa19e3f6638b659edf5cef
+
+
+
+
+https://www.digitalocean.com/community/tutorials/nodejs-jwt-expressjs
+https://stackabuse.com/authentication-and-authorization-with-jwts-in-express-js/
+https://tugrulbayrak.medium.com/jwt-json-web-tokens-ile-express-rest-api-g%C3%BCvenli%C4%9Fi-2-517cc44e846c
+https://www.freecodecamp.org/news/securing-node-js-restful-apis-with-json-web-tokens-9f811a92bb52/
+https://livecodestream.dev/post/a-practical-guide-to-jwt-authentication-with-nodejs/
+https://medium.com/javascript-in-plain-english/storing-user-sessions-on-the-server-with-express-session-422fe11bc500
+https://blog.jscrambler.com/best-practices-for-secure-session-management-in-node/
+http://scottksmith.com/blog/2014/09/04/simple-steps-to-secure-your-express-node-application/
+https://github.com/hagopj13/node-express-boilerplate
+https://miarirabs.medium.com/expressjs-cors-and-jwt-f7a52f7beb79
+
+
+https://www.youtube.com/channel/UCRMr1v2WFJsP0UWbcxn2N9A Her yönüyle hibernate ve design patterns youtube kanalı
+https://github.com/sbahadirm/TasarimKaliplari
+https://www.e4developer.com/2018/08/03/using-redis-in-microservices-architecture/#more-1837
+https://www.e4developer.com/2018/03/11/cqrs-a-simple-explanation/
+https://lostechies.com/jimmybogard/2012/08/22/busting-some-cqrs-myths/
+https://www.youtube.com/watch?v=CPCqe1GHQf0   Java Spring Boot loglama, Loglama nedir? logback konfigurasyonu, Logging Best Practices,
+https://www.youtube.com/watch?v=mhRTU75KLA4&list=PLd0jsEi3hUAdJk49VWxFDRGFBjnrUMK59   spring security
+https://www.youtube.com/watch?v=BsCpDkFfapU redis
+https://github.com/PacktPublishing/Design-Patterns-and-SOLID-Principles-with-Java Packt Publishing
+https://github.com/HaydiKodlayalim/spring-examples
+
+https://abhishek-gupta.gitbook.io/ejb-annotations-primer/

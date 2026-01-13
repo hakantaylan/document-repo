@@ -1,0 +1,4 @@
+﻿https://medium.com/@selcukusta/redisin-high-availability-%C3%A7%C3%B6z%C3%BCm%C3%BC-sentinel-d9c2b6b1a616
+https://medium.com/@selcukusta/mongodb-read-concern-write-concern-kurcalamalar%C4%B1-7ff79457c928
+https://medium.com/@selcukusta/consul-i%CC%87le-service-discovery-d%C3%BCnyas%C4%B1na-bak%C4%B1%C5%9F-60d81c06a45d
+https://levelup.gitconnected.com/the-majority-writeconcern-of-mongodb-replica-sets-be426f388782

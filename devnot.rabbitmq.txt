@@ -1,0 +1,15 @@
+https://jack-vanlightly.com/
+https://jack-vanlightly.com/blog/2017/12/4/rabbitmq-vs-kafka-part-1-messaging-topologies
+https://www.cloudamqp.com/blog/part1-rabbitmq-best-practice.html (eklendi)
+https://www.cloudamqp.com/blog/part2-rabbitmq-best-practice-for-high-performance.html (eklendi)
+https://www.cloudamqp.com/blog/part3-rabbitmq-best-practice-for-high-availability.html (eklendi)
+
+https://jack-vanlightly.com/blog/2017/12/3/rabbitmq-vs-kafka-series-introduction
+https://jack-vanlightly.com/blog/2017/12/4/rabbitmq-vs-kafka-part-1-messaging-topologies
+https://jack-vanlightly.com/blog/2017/12/5/rabbitmq-vs-kafka-part-2-rabbitmq-messaging-patterns-and-topologies
+https://jack-vanlightly.com/blog/2017/12/8/rabbitmq-vs-kafka-part-3-kafka-messaging-patterns
+https://jack-vanlightly.com/blog/2017/12/15/rabbitmq-vs-kafka-part-4-message-delivery-semantics-and-guarantees
+https://jack-vanlightly.com/blog/2018/8/31/rabbitmq-vs-kafka-part-5-fault-tolerance-and-high-availability-with-rabbitmq
+https://jack-vanlightly.com/blog/2018/9/2/rabbitmq-vs-kafka-part-6-fault-tolerance-and-high-availability-with-kafka
+
+https://jack-vanlightly.com/blog/2018/9/10/how-to-lose-messages-on-a-rabbitmq-cluster

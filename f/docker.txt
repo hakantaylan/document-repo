@@ -1,0 +1,17 @@
+https://stackoverflow.com/questions/37468788/what-is-the-right-way-to-add-data-to-an-existing-named-volume-in-docker
+https://stackoverflow.com/questions/68779725/how-to-copy-files-from-host-to-docker-named-volume?rq=1
+https://adamtheautomator.com/docker-cp/
+There's no need to start the container, just creating a container is enough;
+
+docker container create --name dummy -v myvolume:/root hello-world
+docker cp c:\myfolder\myfile.txt dummy:/root/myfile.txt
+docker rm dummy
+
+https://github.com/mstaessen/docker-sonarqube-ce/blob/master/recipes.md
+
+
+https://schneide.blog/2018/05/21/analysing-a-react-web-app-using-sonarqube/
+
+
+https://github.com/int28h/SQLTasks
+https://github.com/viveksyngh/Hackerrank-Code/tree/master/SQL

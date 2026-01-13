@@ -1,0 +1,12 @@
+﻿https://medium.com/@suadev   diğer yazılarına bak
+https://medium.com/devopsturkiye/microservice-mimari-ve-dddnin-bounded-context-kavram%C4%B1-%C3%BCzerine-c5d2ce6f25d8
+http://www.kamilgrzybek.com/design/modular-monolith-primer/
+https://medium.com/devopsturkiye/microservice-mimarilerde-veritaban%C4%B1-tasar%C4%B1m%C4%B1-d58371ec466
+https://medium.com/devopsturkiye/microservice-mimarilerde-servisler-aras%C4%B1-i%CC%87leti%C5%9Fim-nas%C4%B1l-olmal%C4%B1-3d8db63b4dea
+https://medium.com/devopsturkiye/microservice-mimarilerde-transaction-y%C3%B6netimi-nas%C4%B1l-yap%C4%B1l%C4%B1r-228317e248ed
+https://medium.com/devopsturkiye/microservice-mimarilerde-integration-test-nas%C4%B1l-yaz%C4%B1l%C4%B1r-e6b45daa7914
+https://medium.com/devopsturkiye/microservice-mimarilerde-loglama-958fd86ca48b
+https://medium.com/devopsturkiye/microservice-mimariler-i%CC%87%C3%A7in-yol-haritas%C4%B1-6e9fb0e9e2df
+https://medium.com/devopsturkiye/yaz%C4%B1l%C4%B1m-ekiplerinde-kod-kalitesi-ve-kalitede-s%C3%BCreklili%C4%9Fin-sa%C4%9Flanmas%C4%B1-13e3ec028e15
+
+https://jack-vanlightly.com/blog/2017/12/15/rabbitmq-vs-kafka-part-4-message-delivery-semantics-and-guarantees

@@ -1,0 +1,2 @@
+https://medium.com/@avocadi rate limiter
+https://dev.to/qainsights/series/7265 jmeter

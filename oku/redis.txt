@@ -1,0 +1,4 @@
+﻿https://blog.devgenius.io/redis-topologies-d9e16a7fa8e0
+https://www.youtube.com/watch?v=NymIgA7Wa78 redis
+https://www.redisgreen.com/blog/redis-data-structures
+https://medium.com/analytics-vidhya/the-most-important-redis-data-structures-you-must-understand-2e95b5cf2bce

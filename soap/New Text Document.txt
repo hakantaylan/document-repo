@@ -1,0 +1,10 @@
+https://www.soapui.org/learn/tutorials/web-service-example-projects/
+https://www.soapui.org/getting-started/soap-test/
+https://semihsaydam.medium.com/soap-ui-53dc542233c7
+https://semihsaydam.medium.com/sonarqube-sonarlint-ff8c13f08c3e
+https://semihsaydam.medium.com/jmeter-assertions-150aa8ebbbbb
+https://semihsaydam.medium.com/jmeter-giri%C5%9F-d6a142e75581
+
+service virtualization
+https://semihsaydam.medium.com/service-virtualization-ab008108f8ba
+https://semihsaydam.medium.com/kubernetes-%C3%B6%C4%9Frenme-notlar%C4%B1m-1-9de2966f743f

@@ -1,0 +1,12 @@
+In computer’s language, Hash a is a fixed length string generated for a data. This generated string is HASH. You can’t generate back the data from this string (hash).
+There are many algorithms to generate hash like MD5, SHA-1.
+For same data, hash will be same but same hash doesn’t mean data is same.
+Like two identical products will belong to same aisle of the store but two products in same aisle doesn’t mean the products are same.
+Hashing is used in blockchain, Bloom filters, Indexing.
+
+Encoding
+Transforming your data into another form so that it can be safely consumed by other systems. Purpose of encoding is not security. Encoded data can be easily transformed back to its original form.
+Encoding is used in HTTP protocal like json encode, url encode.
+
+Encryption
+Encryption is transforming data with some secret keys which no one in middle can decrypt except the one with secret keys.

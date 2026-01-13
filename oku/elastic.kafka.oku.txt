@@ -1,0 +1,40 @@
+﻿https://maciejszymczyk.medium.com/how-to-provide-failover-for-logstash-or-other-log-collector-using-keepalived-50e2769cc302
+https://medium.com/swlh/does-elasticsearch-lie-how-does-elasticsearch-work-f2d4e2bf92c9
+https://itnext.io/how-to-visualize-public-transport-using-kibana-elasticserach-logstash-elastic-stack-and-kafka-eabc6975255a
+https://medium.com/swlh/dockerizing-a-kafka-streams-app-6a5ea71fe1ef
+
+https://maciejszymczyk.medium.com/calculating-speed-bearing-and-distance-using-kafka-streams-processor-api-9e95834b9e3d
+
+https://github.com/zorteran/wiadro-danych-kafka-streams/tree/kafka_streams_201  bütün branch'lere bakabilirsin
+
+https://itnext.io/kafka-connect-in-a-nutshell-e0a0f57e7cdb
+https://github.com/zorteran/wiadro-danych-kafka-connect-nutshell
+
+https://itnext.io/how-to-elastic-siem-part-1-a39167b8bd23
+https://itnext.io/how-to-elastic-siem-part-2-bf0940f745e5
+
+
+https://towardsdatascience.com/how-to-synchronize-elasticsearch-with-mysql-ed32fc57b339
+https://github.com/redouane-dev/sync-elasticsearch-mysql
+
+https://blog.softwaremill.com/6-not-so-obvious-things-about-elasticsearch-422491494aa4
+
+https://www.alibabacloud.com/blog/combining-elasticsearch-with-dbs-offline-data-synchronization_597115
+https://www.alibabacloud.com/blog/combining-elasticsearch-with-dbs-application-system-scenarios_597112?spm=a2c65.11461447.0.0.7a504f9foU4Ipz
+https://www.alibabacloud.com/blog/combining-elasticsearch-with-dbs-real-time-data-synchronization_597114?spm=a2c65.11461447.0.0.7a504f9foU4Ipz
+https://www.alibabacloud.com/blog/combining-elasticsearch-with-dbs-offline-data-synchronization_597115?spm=a2c65.11461447.0.0.443176c0dENpAF
+
+
+https://dilaverdemirel.medium.com/     oku +++++++++++++++++
+
+https://github.com/lvthillo/docker-elk   docker elk up to date example
+https://itnext.io/deploy-elk-stack-in-docker-to-monitor-containers-c647d7e2bfcd
+https://betterprogramming.pub/customize-your-mysql-database-in-docker-723ffd59d8fb
+https://betterprogramming.pub/connect-from-local-machine-to-postgresql-docker-container-f785f00461a7
+
+
+https://sgitario.github.io/distributed_architectures/
+
+https://www.oreilly.com/content/microservices-antipatterns-and-pitfalls/
+
+

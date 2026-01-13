@@ -1,0 +1,9 @@
+https://kodedu.com/2017/04/spring-cloud-netflix-giris/
+https://kodedu.com/2017/07/spring-cloud-netflix-ve-eureka-service-discovery/https://www.robinhowlett.com/blog/2013/02/13/spring-app-migration-from-xml-to-java-based-config/
+
+https://www.javainuse.com/spring/cloud-gateway
+https://howtodoinjava.com/spring-cloud/
+https://www.javainuse.com/spring/springcloud
+https://www.appsdeveloperblog.com/microservices-and-spring-cloud-tutorials-for-beginners/
+https://stackoverflow.com/questions/65792786/kafka-streams-define-multiple-kafka-streams-using-spring-cloud-stream-for-each
+https://github.com/TechPrimers/kafka-streams-microservices-example

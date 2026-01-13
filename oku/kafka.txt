@@ -1,0 +1,26 @@
+https://www.youtube.com/channel/UC6LgxY4YwVoE1F-v8sT9Jaw  Ahmet Alp Balkan
+
+Write-through: data is written in cache & DB; I/O completion is confirmed only when data is written in both places
+Write-around: data is written in DB only; I/O completion is confirmed when data is written in DB
+Write-back: data is written in cache first; I/O completion is confirmed when data is written in cache; data is written to DB asynchronously (background job) and does not block the request from being processed
+
+
+
+https://www.quora.com/What-are-the-differences-between-Apache-Kafka-and-RabbitMQ
+https://www.quora.com/What-is-the-actual-role-of-Zookeeper-in-Kafka-What-benefits-will-I-miss-out-on-if-I-don%E2%80%99t-use-Zookeeper-and-Kafka-together
+
+
+https://www.youtube.com/watch?v=vmrHBb-RL7E   kafka without zookeeper
+https://www.morling.dev/blog/exploring-zookeeper-less-kafka/
+
+https://grapeup.com/blog/kafka-transactions-integrating-with-legacy-systems/ ++++++++++++++
+https://blog.devgenius.io/transactional-integration-kafka-with-database-7eb5fc270bdc +++++++++
+
+https://github.com/LearningJournal/Kafka-Streams-Master-Class.git
+https://www.learningjournal.guru/courses/kafka/kafka-foundation-training/exactly-once-processing/
+https://turkogluc.com/tag/apache-kafka/ +++++++++++++++++++++++++++++++++++++
+https://turkogluc.com/apache-kafka-basics/
+https://kafka-tutorials.confluent.io/
+
+https://sgitario.github.io/rabbitmq_vs_kafka/
+https://www.youtube.com/watch?v=sjDnqrnnYNM  rabbit mq vs kafka

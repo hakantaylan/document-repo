@@ -1,0 +1,32 @@
+https://bezkoder.com/node-js-jwt-authentication-mysql/
+https://bezkoder.com/react-express-authentication-jwt/
+https://github.com/bmordan/express-jwt-example
+https://github.com/dwyl/learn-json-web-tokens/tree/master/example
+https://github.com/cornflourblue/node-jwt-authentication-api
+https://github.com/cornflourblue/node-basic-authentication-api
+https://flaviocopes.com/express-cors/
+https://github.com/jmw5598/node-express-jwt-example
+https://github.com/MarkKhramko/nodejs-express-jwt/tree/master/app
+https://medium.com/zero-equals-false/building-a-restful-crud-api-with-node-js-jwt-bcrypt-express-and-mongodb-4e1fb20b7f3d
+
+
+https://stackabuse.com/handling-cors-with-node-js/
+Dynamic cors configuration
+https://expressjs.com/en/resources/middleware/cors.html#configuring-cors-w-dynamic-origin  
+
+https://stackabuse.com/integrating-h2-with-node-express/
+
+https://github.com/cornflourblue/react-facebook-login-example
+https://medium.com/better-programming/git-commands-to-live-by-349ab1fe3139
+https://github.com/dwyl/Javascript-the-Good-Parts-notes
+
+
+
+https://medium.com/kodgemisi/rest-api-tasarim-rehberi-2f004a87426d
+https://stackoverflow.com/questions/10849687/express-js-how-to-get-remote-client-address
+https://expressjs.com/en/guide/behind-proxies.html
+https://stackoverflow.com/questions/22877350/how-to-extract-ip-address-in-spring-mvc-controller-get-call
+https://github.com/bezkoder/node-js-jwt-auth
+
+Diðerlerini deðil de neden seni seçelim?
+https://medium.com/kodgemisi/%C3%B6zge%C3%A7mi%C5%9Finizi-cv-nas%C4%B1l-yazmal%C4%B1s%C4%B1n%C4%B1z-6a66d293b619

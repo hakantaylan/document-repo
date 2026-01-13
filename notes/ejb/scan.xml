@@ -1,0 +1,10 @@
+<scan>
+  <packages>
+    <package>org.superbiz.cdi</package>
+    <package>org.superbiz.jsf</package>
+    <package>org.superbiz.ejb</package>
+  </packages>
+  <classes>
+    <class>org.superbiz.Foo</class>
+  <classes>
+</scan>

@@ -1,0 +1,24 @@
+https://www.baeldung.com/hexagonal-architecture-ddd-spring
+https://pereiren.medium.com/clean-architecture-series-part-1-f34ef6b04b62
+https://github.com/iluwatar/java-design-patterns/tree/master/hexagonal
+https://java-design-patterns.com/blog/build-maintainable-systems-with-hexagonal-architecture/
+https://github.com/iluwatar/java-design-patterns/tree/master/circuit-breaker
+https://github.com/iluwatar/java-design-patterns
+https://reflectoring.io/spring-hexagonal/
+https://github.com/jorgetovar/hexagonal-architecture-java
+https://dev.to/jorgetovar621/hexagonal-architecture-javakotlin-example-15i7
+
+https://henesgokdag.medium.com/mocklama-mant%C4%B1%C4%9F%C4%B1-ve-wiremock-57a1f8a56ffe
+
+
+https://henesgokdag.medium.com/spring-data-elasticsearch-17fe1f803412
+
+
+
+https://medium.com/@ssiddhant3030/system-design-single-points-of-failure-196421238ab8
+https://stackoverflow.com/questions/40601012/distributed-application-is-load-balancer-single-point-of-failure
+https://serverfault.com/questions/220413/eliminate-single-point-of-failure-for-webservers/220430#220430
+https://betterprogramming.pub/how-to-avoid-single-point-of-failures-in-your-service-aa1395c5320a
+https://dev.to/slavius/comment/51cm
+https://sre.google/sre-book/load-balancing-frontend/
+Global Server Load Balancer (GSLB) vs Border Gateway Protocol (BGP)

@@ -1,0 +1,27 @@
+https://medium.com/codex/best-java-stream-visualisation-tool-for-junior-developers-84dcc4a67830
+https://medium.com/javarevisited/what-is-function-currying-and-what-the-f-should-i-care-deebedd5b857
+https://levelup.gitconnected.com/build-an-expressive-domain-with-monads-and-polymorphism-1b290a31e964
+https://medium.com/javarevisited/junit5-callbacks-in-less-than-3-minutes-55a87e000fcc
+https://medium.com/javarevisited/junit-5-link-tests-with-task-tracker-issues-9aad6ef50f46
+https://betterprogramming.pub/5-easy-steps-to-master-currying-and-higher-order-functions-in-javascript-85e2a7e2c268 +++
+https://github.com/marianc000/circularReferencesJPA ++++++
+
+https://levelup.gitconnected.com/why-does-my-colleague-use-thread-sleep-0-in-the-code-a3fd12dc98b7
+https://dzone.com/articles/caching-with-apache-http-client-and-spring-resttem
+
+https://dev.to/kirekov/spring-boot-testing-testcontainers-and-flyway-2jpd
+https://github.com/SimonHarmonicMinor/spring-boot-test-example
+https://medium.com/javarevisited/rich-domain-model-with-hibernate-f012d5413d38 https://github.com/SimonHarmonicMinor/rich-domain-model-talk-code/tree/master
+https://medium.com/javarevisited/integration-tests-for-n-1-problem-in-java-bc140285382a  https://github.com/SimonHarmonicMinor/testing-n-1-problem
+
+
+https://nicokrieg.com/google-jib-introduction.html
+https://medium.com/@AlexanderObregon/java-virtual-machine-optimization-techniques-0c7dfb0a61cd
+https://medium.com/@AlexanderObregon/java-virtual-machine-jvm-deep-dive-into-its-architecture-and-performance-9f8f209b30e7
+https://www.baeldung.com/graal-java-jit-compiler
+https://www.baeldung.com/jvm-parameters
+https://stackoverflow.com/questions/198577/real-differences-between-java-server-and-java-client
+
+javac -Xlint:all -XDrawDiagnostics EqualsHashCodeWarningTest.java
+https://openjdk.org/groups/compiler/tests.html
+https://kerimfirat.medium.com/java-virtual-machine-jvm-architecture-2-321f07e99f93

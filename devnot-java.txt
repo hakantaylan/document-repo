@@ -1,0 +1,8 @@
+https://dev.to/yousef_zook/java-performance-summary-45d3
+https://dev.to/yousef_zook/java-performance-chapter-1-1ocn
+https://dev.to/yousef_zook/java-performance-chapter-2-1m10
+https://dev.to/yousef_zook/java-performance-3-a-java-performance-toolbox-iad
+https://dev.to/yousef_zook/java-performance-4-working-with-the-jit-compiler-1ak4
+https://dev.to/yousef_zook/java-performance-5-an-introduction-to-garbage-collection-1d87
+
+https://betterprogramming.pub/java-coding-style-automation-b44b82cec010

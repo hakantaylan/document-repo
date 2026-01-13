@@ -1,0 +1,27 @@
+https://github.com/vladmihalcea/vladmihalcea.wordpress.com/tree/master/hibernate-facts
+https://vladmihalcea.com/hibernate-facts-knowing-flush-operations-order-matters/
+https://github.com/vladmihalcea/vladmihalcea.wordpress.com
+
+https://stackoverflow.com/questions/27755461/why-is-hibernate-batching-order-inserts-order-updates-disabled-by-default
+https://vladmihalcea.com/hibernate-performance-tuning-tips/
+
+https://vladmihalcea.com/how-to-enable-bytecode-enhancement-dirty-checking-in-hibernate/
+https://vladmihalcea.com/how-to-customize-hibernate-dirty-checking-mechanism/
+https://thorben-janssen.com/hibernate-tips-remove-entities-persistence-context/
+
+https://thorben-janssen.com/11-jpa-hibernate-query-hints-every-developer-know/
+https://vladmihalcea.com/the-best-way-to-log-jdbc-statements/
+
+
+https://dzone.com/articles/50-best-performance-practices-for-hibernate-5-amp
+https://github.com/AnghelLeonard/Hibernate-SpringBoot/tree/master/HibernateSpringBootEnableDirtyTracking
+https://github.com/AnghelLeonard/Hibernate-SpringBoot
+
+
+https://github.com/AnghelLeonard/Java-Data-Structures
+
+https://github.com/AnghelLeonard/Refactor
+
+https://www.youtube.com/channel/UCYeDPubBiFCZXIOgGYoyADw  Thorben Janssen hibernate youtube channel
+https://github.com/thjanssen/HibernateTips
+https://github.com/thjanssen/Talk-HibernateTipsAndTricks

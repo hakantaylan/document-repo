@@ -1,0 +1,10 @@
+https://github.com/gkandemi/regex
+https://cs.lmu.edu/~ray/notes/regex/
+https://regex101.com/
+
+
+https://www.youtube.com/watch?v=RAApRT5GkDk   En İyi Visual Studio Code Eklentileri ve Teması 
+
+https://www.youtube.com/watch?v=IGUJKGskaOE MikroServis
+https://ducmanhphan.github.io/2020-01-14-How-to-use-CDI-in-Java-EE/
+http://volkanozturk.net/microservice-nedir/

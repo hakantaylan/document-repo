@@ -1,0 +1,101 @@
+﻿cambly
+englishcentral
+https://www.konusanlarkulubu.com/
+https://www.youtube.com/watch?v=AuznSWn-KMM
+
+Causatives
+With Agent Have / agent / V1 + object
+Have Jill clean your house
+Make Jake fix your car
+
+Without agent HAVE + object + past participle
+Have your house cleaned
+Have your car fixed
+Get your house painted
+
+
+Causative structures with an agent
+MAKE + object + bare infinitive
+HAVE + object + bare infinitive
+GET + object + TO-infinitive
+HAVE, GET + object + present participle
+
+Have the mechanic control the breaks   ---> emir kipi
+I had the mechanic repair my car
+I always have the mechanic repair my car
+I am having the mechanic repair my car
+I will have the mechanic repair my car
+I am goint to have the mechanic repair my car
+I will be having the mechanic repair my car tomorrow at 3 pm
+
+
+you can do something yourself or you can have it done for you
+
+Conditional Clauses
+If I find her address, I’ll send her an invitation veya If I find her address, I send her an invitation
+It is very likley I can find her address
+
+If I found her address, I would send her an invitation.
+It is very unlikely for me to find her address
+
+If I had found her address, I would have sent her an invitation
+
+
+1 - If the weather improves, we’ll go for a walk. (It is possible or likely that the weather will improve.)
+2 - If the weather improved, we could go for a walk. (It is not likely that the weather will improve.)
+3 - If the weather had improved, we could have gone for a walk. (The weather did not improve – fine weather is therefore an impossible condition.)
+
+In second case we use a past form in the conditional clause to indicate a distance from reality, rather than indicating past time. We often use past forms in this way in English.
+
+Indirect speech
+Tense'leri bir geçmişe götürüyoruz.
+Emir cümleleri için to + emir cümlesini bozmadan kullanıyoruz.
+
+Turn around and raise your hands
+He told me to turn around and raise my hands
+
+Who knows the answer?
+Theacher asked who knew the answer?
+
+
+Imagine what TUAF have to do without this software. From producing daily attandence reports to performing operational tasks performing intelligence tasks, planning which air vehicle will fly with which equipment with which pilot and fly on which route
+Thanks to our software Turkish Airforce Information System all these tasks are transferred in to our system and automated. This is called a military command and control system
+
+Ours is a rich client desktop application written in Java
+At java side, you have more freedom, you have windows and necessary infrastructures related to windows and window management but at web side you are trapped in web browser. Biggest problem for us was simulating a multi window structure in web browser.  
+
+For years, company had us work with a title named Techical Coach which is an unofficial title. It did not correspond to anything in the organisation tree. So practically we worked as a team leader. We did what a team leader does. We had all responsibilities and workload of a team leader without getting any benefit or raise in the salary or any other benefits.
+Finally after years, company made it official last February but it was too late. This caused some heartbreaks amongst me and some of my callegues
+
+Changing project, moving on to another project was close to impossible. It was not an option for me because of the nature of the contract made between TUAF and Havelsan. Contract is based on the names of the persons with whom TUAF demands to work. On the contract they say I want to work with Hakan, I want to work with Hasan etc.
+So you are locked into that project you are tied to that project.
+
+So for last few years I have been waiting for completion of my social insurance premium. In Turkey according to the Turkish Labor Law if you pay your social insurance premium for a specified period of time, even if you resign you can still get your severance payment which is a big amount for me considering last fourteen years
+
+I have no idea what an average senior software engineer earns, what is the avegare salary in Berlin but I trust you that you will offer a proper and fare salary for this position considering my knowledge and experience.
+
+I have a notice period of six to eigth weeks
+
+task size -> iş büyüklüğü
+assigning tasks -> görev dağılımı
+distribution of tasks -> görev dağılımı
+görev dağılımı yapmak	delegate the duties	
+görev dağılımı yapmak	distribute the duties
+
+Programın gerisinde kalmak stay behind the schedule  be behind the schdule
+stay / be far behind the schedule
+programın ... dakika gerisinde kalmak	be ... minutes behind schedule 
+We are two weeks behind the schedule
+
+I've got a week to wrap things up.
+You need to wrap things up
+
+Please dont eleminate me just because of the salary i demanded. I really would like to hear your offer
+
+In the future, there may be some other in house positions, upper senior engineer positions, and company may consider me for that positions according to my performans
+
+What good will that do? Ne işe yarayacak?
+what is the use? ne işe yarayacak? Ne anlamı var?
+
+I hope you are doing fine
+During our meeting you told me to remind you if you did not call/connect me in a few days. So I am writing to remind you for technical interview you mentioned. I hope we can arrange a meeting with tech team

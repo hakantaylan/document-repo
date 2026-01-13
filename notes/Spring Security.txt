@@ -1,0 +1,126 @@
+﻿http://myjavaadventures.com/blog/2019/11/09/spring-boot-angular-and-cors/
+https://javadeveloperzone.com/spring-boot/spring-rest-service-allow-cross-origin/
+https://stackoverflow.com/questions/40418441/spring-security-cors-filter/43559288#43559288
+https://dev.to/martinbelev/how-to-enable-junit-5-in-new-spring-boot-project-29a8 spring boot Junit5
+
+
+
+
+https://jwt.io/
+eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiZm9vIiwiZW1haWwiOiJmb29AZm9vLmNvbSJ9.rJroG191Sy8HTbr7aJMf_xvguWHTX9dkU0i2ebe_wFcjbiw1bhW2wooSkUDcvyoMU4IWLwW5U4tmxpHr9_xEfQ
+
+
+https://stackify.com/spring-security-java-configuration/
+https://spring.io/guides/topicals/spring-security-architecture
+https://www.marcobehler.com/guides/spring-security
+https://www.freecodecamp.org/news/how-to-setup-jwt-authorization-and-authentication-in-spring/
+
+https://reflectoring.io/spring-security-password-handling/
+
+Eugen'in tutorial sayfası
+https://github.com/eugenp/tutorials
+
+
+https://github.com/thombergs/spring-data-jpa
+https://github.com/thombergs/spring-data-jdbc
+
+https://medium.com/@kamer.dev/spring-boot-user-registration-and-login-43a33ea19745
+
+
+https://github.com/github/gitignore gitignore templates
+
+https://www.innoq.com/en/blog/cookie-based-spring-security-session/
+https://stackoverflow.com/questions/22877350/how-to-extract-ip-address-in-spring-mvc-controller-get-call
+https://simplesolution.dev/spring-boot-web-get-client-ip-address/
+https://github.com/altunkan/authentication-test
+https://mkyong.com/java/how-to-get-client-ip-address-in-java/
+
+
+https://github.com/ThomasBem/spring-session-jwt
+https://github.com/daniel-mader/blog-post-spring-multi-jwt
+https://www.novatec-gmbh.de/en/blog/how-to-support-different-jwts-in-your-spring-boot-application/
+https://github.com/eugenp/tutorials/tree/master/persistence-modules/redis
+https://miao1007.github.io/gitbook/redis/session.html
+https://hasura.io/blog/best-practices-of-using-jwt-with-graphql/
+
+https://developer.okta.com/blog/2017/08/17/why-jwts-suck-as-session-tokens
+http://cryto.net/~joepie91/blog/2016/06/13/stop-using-jwt-for-sessions/
+http://cryto.net/~joepie91/blog/2016/06/19/stop-using-jwt-for-sessions-part-2-why-your-solution-doesnt-work/
+https://www.pingidentity.com/en/company/blog/posts/2019/jwt-security-nobody-talks-about.html
+https://curity.io/resources/architect/api-security/jwt-best-practices/
+https://developer.okta.com/blog/2017/08/17/why-jwts-suck-as-session-tokens
+https://www.pingidentity.com/en/company/blog/posts/2019/jwt-security-nobody-talks-about.html
+https://ponyfoo.com/articles/json-web-tokens-vs-session-cookies   However, other alternatives for solving this challenge are issuing JWTs to specific IP addresses and using browser fingerprinting.
+https://blog.logrocket.com/jwt-authentication-best-practices/
+
+https://hackernoon.com/all-you-need-to-know-about-user-session-security-ee5245e6bdad
+https://hackernoon.com/the-best-way-to-securely-manage-user-sessions-91f27eeef460
+https://scotch.io/bar-talk/why-jwts-suck-as-session-tokens
+
+https://gist.github.com/zmts/802dc9c3510d79fd40f9dc38a12bccfc translate to English
+
+TL;DR: What are they good for?
+JWT is a great technology for API authentication and server-to-server authorization.
+
+It’s not a good choice for sessions.
+https://blog.logrocket.com/jwt-authentication-best-practices/
+
+aud audience alıcı, iss issuer token'i üreten taraf
+
+
+https://www.toptal.com/spring/spring-security-tutorial    +++++
+https://www.marcobehler.com/guides/spring-security      +++++++++++++ best explained
+https://www.marcobehler.com/guides/spring-security-oauth2
+https://www.marcobehler.com/guides/spring-boot-interview-questions
+https://www.marcobehler.com/guides/spring-framework
+
+https://turkogluc.com/spring-jwt-authentication/    son kısmı oku
+
+https://svlada.com/jwt-token-authentication-with-spring-boot/    bloomfilter
+https://auth0.com/blog/denylist-json-web-token-api-keys/
+https://grobmeier.solutions/spring-security-5-jwt-basic-auth.html
+
+https://dev.to/kubadlo/spring-security-with-jwt-3j76
+
+https://www.evertop.pl/en/how-to-secure-the-application-with-spring-security-using-the-jwt-and-mysql-database/   +++ İyi görünüyor
+
+
+
+https://turkogluc.com/java-concurrency-with-load-balancer-simulation/
+https://github.com/turkogluc/java-concurrency-load-balancer-simulation
+
+https://turkogluc.com/java-concurrency-producer-consumer/
+https://github.com/turkogluc/java-producer-consumer-problem
+
+https://medium.com/@metinalniacik/spring-security-ve-jwt-entegrasyonu-5dfa57dfae87
+
+https://spring.io/guides/topicals/spring-security-architecture
+
+
+https://www.youtube.com/watch?v=N2t5w7uMBHg     filter öğren sil
+https://www.youtube.com/watch?v=soGRyl9ztjI  jwt
+https://www.toptal.com/java/rest-security-with-jwt-spring-security-and-java
+https://www.appsdeveloperblog.com/spring-security-in-memory-authentication/
+
+
+C:\Users\htaylan\Desktop\aa    sonunda çalışan
+C:\Users\htaylan\Desktop\jwt-security   çalışan güzel örnek
+
+
+https://github.com/PacktPublishing/Hands-on-Spring-Security-5.1.1.git
+https://github.com/PacktPublishing/Hands-On-Microservices-with-Spring-Boot-2.0.git    csrf example
+
+https://piotrminkowski.com/2021/01/13/spring-boot-tips-tricks-and-techniques/
+https://www.infoworld.com/article/3543268/junit-5-tutorial-part-2-unit-testing-spring-mvc-with-junit-5.html
+
+https://dev.to/suin/spring-boot-developer-tools-how-to-enable-automatic-restart-in-intellij-idea-1c6i
+
+
+Disable Using generated security password: 
+https://www.jvt.me/posts/2020/06/19/spring-boot-default-security-password-logging/
+https://www.yawintutor.com/using-generated-security-password-spring-boot/
+
+https://www.jvt.me/posts/2020/10/29/spring-log-all-exceptions/
+
+
+https://www.journaldev.com/1907/java-session-management-servlet-httpsession-url-rewriting

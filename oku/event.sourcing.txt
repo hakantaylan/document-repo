@@ -1,0 +1,6 @@
+﻿
+Event Sourcing
+Event sourcing mainly tries to solve the problem of atomically updating the database and publishing an event.
+Event sourcing is a data management pattern. With event sourcing, every state change is persisted as a journaled event in an append-only store (known as event-store). This could be something like Kafka for example. The current state is calculated by replaying and applying the history of events. This is different than the traditional databases (Active record) which continuously updates the current state.
+
+Event Sourcing is an alternative way to persist data. In contrast with state-oriented persistence that only keeps the latest version of the entity state, Event Sourcing stores each state mutation as a separate record called an event.

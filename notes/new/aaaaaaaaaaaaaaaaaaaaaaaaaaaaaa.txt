@@ -1,0 +1,46 @@
+﻿spring @ModelAttribute öğren
+ViewResolver
+https://www.greycampus.com/blog/programming/top-spring-interview-questions-and-answers
+
+https://medium.com/@berkaybasoz/cqrs-command-query-responsibility-segregation-nedir-fd94882f195e
+https://github.com/PacktPublishing/Spring-Boot-Tips-Tricks-and-Techniques
+https://github.com/piomin/sample-testing-microservices
+https://github.com/piomin/spring-boot-tips
+
+https://piotrminkowski.com/2017/05/08/jpa-caching-with-hazelcast-hibernate-and-spring-boot/
+https://piotrminkowski.com/2020/06/19/distributed-transactions-in-microservices-with-spring-boot/
+
+https://piotrminkowski.com/2020/07/31/an-advanced-guide-to-graphql-with-spring-boot/
+https://piotrminkowski.com/2021/01/13/spring-boot-tips-tricks-and-techniques/
+
+
+
+https://github.com/rieckpil/blog-tutorials/tree/master/spring-test-context-caching-introduction
+https://rieckpil.de/improve-build-times-with-context-caching-from-spring-test/
+
+mongo interview questions
+ObjectId nedir?
+Max. document size nedir? Bunu aşan datayı nasıl persist edersin?
+https://betterprogramming.pub/how-to-store-documents-larger-than-16-mb-in-mongodb-aecc957bbe6c
+https://gist.github.com/bradtraversy/f407d642bdc3b31681bc7e56d95485b6  mongo cheat sheet
+https://gist.github.com/bradtraversy/6386eac2ab15842d1e8e0424a727a81d  stack
+
+https://developer.mongodb.com/quickstart/cheat-sheet/
+https://koraypeker.com/2020/04/11/mongodb-cheat-sheet/
+
+
+https://www.mongodb.com/blog/post/6-rules-of-thumb-for-mongodb-schema-design-part-1
+https://www.mongodb.com/blog/post/6-rules-of-thumb-for-mongodb-schema-design-part-2
+https://www.mongodb.com/blog/post/6-rules-of-thumb-for-mongodb-schema-design-part-3
+https://docs.mongodb.com/manual/tutorial/model-referenced-one-to-many-relationships-between-documents/
+
+https://scalegrid.io/blog/should-you-enable-mongodb-journalling/   mongo journal flush mekanizması öğren
+https://www.mongodb.com/blog/post/how-mongodbs-journaling-works
+
+What happens if an index does not fit into RAM?
+If the indexes do not fit into RAM, MongoDB reads data from disk which is relatively very much slower than reading from RAM.
+
+What is Aggregation in MongoDB?
+Aggregations operations process data records and return computed results. Aggregation operations group values from multiple documents together, and can perform a variety of operations on the grouped data to return a single result. MongoDB provides three ways to perform aggregation: the aggregation pipeline, the map-reduce function, and single purpose aggregation methods and commands.
+
+https://www.mixmax.com/engineering/improving-mongo-performance-by-managing-indexes/

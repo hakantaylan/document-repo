@@ -1,0 +1,20 @@
+https://stackoverflow.com/questions/40749877/rabbitmq-sending-message-in-transaction   +++++
+https://piotrminkowski.com/2022/12/22/java-http-server-and-virtual-threads/
+https://grapeup.com/blog/kafka-transactions-integrating-with-legacy-systems/   ++++++++++++++
+
+https://piotrminkowski.com/2022/10/29/kafka-transactions-with-spring-boot/  +++
+
+
+https://docs.spring.io/spring-amqp/reference/html/amqp.html#connections
+https://docs.spring.io/spring-amqp/reference/html/amqp.html#transactions
+https://docs.spring.io/spring-amqp/reference/html/amqp.html#choose-container
+
+https://blog.pragmatists.com/spring-events-and-transactions-be-cautious-bdb64cb49a95
+
+https://gist.github.com/scvalex/613157
+https://gist.github.com/scvalex/613165
+
+https://itnext.io/kafka-transaction-56f022af1b0c ++ transactional rebalance
+
+http://mbukowicz.github.io/
+http://mbukowicz.github.io/java/spring-data/2020/04/13/querying-in-spring-data.html

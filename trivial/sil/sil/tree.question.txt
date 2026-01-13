@@ -1,0 +1,54 @@
+https://www.minuteinbox.com/
+jibreel.witt@milkgitter.com
+https://codebunk.com/b/3231100633469/
+
+// Class name must be "Main"
+// Libraries included:
+// Write a program which prints outputbelow to console
+//          *
+//         * *
+//        * * * 
+//       * * * *
+//      * * * * *
+//     * * * * * *
+//    * * * * * * *
+//   * * * * * * * *
+//  * * * * * * * * *
+// * * * * * * * * * *
+
+
+
+
+
+
+// Class name must be "Main"
+// Libraries included:
+// Write a program which prints outputbelow to console
+//
+//          *
+//         * *
+//        * * * 
+//       * * * *
+//      * * * * *
+//     * * * * * *
+//    * * * * * * *
+//   * * * * * * * *
+//  * * * * * * * * *
+// * * * * * * * * * *
+
+class Main {
+    public static void main(String[] args) {
+        for(int i=0; i < 11; i++) {
+        
+            for(int j=i; j < 10; j++) {
+                System.out.print(" ");
+            }
+            
+            for(int t=0; t < i; t++) {
+                System.out.print("* ");
+            }
+            
+          System.out.println();
+        }
+    }
+}

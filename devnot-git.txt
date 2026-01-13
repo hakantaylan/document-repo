@@ -1,0 +1,10 @@
+https://medium.com/@patrickporto/4-branching-workflows-for-git-30d0aaee7bf
+https://datasift.github.io/gitflow/IntroducingGitFlow.html +++++++++++++++++++++
+https://dustinspecker.com/posts/three-git-tips-rebasing-quicker/
+https://rahuldkjain.github.io/gh-profile-readme-generator/
+https://blog.arcak.net/index.php/2018/08/15/vi-editoru-kullanimi/
+https://www.syslogs.org/vi-basvuru-klavuzu-cheat-sheet/
+
+https://www.kenmuse.com/blog/configure-git-text-editor/
+https://www.kenmuse.com/blog/ssh-and-multiple-git-credentials/
+https://betterprogramming.pub/automation-with-jira-webhook-and-github-actions-workflow-fcd7efbf6688

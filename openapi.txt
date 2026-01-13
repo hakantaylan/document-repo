@@ -1,0 +1,14 @@
+https://reflectoring.io/spring-boot-openapi/
+https://marco.dev/spring-boot-openapi-generator
+https://www.baeldung.com/spring-rest-openapi-documentation
+https://github.com/springdoc/springdoc-openapi/issues/758
+https://www.baeldung.com/swagger-apioperation-vs-apiresponse
+https://1kevinson.com/document-a-springbootrest-api-with-swagger-and-open-api/
+https://lankydan.dev/documenting-a-spring-rest-api-following-the-openapi-specification
+https://github.com/smallrye/smallrye-open-api/issues/100
+https://www.bezkoder.com/spring-boot-swagger-3/
+https://www.geekyhacker.com/2019/12/08/spring-boot-disable-swagger-ui-in-production/
+
+
+
+

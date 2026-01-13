@@ -1,0 +1,19 @@
+﻿https://phoenixnap.com/kb/kibana-nginx-proxy
+https://phoenixnap.com/kb/redirect-http-to-https-nginx
+https://phoenixnap.com/kb/nginx-reverse-proxy
+https://phoenixnap.com/kb/docker-nginx-reverse-proxy
+https://www.digitalocean.com/community/tutorials/how-to-set-up-password-authentication-with-nginx-on-ubuntu-14-04
+https://github.com/vinipachecov/nginx-fundamentals
+https://deniz-turkmen.medium.com/nginx-kurulum-ve-ayarlama-ff7f0e0d15d5
+
+https://www.youtube.com/watch?v=hPfk0qd4xEY Meet keepalived - High Availability and Load Balancing in One
+https://www.pentestpartners.com/security-blog/how-to-use-keepalived-for-high-availability-and-load-balancing/
+https://docs.nginx.com/nginx/admin-guide/high-availability/ha-keepalived-nodes/
+https://stackoverflow.com/questions/31503936/keepalived-and-two-active-servers
+
+https://sma.im/highly-available-private-networking-using-keepalived/
+https://www.haproxy.com/documentation/hapee/latest/high-availability/active-active/
+HA with Layer 4 load balancing
+https://www.redhat.com/sysadmin/advanced-keepalived
+https://chamila.dev/blog/2019-02-28_load-balancing-and-reverse-proxying-for-kubernetes-services/
+https://www.section.io/engineering-education/nginx-reverse-proxy/

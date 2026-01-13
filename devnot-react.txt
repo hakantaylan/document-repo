@@ -1,0 +1,6 @@
+https://medium.com/@franleplant/react-higher-order-components-in-depth-cf9032ee6c3e
+https://blog.jakoblind.no/real-world-higher-order-components-hocs/
+https://engineering.opsgenie.com/a-simple-improvement-for-your-redux-store-4923db87ffa9
+https://blog.logrocket.com/5-react-performance-optimization-techniques/
+https://github.com/tayiorbeii/egghead.io_redux_course_notes
+https://github.com/tayiorbeii/egghead.io_idiomatic_redux_course_notes

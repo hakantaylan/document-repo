@@ -1,0 +1,7 @@
+https://trends.google.com/trends/explore?cat=31&date=today%205-y&q=React,Angular,Svelte,Vue
+https://npmtrends.com/angular-vs-react-vs-svelte-vs-vue
+https://www.thoughtworks.com/radar/languages-and-frameworks/react-js
+https://www.thoughtworks.com/radar/languages-and-frameworks/angular
+https://www.thoughtworks.com/radar/languages-and-frameworks/vue-js
+https://insights.stackoverflow.com/survey/2021#technology
+https://insights.stackoverflow.com/survey/2021#technology-most-popular-technologies

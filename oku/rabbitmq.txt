@@ -1,0 +1,265 @@
+https://docs.spring.io/spring-amqp/reference/html/#choose-container
+https://stackoverflow.com/questions/60045304/directmessagelistenercontainer-and-simplemessagelistenercontainer-relationship-t
+
+The DMLC uses a separate channel for each consumer and does not have any channel pooling/recycling/rebalancing etc. feature
+The SMLC uses one channel per concurrentConsumers
+dynamically adding or removing queues is much less efficient with the SMLC because the consumer(s) are canceled and re-created when changes are made.
+
+SMLC has a dedicated thread for each consumer (concurrency) which polls an internal queue
+
+DirectMessageListenerContainer.setConsumersPerQueue 
+
+DirectMessageListenerContainer listenerContainer = new DirectMessageListenerContainer(connectionFactory);
+listenerContainer.setConsumersPerQueue(10);
+It's to increase concurrency; for example if your listener is slow, and you don't care about message ordering, you can assign multiple consumers to the same queue and process messages in parallel. Depending on your message count, you may need to reduce the prefetch count so that one consumer doesn't "grab" all the messages during startup.
+
+The prefetch size has no effect on concurrency; it is just that; prefetch.
+
+https://www.baeldung.com/java-rabbitmq-channels-connections https://github.com/eugenp/tutorials/tree/master/messaging-modules/rabbitmq
+Connection consumer ve rabbitmq arasındaki gerçek bir TCP bağlantısını temsil eder. Channel ise bu connection içerisinde tanımlanan sanal yapılardır. Aynı connection'ı kullanarak (aynı otobanı kullanarak) aynı veya farklı kuyruklara okuma yazma yapmak için kullanılır. In other words, a channel multiplexes a TCP connection. Typically, each process only creates one TCP connection, and uses multiple channels in that connection for different threads. When you are publishing or consuming messages from a queue, it's all done over a channel.
+Since unacknowledged messages are a resource-drain, RabbitMQ limits the number of unacknowledged messages a channel can hold at any point in time, using a Prefetch count configuration. Depending upon the unacknowledged message traffic on your channels and the count of consumers for those messages, you may want to fine-tune this Prefetch count time and again. By setting the global flag to true, you may even decide to configure a Consumer Prefetch count, which will be shared across all consumers on a channel.
+
+Tek bir connection içinde birden fazla channel kullanıldığı durumda chaneller arası bir syncronisaiton mekanizması gerekecektir. Diğer taraftan birden fazla connection açmanın da kendine göre bir maliyeti vardır.
+5.1. Single Connection/Multiple Channels
+In this strategy, we'll use a single connection and just create a channel pool with a capacity equal to the maximum number of concurrent connections the service can manage. For a traditional thread-per-request model, this should be set to the same size as the request handler thread pool.
+
+The downside of this strategy is that, under heavier loads, the fact that we must send commands one at a time through the associated channel implies that we must use a synchronization mechanism. This, in turn, adds extra latency in the command path, which we want to minimize.
+
+5.2. Connection-per-Thread Strategy
+Another option is to go to the other extreme and use a Connection pool, so there's never contention for a channel. For each Connection, we'll create a single Channel that a handler thread will use to issue commands to the server.
+
+However, the fact that we remove synchronization from the client side comes with a cost. The broker must allocate additional resources for each connection, such as socket descriptors and state information. Moreover, the server must split the available throughput between clients
+
+https://stackoverflow.com/questions/18418936/rabbitmq-and-relationship-between-channel-and-connection
+
+
+The value of prefetch count can be set based on Consumer or channel, which means the maximum number of unacked messages on the Consumer side. When messages exceeding this value are not confirmed, RabbitMQ will stop delivering new messages to the consumer.
+
+channel.basicQos(2); // 如果超过 2 条消息没有发送 ACK，当前消费者不再接受队列消息 channel.basicConsume(QUEUE_NAME, false, consumer);
+SimpleMessageListenerContainer
+
+container.setPrefetchCount(2);
+Spring Boot configuration:
+
+spring.rabbitmq.listener.simple.prefetch=2
+
+https://blog.ityoung.tech/toturial/java%20basic%20knowledge/%E5%88%86%E5%B8%83%E5%BC%8F/%E6%B6%88%E6%81%AF%E9%80%9A%E4%BF%A1/RabbitMQ/02-rabbitMQ%E8%BF%9B%E9%98%B6%E7%9F%A5%E8%AF%86%E5%8F%8ASpring%20AMQP.html
+https://blog.ityoung.tech/toturial/java%20basic%20knowledge/%E5%88%86%E5%B8%83%E5%BC%8F/%E6%B6%88%E6%81%AF%E9%80%9A%E4%BF%A1/RabbitMQ/03-rabbitMQ%E5%8F%AF%E9%9D%A0%E6%80%A7%E6%8A%95%E9%80%92%E4%B8%8E%E9%AB%98%E5%8F%AF%E7%94%A8.html
+https://blog.ityoung.tech/toturial/java%20basic%20knowledge/%E5%88%86%E5%B8%83%E5%BC%8F/%E6%B6%88%E6%81%AF%E9%80%9A%E4%BF%A1/RabbitMQ/01-rabbitMQ%E7%AE%80%E4%BB%8B%E5%8D%B3%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8.html
+
+https://stackoverflow.com/questions/18418936/rabbitmq-and-relationship-%20between-channel-and-connection
+
+Connection
+Whether the producer sends a message or the consumer receives a message, a connection must be established with the Broker. This connection is a TCP long connection.
+
+Channel
+If all producers send messages and consumers receive messages, they directly create and release TCP long-term connections, which will definitely cause a lot of performance loss for Broker, because TCP connections are very precious resources, and creation and release also require time consuming.
+
+Therefore, the concept of Channel is introduced in AMQP, which is a virtual connection. We translate it into channel, or message channel. In this way, we can create and release Channels in the long-held TCP connection, which greatly reduces resource consumption. Another thing to note is that Channel is the most important programming interface in RabbitMQ's native API. That is to say, we define switches, queues, and binding relationships, send and consume messages, and call methods on the Channel interface
+
+
+SMLC (SimpleMessageListenerContainer) has the following features, but DMLC (DirectMessageListener-Container) does not:
+batchSize: With SMLC, you can set this value to control the number of messages delivered in one transaction or reduce the number of acks, but it may cause an increase in the number of repeated deliveries after failures. (DMLC has messagesPerAck, which you can use to reduce acks, like batchSize and SMLC, but it doesn't work with transactions - each message is delivered and acked in a separate transaction).
+consumerBatchEnabled: Allows batching of discrete messages in the consumer.
+maxConcurrentConsumers and consumer scaling intervals or triggers - there is no auto scaling in DMLC. However, it allows you to programmatically change the consumersPerQueue property and adjust consumers accordingly.
+Compared with SMLC, DMLC has the following advantages:
+It is more efficient to add and remove queues at runtime. With SMLC, the entire consumer thread is restarted (all consumers are canceled and recreated). Through the DMLC, unaffected consumers will not be cancelled.
+Avoid context switching between RabbitMQ Client thread and consumer thread.
+Threads are shared among consumers instead of having a dedicated thread for each consumer in smlc
+
+https://docs.spring.io/spring-amqp/reference/html/amqp.html
+https://docs.spring.io/spring-amqp/reference/html/amqp.html#scoped-operations
+
+There are three connection factories to choose from:
+
+PooledChannelConnectionFactory
+ThreadChannelConnectionFactory
+CachingConnectionFactory
+For most use cases, PooledChannelConnectionFactory should be used. If you want to ensure strict message order without using scoped operations, you can use ThreadChannelConnectionFactory. You should use a CachingConnectionFactory if you wish to use relative publisher acknowledgments, or if you wish to open multiple connections via their CacheMode.
+
+When configuring the RabbitTemplate to use a separate connection, you can now, starting with version 2.3.2, configure the publish connection factory to be of a different type. By default, the release factory is of the same type, and any properties set on the main factory are also propagated to the release factory.
+
+PooledChannelConnectionFactory
+
+The factory manages a single connection and two channel pools based on Apache Pool2. One pool is used for transactional channels and the other pool is used for non-transactional channels. The pool is a GenericObjectPool with default configuration; a callback is provided to configure the pool; see the Apache documentation for more information.
+
+ThreadChannelConnectionFactory
+
+This factory manages a connection and two ThreadLocals, one for transactional channels and one for non-transactional channels. This factory ensures that all operations on the same thread use the same channel (as long as it remains open). This facilitates strict message ordering without the need for scoped operations. To avoid memory leaks, if your application uses many short-lived threads, you must call the factory's closeThreadChannel() to release channel resources. Starting with version 2.3.7, a thread can transfer its channel to another thread. For more information, see Strict Message Ordering in Multithreaded Environments.
+
+CachingConnectionFactory
+
+The third implementation provided is CachingConnectionFactory, which by default establishes a connection proxy that can be shared by applications. Sharing connections is possible because the "unit of work" for messaging with AMQP is actually a "channel" (in some ways this is similar to the relationship between a connection and a session in JMS). This connection instance provides a createChannel method. CachingConnectionFactory implementations support caching of these channels and maintain separate caches for channels depending on whether they are transactional or not. When creating a CachingConnectionFactory instance, you can provide a 'hostname' via the constructor. You should also provide "username" and "password" attributes. To configure the size of the channel cache (25 by default), call the setChannelCacheSize() method.
+
+Starting with version 1.3, you can configure a CachingConnectionFactory to cache connections and channels. In this example, each call to createConnection() creates a new connection (or retrieves an idle connection from the cache). Closing the connection returns the connection to the cache (if the cache size has not been reached). Channels created on these connections are also cached. In some environments it may be useful to use separate connections, such as in an HA cluster using a load balancer to connect different cluster members and other members. To cache connections, set cacheMode to cacheMode.connection.
+
+It's important to understand that the cache size (by default) is not a limit, but simply the number of channels that can be cached. With a cache size of 10, virtually any number of channels can be used. If more than 10 channels are being used and they are all returned to the cache, then 10 channels go into the cache. The rest is physically enclosed.
+
+Starting with version 1.6, the default channel cache size was increased from 1 to 25. In a high-volume, multi-threaded environment, small caches mean that channels can be created and closed quickly. Increasing the default cache size avoids this overhead. You should monitor the channels being used through the RabbitMQ Admin UI, and if you see many channels being created and closed, consider increasing the cache size further. The cache only grows on demand (to accommodate the application's concurrency needs), so this change will not affect existing low-volume applications.
+
+Since version 1.4.2, the CachingConnectionFactory has a property called channelCheckoutTimeout. When this property is greater than zero, channelCacheSize becomes the limit on the number of channels that can be created on a connection. If the limit is reached, the calling thread will block until the channel becomes available or this timeout is reached, in which case an AmqpTimeoutException is thrown.
+
+
+
+RabbitTemplate provides three connection factories:
+PooledChannelConnectionFactory
+
+Commonly used, connection factory based on connection pool (commons-pool2)
+Support simple publisher confirmation
+
+ThreadChannelConnectionFactory
+
+You need to use scope operations to ensure strict message ordering
+Support simple publisher confirmation
+This factory ensures that all operations on the same thread use the same channel
+
+CachingConnectionFactory
+Multiple connections can be opened by CacheMode (shared connection, different from connection pool)
+can be confirmed by the relevant publisher
+Support simple publisher confirmation
+
+
+https://juejin.cn/post/6944288383820627976   Inventory MQ: Message Queue Overview
+https://juejin.cn/post/6968484460580831268 spring listener
+
+Detect idle consumers:
+You can configure the idleEventInterval property of SimpleMessageListenerContainer or SimpleRabbitListenerContainerFactory.
+Specific consumers can be monitored by using @EventListener
+@RabbitListener(id="someId", queues="#{queue.name}")
+@EventListener(condition = "event.listenerId == 'someId'")
+public void onApplicaitonEvent(ListenerContainerIdleEvent event) {
+}
+
+Using the Same Broker(s) for Multiple Test Classes
+You can use the same broker for multiple test classes with something similar to the following:
+
+public final class EmbeddedKafkaHolder {
+
+    private static EmbeddedKafkaBroker embeddedKafka = new EmbeddedKafkaBroker(1, false)
+            .brokerListProperty("spring.kafka.bootstrap-servers");
+
+    private static boolean started;
+
+    public static EmbeddedKafkaBroker getEmbeddedKafka() {
+        if (!started) {
+            try {
+                embeddedKafka.afterPropertiesSet();
+            }
+            catch (Exception e) {
+                throw new KafkaException("Embedded broker failed to start", e);
+            }
+            started = true;
+        }
+        return embeddedKafka;
+    }
+
+    private EmbeddedKafkaHolder() {
+        super();
+    }
+
+}
+
+This assumes a Spring Boot environment and the embedded broker replaces the bootstrap servers property.
+
+Then, in each test class, you can use something similar to the following:
+
+static {
+    EmbeddedKafkaHolder.getEmbeddedKafka().addTopics("topic1", "topic2");
+}
+
+private static final EmbeddedKafkaBroker broker = EmbeddedKafkaHolder.getEmbeddedKafka();
+
+If you are not using Spring Boot, you can obtain the bootstrap servers using broker.getBrokersAsString();
+JUnit5
+@EmbeddedKafka
+public class EmbeddedKafkaConditionTests {
+
+    @Test
+    public void test(EmbeddedKafkaBroker broker) {
+        String brokerList = broker.getBrokersAsString();
+        ...
+    }
+
+}
+
+
+https://medium.com/javarevisited/getting-started-with-rabbitmq-in-spring-boot-6323b9179247
+https://github.com/Ruhshan/rabbitmq-spring-demo
+https://medium.com/javarevisited/caching-made-easy-in-spring-boot-27d1a545905c 
+https://github.com/Ruhshan/spring-boot-caching-demo
+https://medium.com/javarevisited/what-are-the-new-features-of-springboot3-6ddba9af664
+ mvnw -Pnative native:compile
+2. ./target/demo2
+
+
+Verify if Exists in a String
+
+// 3. Verify if Exists in a String
+List<String> wordList = Arrays.asList("java", "jdk", "spring", "maven");
+String tweet = "This is an example tweet talking about java and maven.";
+wordList.stream().anyMatch(tweet::contains);
+
+4. Read in a File
+
+// 4. Read in a File
+ String fileText = new String(Files.readAllBytes(Paths.get("data.txt")));
+ List<String> fileLines = Files.readAllLines(Paths.get("data.txt"));
+
+5. Happy Birthday to You!
+
+// 5. Happy Birthday to You!
+IntStream.rangeClosed(1, 4)
+  .mapToObj(i -> MessageFormat.format("Happy Birthday {0}", (i == 3) ? "dear NAME" : "to You"))
+  .forEach(System.out::println);
+
+6. Filter list of numbers
+
+// 6. Filter list of numbers
+Map<Boolean, List<Integer>> passedFailedMap = Stream.of(49, 58, 76, 82, 88, 90)
+  .collect(Collectors.partitioningBy(i -> i > 60));
+
+
+https://www.rabbitmq.com/connections.html
+
+
+A listener "container" is a Spring concept across multiple technologies (JMS, RabbitMQ, Kafka, AWS, etc, etc).
+
+The listener is defined as a POJO bean method and is a property of the container (the container "contains" the listener).
+
+The container is responsible for interacting with the broker to receive messages and invoke your listener method with each message, or a batch of messages, depending on the listener type.
+
+This means your application code does not have to deal with the mechanics of interacting with the broker and you can concentrate on your business logic only.
+
+The framework discovers any @KafkaListener methods and uses the factory to create a container for each one.
+
+
+
+https://howtoprogram.xyz/2016/09/25/spring-kafka-multi-threaded-message-consumption/
+
+There are two implementations of MessageListenerContainer - the KafkaMessageListenerContainer (KMLC) and ConcurrentMessageListenerContainer (CMLC).
+
+The CMLC is simply a wrapper for one or more KMLCs, with the number of KMLCs specified by the concurrency.
+
+@KafkaListener always uses a CMLC.
+
+Each KMLC gets one Consumer (and one thread). The thread continually poll()s the consumer, with the specified pollTimeout.
+
+How the topics/partitions are distributed across the KMLCs depends on
+
+how many partitions the topic(s) have
+the consumer's partition.assignment.strategy property
+If you have multiple topics with fewer partitions than the concurrency, you will likely need an alternate partition assignor, such as the round robin assignor, otherwise you will have idle containers with no assignment.
+
+That is correct; if you explicitly want a different container for each topic, you can provide multiple @KafkaListener annotations on the same method.
+See my explanation above.
+That is correct - it's the only way to get concurrency with Kafka (without adding very complicated logic to manage offsets).
+The number of records returned by each poll depends on a number of consumer properties, max.poll.records, fetch.min.bytes, fetch.max.wait.ms.
+
+
+https://stackoverflow.com/questions/71102930/rabbitmq-pull-vs-push-consume
+https://www.upsolver.com/blog/kafka-versus-rabbitmq-architecture-performance-use-case
+https://www.logicmonitor.com/blog/rabbitmq-vs-kafka
+https://jack-vanlightly.com/blog/2017/12/4/rabbitmq-vs-kafka-part-1-messaging-topologies
+https://www.cloudamqp.com/blog/part1-rabbitmq-best-practice.html
+https://www.cloudamqp.com/blog/part2-rabbitmq-best-practice-for-high-performance.html
+https://www.cloudamqp.com/blog/part3-rabbitmq-best-practice-for-high-availability.html

@@ -1,0 +1,6 @@
+https://www.haproxy.com/blog/haproxy-on-docker-swarm-load-balancing-and-dns-service-discovery/
+https://gist.githubusercontent.com/haproxytechblog/5f38382fc7d9c9b44814ecb68d2bfca3/raw/a4a07a2ef28bc9f9e55222626d4268b78b45e8fc/blog20191008-full.cfg
+Layer 4 and Layer 7 Proxy Mode
+https://gist.github.com/haproxytechblog/60fde86e1aa9e687055d67973ab53795
+Enable Sticky Sessions in HAProxy
+https://gist.github.com/haproxytechblog/11b14d15be71368026b2ae1930b81333

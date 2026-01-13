@@ -1,0 +1,76 @@
+﻿https://www.youtube.com/watch?v=aHbE3pTyG-Q
+https://www.youtube.com/watch?v=G3gnMSyX-XM
+https://www.percona.com/blog/2019/11/22/uuids-are-popular-but-bad-for-performance-lets-discuss/
+https://www.youtube.com/watch?v=7H53Peoh_Jc The 2020 Google Outage (Detailed Analysis)
+https://www.youtube.com/watch?v=QQVNVOneZNg Is SELECT * Expensive?
+https://www.youtube.com/watch?v=DQ3D_mplIgY CQRS is probably the cause of the Microservices madness
+https://www.youtube.com/playlist?list=PLQnljOFTspQWGrOqslniFlRcwxyY94cjj   Postgres videos
+https://www.youtube.com/playlist?list=PLQnljOFTspQWsD-rakNw1C20c1JI8UR1r  All docker videos
+https://www.youtube.com/watch?v=Vw1fCeD06YI Column vs Row Oriented Databases Explained
+https://dataschool.com/data-modeling-101/row-vs-column-oriented-databases/
+https://towardsdatascience.com/columnar-stores-when-how-why-2d6759914319
+https://towardsdatascience.com/guide-to-big-data-joins-python-sql-pandas-spark-dask-51b7f4fec810
+https://www.youtube.com/watch?v=_UUFMAZswhU Be careful while working with large text fields in Postgres - TOAST
+https://www.youtube.com/watch?v=-qNSXK7s7_w Database Indexing Explained (with PostgreSQL)
+https://www.youtube.com/watch?v=ccemOqDrc2I Basic Caching Techniques Explained - Spatial, Temporal, Distributed, Write-Through, Write-Back,Aside
+https://www.youtube.com/watch?v=ufdHsFClAk0  Step by Step Javascript and Postgres Tutorial using node-postgres
+https://github.com/hnasr/javascript_playground/tree/master/javascript_postgres
+https://stackoverflow.com/questions/29600369/starting-and-populating-a-postgres-container-in-docker
+
+https://www.youtube.com/watch?v=iHNovZUZM3A  When should you shard your database
+Before you Shard, try the following first
+0. Understand what your actual problem is before optimizing(too slow reads vs too slow writes)  Analyze your slowest queries and see why its slow: https://youtu.be/-qNSXK7s7_w?t=237 Create indexes on appropriate columns and tune your data schema.
+
+1. Horizontal Partitioning - Have partition key(mostly on primary key) and split database into different ranges.  This will create smaller B-trees on the indexes.
+
+2. Vertical Partitioning - When you have columns that you rarely access, and you cut a column out of the main database. This will make reads faster for frequent queries and slower for not frequent queries and make your B-trees smaller(less space in memory also)
+
+Partitioning Video: https://www.youtube.com/watch?v=QA25cMWp9Tk
+---- << Database still in one machine when you do Partitioning.  Partitioning is done automatically by most modern DB systems and client doesn't have to know any difference).>>--
+
+
+3. (Read Optimization) Master-Slaves replications, with master handling all writes and slaves handling all reads.  Masters sync with slaves with latest data
+4. (Write optimization) Master-Master-Slaves replication in multi-regions(i.e. EAST vs WEST) with multiple masters handling writes, slaves handling reads, sync handled between masters<->masters and masters->read
+
+5. Finally shard when you REALLY have to.  Sharding adds complex client logic and couples with your data base.  You also lose ACID as you cannot guarantee transactions and isolation between your shards.   You can use Vitess to help you manage your sharding query logic https://vitess.io/
+
+
+https://www.youtube.com/watch?v=hmTl5Y4ee_Y&list=PLQnljOFTspQV1emqxKbcP5esAf4zpqWpe&index=1   node.js express none blocking with fork
+https://github.com/hnasr/javascript_playground/blob/master/isprime-blocking/index.js
+https://github.com/hnasr/javascript_playground/tree/master/isprime-non-blocking
+
+https://medium.com/swlh/how-data-is-stored-down-the-rabbit-hole-976a46347726
+https://dataschool.com/how-to-teach-people-sql/
+
+docker run --name my-postgres -e POSTGRESS_PASSWORD=password -d -p 5432:5432 postgres
+-e --> environment variables
+-d detach mode konsolu sana bırakır
+-p port mapping işlemi için
+
+
+Container çalıştıktan sonra postgre'ye bağlanıp psql komutları çalıştırmak için
+docker exec -it my-postgres bash
+
+psql -U postgres
+
+\du   postgres kullanıcılarını listener
+\l veritabanlarını listeler
+
+create database test;   test isminde bir database oluşturur
+\c test;  test database'ine bağlanır
+
+
+
+Container içindeki postgres veritabanına bağlanmanın bir diğer yolu eğer ortamında Postgress kurulu ise
+psql -h localhost -p 5432 -U postgress
+
+create extension if not exists "uuid-ossp";
+select uuid_generate_v1();
+insert into student (id, name, course) values (uuid_generate_v1(), 'John', 'Finance');
+
+\q ile psql shell'den çıkarsın
+
+docker run --name my-postgres -e POSTGRES_PASSWORD=postgres -d my-postgres
+docker save image_name -o /path/to/file.tar
+docker export image_name -o /path/to/file.tar
+docker load --input /path/to/file.tar docker load -i /path/to/file.tar

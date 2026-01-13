@@ -1,0 +1,2 @@
+https://aliozgur.gitbooks.io/git101/content/ileri_seviye_komutlar_ve_islemler/degisikliklerinizi_geri_almak.html
+https://aliozgur.gitbooks.io/git101/content/ileri_seviye_komutlar_ve_islemler/merge_alternatifi_olarak_rebase_kullanimi.html

@@ -1,0 +1,26 @@
+git merge --no-commit --no-ff BRANCH-TO-MERGE
+echo $?
+git merge --abort
+
+git clone --mirror ile clone'lanırsa tüm history ile birlikte clone'lanır.
+
+
+Idea Plugin GitToolBox
+TortoiseGit
+
+https://hackandcraft.com/about-us/careers/senior-back-end-developer/
+https://www.linkedin.com/company/hack-and-craft/jobs/
+
+
+git diff --name-only "@{3 day ago}"
+git diff --name-only "@{3 days ago}" "@{1 days ago}"
+ git diff --stat "@{2022-02-20}..@{2022-02-24}"
+git whatchanged --since="2 year ago" --until="1 year ago" [--author="NAME_OF_THE_AUTHOR"]
+git whatchanged --since="2 year ago" --until="1 year ago" --pretty=format: --name-only
+
+git log --name-only --pretty=format: "develop@{1 month ago}..develop@{yesterday}"
+git log --after="2015-10-14" --before="2015-10-21" --grep="MB[FT][0-9-]*" --author="John\|Mary"
+
+
+Compare two branches using git diff
+git diff branch1..branch2

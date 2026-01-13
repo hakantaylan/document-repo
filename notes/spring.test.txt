@@ -1,0 +1,44 @@
+﻿https://spring.io/guides/gs/testing-web/
+https://github.com/spring-guides/gs-testing-web
+https://github.com/eugenp/tutorials/tree/master/spring-5-reactive-client
+https://howtodoinjava.com/spring-boot2/testing/testing-support/
+https://stackoverflow.com/questions/39865596/difference-between-using-mockmvc-with-springboottest-and-using-webmvctest
+https://stackoverflow.com/questions/25901985/difference-between-mockmvc-and-resttemplate-in-integration-tests
+https://dimitr.im/testing-your-rest-controllers-and-clients-with-spring
+https://dimitr.im/spring-boot-cache-ehcaches
+
+https://dimitr.im/writing-dynamic-queries-with-spring-data-jpa
+https://stackoverflow.com/questions/39865596/difference-between-using-mockmvc-with-springboottest-and-using-webmvctest
+https://medium.com/swlh/https-medium-com-jet-cabral-testing-spring-boot-restful-apis-b84ea031973d
+https://github.com/Jet-C/spring-demo
+https://stackoverflow.com/questions/59097035/springboottest-vs-webmvctest-datajpatest-service-unit-tests-what-is-the-b
+
+@SpringBootTest annotation tells Spring Boot to go and look for a main configuration class (one with @SpringBootApplication for instance), and use that to start a Spring application context. SpringBootTest loads complete application and injects all the beans which is can be slow.
+
+@WebMvcTest is only going to scan the controller you’ve defined and the MVC infrastructure. That’s it. So if your controller has some dependency to other beans from your service layer, the test won’t start until you either load that config yourself or provide a mock for it. This is much faster as we only load a tiny portion of your app. This annotation uses slicing.
+
+this is for testing the controller layer and you need to provide remaining dependencies required using Mock Objects
+
+
+https://github.com/robbertvdzon/spring-tests
+
+
+RestTemplate aynı zamandan REST api'leri çağıran servisler yazmak için kullanılır. Deprecated bunun yerine WebClient kullanılacak
+
+https://github.com/hakansander/SpringRestUnitTest
+https://mkyong.com/spring-boot/spring-rest-integration-test-example/
+
+@RestClientTest annotation is used to test service layer which uses RestTemplate or RestTemplateBuilder to interact with external services.
+
+https://spring.io/guides/topicals/spring-security-architecture/
+https://spring.io/guides/gs/testing-web/
+https://howtodoinjava.com/spring-boot2/testing/spring-boot-mockmvc-example/
+
+
+https://jsonlint.com/
+
+https://www.callicoder.com/series/spring-security-react/
+https://github.com/callicoder/spring-security-react-ant-design-polls-app
+https://github.com/callicoder/java-concurrency-examples
+https://medium.com/@xoor/jwt-authentication-service-44658409e12c
+https://github.com/murraco/spring-boot-jwt

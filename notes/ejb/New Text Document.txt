@@ -1,0 +1,167 @@
+﻿https://tomee.apache.org/developer/testing/
+https://github.com/rcuprak/actionbazaar.git   Code for the EJB 3 in Action Book
+https://www.slideshare.net/rcuprak/con1947
+
+https://stackoverflow.com/questions/34606253/arquillianservletrunner-not-found   StringAsset for xml descritors
+https://blog.payara.fish/using-payara-embedded-as-an-arquillian-container-inside-intellij-idea
+https://antoniogoncalves.org/2012/01/16/wytiwyr-what-you-test-is-what-you-run/
+https://github.com/agoncal/agoncal-sample-arquilian
+
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+
+custom ejb name
+https://developer.jboss.org/thread/177380
+https://docs.jboss.org/author/display/WFLY/JNDI%20Reference.html
+
+https://cwiki.apache.org/confluence/display/OPENEJB/Embedded
+http://openejb.apache.org/examples-trunk/index.html
+https://github.com/apache/tomee/tree/042d4d9fc647c32ee31c4c7455a4769817564340/examples
+
+http://openejb.apache.org/examples-trunk/application-composer/README.html   arquillian equivalent
+https://github.com/apache/tomee/pull/305/files
+
+http://tomee.apache.org/master/examples/rest-applicationcomposer-mockito.html
+https://mvnrepository.com/artifact/org.apache.tomee/openejb-mockito/8.0.5
+https://github.com/kubamarchwicki/ejb-testing
+
+http://jakub.marchwicki.pl/posts/2011/05/02/the-art-of-testing-an-ejb-application-part-i/
+http://jakub.marchwicki.pl/posts/2011/05/06/the-art-of-testing-an-ejb-application-part-ii/
+http://jakub.marchwicki.pl/posts/2011/06/09/the-art-of-testing-an-ejb-application-openejb/
+http://jakub.marchwicki.pl/posts/2011/07/01/testing-ejb-application-openejb-without-classpath-scanning/
+https://github.com/kubamarchwicki/ejb-testing
+
+https://github.com/kubamarchwicki/arquillian-examples/tree/master/arq-tomee-embedded
+https://docs.jboss.org/author/display/ARQ/Apache%20OpenEJB%203.1%20-%20Embedded.html
+https://mvnrepository.com/artifact/org.apache.tomee/arquillian-openejb-embedded
+
+https://rmannibucau.wordpress.com/2012/06/18/running-arquillian-test-using-different-tomeeopenejb-adapters-in-the-same-buildartifact/
+
+https://www.baeldung.com/mockito-junit-5-extension
+https://github.com/powermock/powermock/wiki/Mockito
+https://wttech.blog/blog/2020/mocking-static-methods-made-possible-in-mockito-3.4.0/
+
+https://rieckpil.de/mongodb-testcontainers-setup-for-datamongotest/   @DataMongoTest
+https://github.com/rieckpil/blog-tutorials/tree/master/spring-data-mongo-test-testcontainers
+https://rieckpil.de/override-spring-boot-configuration-properties-for-tests/
+https://github.com/rieckpil/blog-tutorials/tree/master/spring-boot-override-test-properties
+https://rieckpil.de/difference-between-mock-and-mockbean-spring-boot-applications/
+https://github.com/rieckpil/blog-tutorials/tree/master/difference-between-mock-and-mockbean
+https://www.baeldung.com/java-spring-mockito-mock-mockbean
+https://github.com/neiser/mockbean-and-primary
+@Configuration
+@MockBeans({YourComponentSuperclass.class})
+public class TestConfig {
+}
+
+https://rieckpil.de/howto-simple-load-testing-with-apache-benchmark/
+https://www.baeldung.com/java-faker
+
+https://stackoverflow.com/questions/21054057/how-to-inject-multiple-mocks-of-the-same-interface
+https://howtodoinjava.com/spring-boot2/testing/spring-mockbean-annotation/
+https://reflectoring.io/spring-boot-mock/
+
+https://rieckpil.de/spring-boot-test-slices-overview-and-usage/
+https://github.com/rieckpil/blog-tutorials/tree/master/spring-boot-test-slice-annotations
+https://rieckpil.de/test-spring-webclient-with-mockwebserver-from-okhttp/
+https://rieckpil.de/improve-build-times-with-context-caching-from-spring-test/
+https://frontbackend.com/java/how-to-mock-static-methods-with-mockito
+https://rieckpil.de/mocking-static-methods-with-mockito-java-kotlin/
+https://rieckpil.de/how-to-test-java-http-client-usages-e-g-okhttp-apache-httpclient/
+https://rieckpil.de/override-spring-boot-configuration-properties-for-tests/
+https://github.com/rieckpil/blog-tutorials/tree/master/spring-boot-override-test-properties
+
+https://aggarwal-rohan17.medium.com/simplifying-junit-mockito-and-powermock-d1392059ce87
+https://www.baeldung.com/mockito-2-java-8
+
+https://mincong.io/2020/04/19/mockito-junit5/
+
+https://github.com/mincong-h/java-examples
+https://github.com/mincong-h/learning-elasticsearch
+https://github.com/mincong-h/tech-resources/blob/master/git.md
+https://github.com/mincong-h/tech-resources/blob/master/system-design.md
+https://github.com/mincong-h/tech-resources/blob/master/java/tools.md
+https://github.com/mincong-h/tech-resources/blob/master/java/maven.md
+https://github.com/mincong-h/tech-resources/blob/master/java/jvm.md
+https://github.com/mincong-h/maven-demo
+https://github.com/mincong-h/java-examples
+https://gist.github.com/djspiewak/46b543800958cf61af6efa8e072bfd5c  thread pools
+https://mincong.io/2020/11/07/throttler/
+https://github.com/mincong-h/java-examples/blob/blog/throttler/reliability/src/main/java/io/mincong/reliability/Throttler.java
+https://mincong.io/2020/10/25/java-time/ Using Java Time In Different Frameworks
+https://mincong.io/2020/05/30/exception-handling-in-completable-future/ 3 Ways to Handle Exception In Completable Future
+https://mincong.io/2020/05/24/java-clock/ Controlling Time with Java Clock
+https://mincong.io/2020/04/05/testing-elasticsearch-with-docker-and-java-client/ github profilinde örnek olabilir
+https://mincong.io/2020/02/02/logback-test-logging-event/
+https://mincong.io/2019/12/15/mockito-argument-captor/
+https://mincong.io/2019/11/24/essinglenodetestcase/ Testing Elasticsearch with ESSingleNodeTestCase
+https://github.com/mincong-h/learning-elasticsearch/tree/blog-ESSingleNodeTestCase
+https://mincong.io/2018/10/04/maven-failsafe-plugin-understanding/
+https://mincong.io/2017/09/23/test-a-pom-packaging-maven-module/
+https://medium.com/@igorski/using-mockito-with-junit-5-babff57e04e0
+
+https://medium.com/@igorski/polymorphic-deserialization-with-jackson-2478567a0a7f
+https://medium.com/@igorski/log-hierarchy-in-logback-f68d731941e9
+https://medium.com/@igorski/mixing-junit-4-and-junit-5-tests-3a702f1842ae
+https://medium.com/@igorski/junit-5-extension-model-6e8f73b55cb2
+https://github.com/igorstojanovski/junit5-examples
+
+https://github.com/igorstojanovski/jacoco-offline-instrumentation
+https://medium.com/@igorski/dynamic-tests-in-junit-5-de77a43e0720
+https://www.infoworld.com/article/3537563/junit-5-tutorial-part-1-unit-testing-with-junit-5-mockito-and-hamcrest.html?page=2  Parameterized tests in JUnit 5
+
+
+
+https://mincong.io/2018/08/29/maven-compiler-plugin-understanding/
+https://github.com/mincong-h/maven-compiler-plugin-demo
+https://github.com/mincong-h/maven-demo/tree/blog-maven-compiler-plugin/maven-compiler-plugin
+https://mincong.io/2018/09/14/maven-resources-plugin-understanding/
+https://mincong.io/2018/10/04/maven-failsafe-plugin-understanding/
+
+https://www.bogotobogo.com/Java/tutorials/Maven/Apache-Maven-Lifecycle.php
+
+https://coderstower.com/2019/09/24/unit-testing-behavior-vs-state/
+https://www.guru99.com/back-box-vs-white-box-testing.html
+https://manas.tech/blog/2009/04/30/state-vs-behaviour-verification/
+
+https://www.arhohuttunen.com/junit-5-mockito/
+https://github.com/AntonioDiaz/mockito.tutorial#step-10--mockito-annotations
+
+https://www.devteams.at/2020/07/20/using-mocks-to-test-untestable-code-dont-do-that.html
+https://www.devteams.at/react_tdd/2019/11/11/react-tdd-0-all-posts.html
+https://www.devteams.at/react_tdd/2019/11/11/react-tdd-1-testing-the-ui-itself.html
+https://www.devteams.at/react_tdd/2019/11/18/react-tdd-2-value-and-cost-of-tests.html
+https://www.devteams.at/react_tdd/2019/12/03/react-tdd-3-dependency-injection.html
+
+https://www.devteams.at/react_spring_boot/2020/03/17/spring-isomorphic-react-1-setup-with-graalvm.html
+https://www.devteams.at/react_spring_boot/2020/03/25/spring-isomorphic-react-2-react-router.html
+https://www.devteams.at/react_spring_boot/2020/03/30/spring-isomorphic-react-3-first-load-performance.html
+https://www.devteams.at/react_spring_boot/2020/04/06/spring-isomorphic-react-4-server-side-data.html
+
+https://github.com/blog-pchudzik-examples/transactional-exceptions/tree/master/src/main/java/com/pchudzik/blog/examples/springtransactions
+
+https://www.devteams.at/stuck_in_bad_job/2019/06/03/stuck-in-a-bad-job-2-fuck-you-money.html
+https://www.devteams.at/2019/01/28/object_oriented_design_pitfalls.html
+https://www.devteams.at/2018/04/23/planning-software-development.html
+
+https://www.devteams.at/simon_harrer_dwx_2019/2020/01/13/simon-harrer-5-combine-state-and-behavior-java-by-comparison.html
+
+https://devops.datenkollektiv.de/mockito-cheat-sheet-for-easymock-users.html
+https://frontbackend.com/java/mockito-tutorial
+https://github.com/martinwojtus/tutorials/tree/master/libraries/mockito
+https://github.com/martinwojtus/tutorials/tree/master/libraries/apache-poi
+
+https://frontbackend.com/spring-boot/spring-boot-starters
+https://frontbackend.com/spring-boot/what-code-structure-use-for-spring-boot-applications
+https://frontbackend.com/oracle/how-to-generate-random-uuid-in-oracle
+
+
+https://www.sentiatechblog.com/react-hooks-explained
+https://github.com/doppelmutzi/useeffect-showcase
+https://doppelmutzi.github.io/react-eslint-prettier-vscode-2020/
+https://blog.logrocket.com/guide-to-react-useeffect-hook/
+
+https://www.baeldung.com/java-wait-notify

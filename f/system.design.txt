@@ -1,0 +1,15 @@
+https://github.com/eileen-code4fun/SystemDesignInterviews
+
+https://serhatgiydiren.github.io/system-design-interview-top-k-problem-heavy-hitters
+https://serhatgiydiren.github.io/helpful-resources-for-system-design-interviews
+https://serhatgiydiren.github.io/system-design-inteview-topics
+https://akshay-iyangar.github.io/system-design/
+https://serhatgiydiren.github.io/system-design-interview-distributed-cache
+https://serhatgiydiren.github.io/system-design-interview-rate-limiting
+https://serhatgiydiren.github.io/system-design-interview-notification-service
+https://serhatgiydiren.github.io/system-design-interview-distributed-message-queue
+
+https://serhatgiydiren.github.io/managers
+
+https://redis.com/blog/streaming-analytics-with-probabilistic-data-structures/
+https://pkghosh.wordpress.com/2014/09/10/realtime-trending-analysis-with-approximate-algorithms/

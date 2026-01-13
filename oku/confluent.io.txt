@@ -1,0 +1,7 @@
+﻿https://www.confluent.io/blog/author/martin-kleppmann/
+https://www.confluent.io/blog/using-logs-to-build-a-solid-data-infrastructure-or-why-dual-writes-are-a-bad-idea/
+https://www.confluent.io/blog/data-dichotomy-rethinking-the-way-we-treat-data-and-services/   tüm seriyi oku
+
+https://www.confluent.io/blog/leveraging-power-database-unbundled/
+https://www.confluent.io/blog/category/microservices/
+https://www.confluent.io/blog/exactly-once-semantics-are-possible-heres-how-apache-kafka-does-it/  Burda yazana göre exactly once yaklaşımı teker teker yazmada hissedilir bir yavaşlığa sebep olsa da batch yazmada %3 kadar bir yavaşlığa sebep oluyor.

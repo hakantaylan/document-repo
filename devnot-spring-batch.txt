@@ -1,0 +1,45 @@
+https://www.toptal.com/spring/spring-batch-tutorial
+https://hevodata.com/learn/spring-batch-parallel-processing/
+
+https://stackoverflow.com/questions/20323229/difference-between-spring-batch-remote-chunking-and-remote-partitioning
+https://arnoldgalovics.com/spring-batch-remote-partitioning-kafka/
+https://github.com/galovics/spring-batch-remote-partitioning
+
+https://spring.io/blog/2021/01/27/spring-batch-on-kubernetes-efficient-batch-processing-at-scale
+
+https://frandorado.github.io/spring/2019/07/29/spring-batch-aws-series-introduction.html
+https://frandorado.github.io/spring/2019/09/19/spring-batch-aws-series-chunking.html
+https://frandorado.github.io/spring/2019/10/11/spring-batch-aws-series-partitioning.html
+https://github.com/frandorado/spring-projects/tree/master/spring-batch-aws-integration
+https://www.javacodegeeks.com/spring-batch-tutorial.html   +++++
+https://github.com/spring-projects/spring-batch
+https://github.com/galovics/spring-batch-remote-partitioning
+https://arnoldgalovics.com/spring-batch-remote-partitioning-kafka/
+https://github.com/galovics/spring-batch-remote-partitioning
+https://stackoverflow.com/questions/20323229/difference-between-spring-batch-remote-chunking-and-remote-partitioning/20342308#20342308
+https://github.com/spring-projects/spring-batch
+https://github.com/spring-projects
+https://www.toptal.com/spring/spring-batch-tutorial
+https://github.com/asaen/spring-batch-article
+
+https://akjamie.github.io/post/2019-07-21-spring-batch-single-process-remote-partitioning/
+https://github.com/cloud-poc/springbatch-userservice
+https://cloud-poc.github.io/2019/07/21/Spring-batch-01-single-process-demo/index/#more
+
+https://github.com/mminella/scaling-demos
+https://github.com/mminella/SpringBatch101
+https://github.com/mminella/java-remote-partitioning
+https://github.com/mminella/LearningSpringBatch
+https://github.com/mminella/spring-batch-multiple-modules
+https://docs.spring.io/spring-batch/docs/current/reference/html/scalability.html
+http://www.ontheserverside.com/blog/2014/07/23/horizontal-and-vertical-scaling-strategies-for-batch-applications
+https://www.youtube.com/watch?v=iMIbkv9r6ok Significance of Spring Batch tables
+https://www.youtube.com/watch?v=Hez1hCUtb30 71.Spring Boot-Initialize a Spring Batch database
+
+https://docs.spring.io/spring-batch/docs/current/reference/html/testing.html#testing
+https://docs.spring.io/spring-batch/docs/current/reference/html/step.html#configureStep
+https://docs.spring.io/spring-batch/docs/current/reference/html/spring-batch-integration.html
+
+https://github.com/karthikeyan-ng/learn-and-apply-spring-batch  +++++++++++
+https://docs.spring.io/spring-batch/docs/current/reference/html/common-patterns.html
+https://itnext.io/batch-processing-large-data-sets-with-spring-boot-and-spring-batch-80b8f8c2411e

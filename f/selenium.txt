@@ -1,0 +1,118 @@
+.\node_modules\.bin\nyc report --temp-dir="D:/ui-test-son/.nyc_output" --exclude=**/tukks-web-ui-framework/** --reporter html --reporter text --report-dir coverage/summary2
+
+https://stackoverflow.com/questions/26618243/how-do-i-read-an-istanbul-coverage-report
+https://github.com/istanbuljs/nyc
+
+npx nyc report --exclude="**/tukks-web-ui-framework/**" --reporter html --report-dir xxx  --source-map=true --exclude-after-remap=false
+.\node_modules\.bin\nyc report --reporter html --report-dir xxx
+
+https://github.com/istanbuljs/nyc
+https://stackoverflow.com/questions/52959976/node-how-to-use-source-map-with-nyc-and-mocha
+
+
+https://simonsmith.io/organising-webpack-config-environments
+https://dev.to/didof/how-to-split-dev-prod-webpack-configuration-n53
+https://github.com/didof/webpack-configuration-split/tree/master/config
+https://gist.github.com/andfaulkner/8a6e9f911e89899d328c7ca91a0be267
+
+https://ivanderevianko.com/2020/04/disable-logging-in-selenium-chromedriver
+https://stackabuse.com/node-http-servers-for-static-file-serving/
+https://morioh.com/p/7a0407522d20
+
+https://glebbahmutov.com/blog/how-to-correctly-unit-test-express-server/
+https://www.alxolr.com/articles/how-to-separate-mocha-tests-in-multiple-files
+
+https://medium.com/critigenopensource/mocha-unit-testing-pattern-test-suite-setup-code-for-file-separated-test-e339a550dbf6
+https://www.alxolr.com/articles/how-to-separate-mocha-tests-in-multiple-files
+https://realguess.net/2015/04/01/test-execution-order-in-mocha/
+https://github.com/mochajs/mocha/issues/1792
+https://www.linkedin.com/posts/omerarikan_bir-%C3%B6nceki-payla%C5%9F%C4%B1m%C4%B1mda-bir-doland%C4%B1r%C4%B1c%C4%B1l%C4%B1k-ugcPost-6892549523672043520-7P6N
+https://medium.com/@sercangsu/node-js-ve-selenium-ile-otomasyon-testi-5b02783fbdfe
+
+
+https://stackoverflow.com/questions/49789886/how-to-correctly-close-express-server-between-tests-using-mocha-and-chai
+mocha after done kullanımı async birden fazla metodu beklemek gerekiyorsa ya tek tek await en sona done çağılır ya da aysnc caal'ların döndüğü promise'ler Promise.all(...).then(done()) şeklinde kullanılır.
+
+https://stackoverflow.com/questions/53048031/mocha-not-stopping-after-supertest-when-using-express-server
+mocha --exit
+http://onsen.io.s3-website-us-east-1.amazonaws.com/blog/mocha-chaijs-unit-test-coverage-es6/
+
+https://www.youtube.com/watch?v=-OeAxENts8A Efficient Unit Testing Part 1/4 Basics
+
+https://medium.com/geekculture/optimize-selenium-webdriver-automated-test-scripts-speed-12d23f623a6
+https://medium.com/geekculture/optimize-selenium-webdriver-automated-test-scripts-maintainability-626cf8849754
+https://medium.com/geekculture/optimize-selenium-webdriver-automated-test-scripts-readability-302a6d9150b1
+https://github.com/testwisely/agiletravel-ui-tests/tree/master/selenium-webdriver-nodejs-mochax
+https://github.com/testwisely/agiletravel-ui-tests
+
+https://zhiminzhan.medium.com/selenium-vs-x-y-z-all-these-years-979b8aa34125
+Selenium WebDriver Recipes in Node.js
+Selenium WebDriver Recipes
+Practical Web Test Automation with Selenium WebDriver
+https://zhiminzhan.medium.com/definition-of-end-to-end-test-automation-success-c668d914a87e
+https://zhiminzhan.medium.com/use-regular-expressions-in-test-automation-76617b601ddb
+https://zhiminzhan.medium.com/selenium-4-chrome-devtools-examples-7b2e81008a46
+https://zhiminzhan.medium.com/regression-testing-clarified-67180e0dcd31
+https://zhiminzhan.medium.com/estimating-user-story-points-is-a-waste-of-time-4003f3a74856
+https://medium.com/geekculture/headless-browser-testing-clarified-d544ef0acf43
+https://zhiminzhan.medium.com/benefits-of-continuous-testing-part-5-to-testers-a6801fa5b3b3
+https://medium.com/geekculture/functional-test-refactoring-move-to-helper-ce391c10b393
+https://zhiminzhan.medium.com/selenium-4-new-features-by-examples-in-ruby-4b1e100b2ad7
+https://github.com/remarkablemark/webdriverjs-recipes
+
+https://zhiminzhan.medium.com/unit-testing-clarified-4c1bd739c023
+https://zhiminzhan.medium.com/xp-extreme-programming-is-better-than-scrum-as-xp-defined-devops-20-years-ago-45ff78918858
+https://zhiminzhan.medium.com/my-featured-articles-52a190d0fd87
+https://zhiminzhan.medium.com/functional-test-refactoring-598872af9d51
+
+https://zhiminzhan.medium.com/case-study-simulate-two-users-with-selenium-automation-scripts-2edf80aca09f
+
+http://jiahuang.github.io/2016/12/10/code-coverage-with-js/
+https://www.caliskanofis.com/
+https://www.rudikershaw.com/articles/git-hooks-and-java
+https://hdpe.me/post/maven-checkstyle-pre-commit-hook/
+
+
+https://tutorialmeta.com/question/selenium-webdriver-pass-an-array-of-functions-as-argument-to-executescript
+https://www.seancdavis.com/posts/export-es6-class-globally-webpack/
+https://stackoverflow.com/questions/38954794/how-to-expose-an-es6-module-globally
+https://siawyoung.com/coding/javascript/exporting-es6-modules-as-single-scripts-with-webpack.html
+https://www.freecodecamp.org/news/creating-a-production-ready-webpack-4-config-from-scratch/
+
+https://marmelab.com/blog/2016/04/19/e2e-testing-with-node-and-es6.html
+https://marmelab.com/blog/2021/08/31/testing-react.html
+https://kentcdodds.com/blog/how-to-use-react-context-effectively
+https://kentcdodds.com/blog/the-testing-trophy-and-testing-classifications
+https://kentcdodds.com/blog/static-vs-unit-vs-integration-vs-e2e-tests
+https://twitter.com/dan_abramov/status/790620185195601920   dan abramov function this
+
+
+
+https://hackernoon.com/react-app-powered-with-selenium-2562dab0a7bb
+https://www.softwaretestinghelp.com/selenium-webdriver-commands-selenium-tutorial-17/
+npm install chromedriver --chromedriver_version=LATEST
+
+npx http-server --cors
+
+https://www.youtube.com/watch?v=edgeQZ8UpD0
+https://github.com/cypress-io/instrument-cra
+https://vijayt.com/post/custom-react-scripts-to-instrument-react-app-using-istanbul/
+
+https://betterprogramming.pub/introduction-to-elasticsearch-using-node-js-part-1-164311327557
+https://betterprogramming.pub/introduction-to-elasticsearch-using-node-js-part-2-4c804427bc94
+https://www.freecodecamp.org/news/express-explained-with-examples-installation-routing-middleware-and-more/
+
+https://stackabuse.com/using-sequelize-js-and-sqlite-in-an-express-js-app/
+https://www.youtube.com/watch?v=7CqJlxBYj-M
+https://www.youtube.com/watch?v=mrHNSanmqQ4
+
+https://www.itsolutionstuff.com/post/node-js-express-form-submission-exampleexample.html
+https://www.itsolutionstuff.com/post/node-js-mysql-connection-exampleexample.html
+
+node.js express phone management example
+
+https://www.youtube.com/watch?v=yJ6q3sh3zOs
+https://www.raddy.dev/blog/simple-user-management-system-nodejs-express-mysql-handlebards/
+https://www.bezkoder.com/sequelize-associate-one-to-many/
+https://blog.logrocket.com/creating-scalable-graphql-api-mysql-apollo-node/
+https://www.youtube.com/watch?v=F1RwUI3p4bI

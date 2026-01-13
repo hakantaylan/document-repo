@@ -1,0 +1,34 @@
+use admin
+db.createUser({user:"hakan", pwd: "123", roles:[userAdminAnyDatabase]})
+db.auth("hakan", "123")
+
+Built-in Roles
+read readWrite --> DB User Roles
+dbAdmin userAdmin dbOwner --> DB Admin Roles
+readanyDatabase readWriteAnyDatabase userAdminAnyDatabase dbAdminAnyDatabase --> All Database Roles
+clusterManager clusterMonitor hostManager clusterAdmin ---> Cluster Roles
+backup restore
+dbAdmin userAdmin userAdminAnyDatabase  --> Super User Roles
+
+mongo -u hakan -p 123 --authenticationDatabase admin
+
+use shop --> switch to shop db
+db.createUser({user: "deneme", pwd: "123", roles: ["readWrite"]})   create a user or shop db
+db.auth("deneme", "123")  authenticate user for shop db
+
+db.logout()
+mongo -u deneme -p 123 --authenticationDatabase shop
+use shop
+db.products.insertOne({name:"A Book"})
+
+Bu işlemi admin yapmalı
+use shop
+db.updateUser({"deneme", {pwd:"111"}})  --> change password
+db.updateUser({"deneme", {roles: ["readWrite", {role: "readWrite", db: "blog"}]}})  denem kullanıcısına blog db'sine de yazma hakkı verir.
+db.auth("deneme", "123")
+
+db.getUser("deneme")  --> Kullanıcının rol ve yetki detaylarını görmek için
+
+deneme kullanıcısı tekrar login olduğunda blog veritabanını da okuyup yazabilir.
+
+Transport Encryption

@@ -1,0 +1,24 @@
+﻿Unit of work pattern applied to microservices
+Transactions are ACD (no Isolation)
+
+event Sourcing is an architectural Pattern in which the state of the application  is being determinded by a sequence of events
+
+Pessimistic locking does not work in event sourcing architecture
+Örnek ara Pessimistic Lock with event sourcing. Business Lock olarak da adlandırılır. Bir Lock Event'i yayınlanır
+event sorucing ile optimistik lock örneği ara. (Mesage versiyon ekliyorsun)
+
+https://tuhrig.de/saga-pattern-with-spring-boot-and-activemq
+
+https://www.infoq.com/articles/saga-orchestration-outbox/
+https://github.com/debezium/debezium-examples/tree/master/saga
+https://github.com/debezium/debezium-examples/tree/master/failover   debezium failover
+
+https://towardsdatascience.com/effective-microservices-10-best-practices-c6e4ba0c6ee2
+https://towardsdatascience.com/microservice-architecture-and-its-10-most-important-design-patterns-824952d7fa41
+
+https://github.com/Haybu/demo-spring-distributed-transaction   saga with spring state machine
+
+https://medium.com/hepsiburadatech/what-is-the-best-software-architecture-pattern-b7aef9d97c22    oku
+
+https://github.com/lucasdeabreu/saga-pattern-example
+https://github.com/taquy/rabbitmq-saga-demo    Rabbit mq ile birbaşka saga örneği

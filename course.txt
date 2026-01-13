@@ -1,0 +1,4 @@
+https://havelsan.udemy.com/course/mockito3/
+https://havelsan.udemy.com/course/apache-kafka-for-developers-using-springboot/
+https://www.udemy.com/course/docker-kubernetes-the-practical-guide/
+https://www.udemy.com/course/real-time-creditcard-fraud-detection-using-spark/

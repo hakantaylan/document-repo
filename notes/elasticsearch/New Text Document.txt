@@ -1,0 +1,4 @@
+﻿https://www.youtube.com/watch?v=oPObRc8tHgQ
+https://www.lucassaldanha.com/elasticsearch-101/
+https://github.com/ThijsFeryn/elasticsearch_tutorial
+https://opendistro.github.io/for-elasticsearch-docs/docs/elasticsearch/

@@ -1,0 +1,112 @@
+https://marmelab.com/blog/2020/07/02/manage-your-jwt-react-admin-authentication-in-memory.html
+https://github.com/marmelab/ra-in-memory-jwt/tree/master/demo
+https://security.stackexchange.com/questions/179498/is-it-safe-to-store-a-jwt-in-sessionstorage/179507#179507
+
+https://www.cluemediator.com/login-app-with-csrf-protection-understanding-authentication-using-jwt-access-token-and-refresh-token
+https://github.com/cluemediator/secure-auth-api-nodejs
+https://www.cluemediator.com/login-app-with-csrf-protection-implement-authentication-in-reactjs-using-secure-rest-api
+
+https://blog.logrocket.com/mern-app-jwt-authentication-part-1/
+https://github.com/cluemediator/secure-login-app-reactjs
+
+
+https://www.cluemediator.com/how-to-deploy-a-react-app-to-node-server
+https://www.cluemediator.com/how-to-enable-cors-in-node-js
+https://www.cluemediator.com/how-to-enable-cors-for-multiple-domains-in-node-js
+
+https://www.cluemediator.com/how-to-use-socket-io-in-react-using-node-js
+https://www.cluemediator.com/how-to-implement-socket-io-in-node-js
+
+https://www.cluemediator.com/embed-youtube-video-in-reactjs
+
+https://www.cluemediator.com/implement-login-authentication-in-react-app-using-node-js
+https://www.cluemediator.com/create-rest-api-for-authentication-in-node-js-using-jwt
+https://www.cluemediator.com/login-app-create-login-form-in-reactjs-using-secure-rest-api
+
+https://www.cluemediator.com/category/git
+https://www.cluemediator.com/undo-commit-before-push-in-git
+https://www.cluemediator.com/using-branches-in-git
+https://www.cluemediator.com/how-to-save-changes-temporarily-using-git-stash
+https://www.cluemediator.com/how-to-change-the-commit-message-in-git
+https://www.cluemediator.com/how-to-push-code-to-github git restore .
+git reset vs restore
+https://www.cluemediator.com/configure-username-and-email-in-git
+
+https://www.cluemediator.com/git-clone-error-repository-not-found private respository
+
+https://www.taniarascia.com/full-stack-cookies-localstorage-react-express/
+
+https://hasura.io/blog/best-practices-of-using-jwt-with-graphql/   *****
+
+
+------------------------------------------------------------
+https://morioh.com/p/560b4c7153c5
+https://auth0.com/blog/complete-guide-to-react-user-authentication/
+https://auth0.com/blog/refresh-tokens-what-are-they-and-when-to-use-them/
+https://morioh.com/explore?next=%2F
+
+http://mathieu.agopian.info/blog/
+https://hasura.io/blog/best-practices-of-using-jwt-with-graphql/#silent_refresh
+1. The only way to prevent the refresh_token to be vulnerable is to never expose it to the client. Even you sign the refresh_token, a hacked browser that steals it will be able to use and abuse. Signing the refresh token is just overwork.
+
+2. Store the refresh_token in the database is a security approach. It makes it easy and fast to destroy a login. Do you know that feature "see a list of devices, and disconnect each of them"? It will be only possible by storing data somewhere.
+
+An alternative would be have an proxy server that manages client session with the access and refresh tokens. By using this approach will never exposes data to client.
+
+https://developer.forgerock.com/docs/platform/how-tos/building-identity-proxy-your-javascript-apps-using-service-worker
+https://portswigger.net/web-security/csrf/tokens
+https://www.youtube.com/watch?v=k2eAWNrV0js
+https://www.youtube.com/watch?v=Ub5TLow9GL4
+https://medium.com/@charithra/introduction-to-csrf-a329badfca49
+
+https://github.com/pillarjs/cookies
+https://github.com/pillarjs/understanding-csrf
+https://github.com/pillarjs/csrf
+
+https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html
+
+https://auth0.com/blog/cross-site-request-forgery-csrf/   ++++++
+
+https://auth0.com/blog/
+https://auth0.com/blog/preventing-clickjacking-attacks/
+https://auth0.com/blog/preventing-command-injection-attacks-in-node-js-apps/
+
+https://medium.com/tresorit-engineering/modern-csrf-mitigation-in-single-page-applications-695bcb538eec
+https://web.dev/samesite-cookies-explained
+https://web.dev/service-worker-caching-and-http-caching/
+
+https://web.dev/sign-in-form-best-practices/
+https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html
+
+https://www.troyhunt.com/understanding-csrf-video-tutorial/
+
+https://levelup.gitconnected.com/how-to-implement-csrf-tokens-in-express-f867c9e95af0
+https://medium.com/@d.silvas/how-to-implement-csrf-protection-on-a-jwt-based-app-node-csurf-angular-bb90af2a9efd
+
+https://dev.to/demetrakopetros/security-in-node-js-and-express-the-bare-minimum-part-3-54f3
+https://radix.ai/blog/2019/08/javascript-cannot-be-trusted-some-security-implications/ ++++++++++++++
+https://www.twilio.com/blog/2018/01/protect-your-node-js-app-from-cross-site-request-forgery.html
+https://www.freecodecamp.org/news/express-js-security-tips/
+http://mathieu.agopian.info/blog/   ?????
+
+https://levelup.gitconnected.com/an-introduction-to-sliding-window-algorithms-5533c4fe1cc7
+
+https://www.securitydrops.com/the-web-authentication-guide/
+https://www.securitydrops.com/content/images/2018/06/web.auth.cheatsheet.pdf
+
+Double Submit Cookie pattern
+
+https://medium.com/@agrawalsmart7/steal-csrf-auth-unique-key-header-with-xss-5a54c38d7ec3
+https://digi.ninja/blog/xss_steal_csrf_token.php +++++++++++++++++
+Stealing CSRF tokens with XSS
+https://sametsahin.net/posts/steal-csrf-tokens-with-an-xss/
+https://blog.securityinnovation.com/seven-sins-of-anti-csrf-tokens
+https://blog.yeswehack.com/best-practices/the-dark-side-of-xss-revealed/
+
+https://blog.jscrambler.com/best-practices-for-secure-session-management-in-node/ +++++++++++++++++++++++++++
+https://stackoverflow.com/questions/10849687/express-js-how-to-get-remote-client-address
+http://devnot.com/2019/cors-nedir/
+https://redislabs.com/blog/mastering-redisearch-part/
+https://javascript.info/fetch-crossorigin
+
+https://blog.jscrambler.com/best-practices-for-secure-session-management-in-node/

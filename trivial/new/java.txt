@@ -1,0 +1,56 @@
+key to functional thinking: parameterizing code by
+behavior. Itâ€™s this thinking in terms of functions and parameterizing
+by behavior rather than state which is key to differentiating functional
+programming from object-oriented programming.
+
+
+RMI Java Serialization kullanır. Client ve server'da bir objenin aynı versiyonu olmalıdır. Bu istemci ve sunucuyu birbirine sıkı bağlı hale getirir. Birinin versiyonu arttırıldığında diğerininki de aynı olmalıdır. RMI Java ekosistemine ait bir protokoldür. RMI over CORBA ile bu aşılmaya çalışılır.
+En büyük avantajı iletişim için bir web server'a ya da 3rd party bir framework ya da kütüphaneye ihtiyaç duymamasıdır. 2 JVM birbirleriyle RMI ile haberleşebilir. Ayrıca REST ve HTTP'den daha performanslıdır.
+
+
+
+@Transactional
+@JmsListener(destination = "messageQueue")
+public void readMessage(String messageText, Message message)
+throws JMSException {
+if (message.getJMSRedelivered()) {
+processIfNeeded(messageText);
+} else {
+simpleService.processText(messageText);
+postprocess(messageText);
+}
+}
+private void processIfNeeded(String messageText) {
+if (!simpleService.isProcessed(messageText)) {
+simpleService.processText(messageText);
+}
+}
+private void postprocess(String messageText) {
+// simulate error
+throw new IllegalArgumentException(messageText);
+}
+}
+
+What is wrong with layered architecture?
+Using the database entities in the domain layer leads to strong coupling with the persistence layer.
+Our services use
+the persistence model as their business model and not only have to deal with the domain logic, but
+also with eager vs. lazy loading, database transactions, flushing caches and similar housekeeping
+tasks.
+The persistence code is virtually fused into the domain code and thus it’s hard to change one without
+the other. That’s the opposite of being flexible and keeping options open, which should be the goal
+of our architecture.
+
+Our solution doesn't require a database or anything stored on the server side. It even works in the oldest browsers. Here's how:
+
+When the browser pings our server from a website for the first time, we send back a response with a header set to Cache-Control: no-cache, telling the browser to store the request in its cache but revalidate it with the origin server before each use. But most importantly, we send a header which is a date set to the beginning of each day:
+
+last-modified: Wed, 30 Nov 2022 00:00:00 GMT
+
+From now on, every time this request is made again, the server receives the date and adjusts it by one second, and returns it to the browser:
+
+last-modified: Wed, 30 Nov 2022 00:00:01 GMT
+
+This way, the server can calculate the distance in seconds since midnight to give us a visit count.
+
+The visit count is encoded within the date stored in the cached request on the visitor's machine.

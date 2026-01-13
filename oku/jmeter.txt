@@ -1,0 +1,73 @@
+https://gokhansengun.com/jmeter-nedir-ve-ne-ise-yarar/
+https://gokhansengun.com/jmeter-fonksiyon-testi-hazirlama/
+https://gokhansengun.com/jmeter-pratik-test-hazirlama/
+https://gokhansengun.com/jmeter-performans-testi-hazirlama/
+https://chenriang.me/jmeter.html
+
+https://gokhansengun.com/docker-nedir-nasil-calisir-nerede-kullanilir/
+https://gokhansengun.com/docker-yeni-image-hazirlama/
+https://gokhansengun.com/docker-compose-nasil-kullanilir/
+https://gokhansengun.com/docker-ipuclari-soru-ve-cevaplar-bolum-1
+https://gokhansengun.com/docker-ipuclari-soru-ve-cevaplar-bolum-2/
+https://gokhansengun.com/docker-ipuclari-soru-ve-cevaplar-bolum-3/
+https://gokhansengun.com/docker-ipuclari-soru-ve-cevaplar-bolum-4/
+https://tahiroglu.com/post/145827965207/docker-medeniyeti
+https://tahiroglu.com/post/142695470332/kendine-meydan-okuyan-adam
+
+https://debezium.io/blog/2020/02/10/event-sourcing-vs-cdc/
+https://medium.com/engineering-varo/event-driven-architecture-and-the-outbox-pattern-569e6fba7216
+https://medium.com/engineering-varo/3-layer-automated-testing-fe2d230939a2
+https://medium.com/hepsiburadatech/nedir-bu-transactional-messaging-474a793d7780
+https://medium.com/hepsiburadatech/elasticsearch-event-driven-projection-568167b9a670
+
+https://microservices.io/patterns/data/transactional-outbox.html
+http://www.kamilgrzybek.com/design/the-outbox-pattern/
+https://thorben-janssen.com/outbox-pattern-hibernate/
+
+Polling Publisher
+outbox pattern vs event sourcing
+
+
+https://medium.com/hepsiburadatech/graph-sistemlerle-fraud-detection-f479274a0c3a
+https://medium.com/hepsiburadatech/rabbitmq-ile-event-ordering-consistent-hash-exchange-kullan%C4%B1m%C4%B1-cf45b7292e53
+
+
+Detecting Missiong Or Wrong data
+Constantly compare record counts on source and sink
+Compare every nth record field by field
+E.g have all records compared within one week
+
+
+
+
+https://twitter.com/Sarp_burak
+https://coderspace.io/etkinlikler/trendyol-backend-developer-bootcamp/
+
+https://mykidong.medium.com/howto-grpc-java-client-side-load-balancing-using-consul-8f729668d3f8
+https://grpc.io/blog/grpc-load-balancing/
+https://stackoverflow.com/questions/44877606/is-grpchttp-2-faster-than-rest-with-http-2
+
+https://www.sipios.com/blog-tech/tag/spring-boot all items
+https://www.baeldung.com/mdc-in-log4j-2-logback
+https://spring.io/guides/gs/async-method/
+https://www.sipios.com/blog-tech/blue-green-deployment-of-spring-applications
+https://www.sipios.com/blog-tech/how-to-make-parallel-calls-in-java-springboot-application-and-how-to-test-them
+https://www.sipios.com/blog-tech/how-to-generate-an-advanced-search-api-spring-boot
+https://www.sipios.com/blog-tech/emailing-microservice-apache-kafka-spring-boot
+https://codenotfound.com/spring-kafka-consumer-producer-example.html
+https://yidongnan.github.io/grpc-spring-boot-starter/en/server/getting-started.html
+https://codenotfound.com/grpc-java-example.html
+
+https://betterprogramming.pub/understanding-protocol-buffers-43c5bced0d47
+https://betterprogramming.pub/understanding-grpc-60737b23e79e
+By default, gRPC uses protocol buffers for serializing structured data. Generally, gRPC is considered as a better alternative to the REST protocol for microservice architecture
+The most important difference is that gRPC uses protocol buffers as the interface definition language for serialization and communication instead of JSON/XML. Protocol buffers can describe the structure of data and the code can be generated from that description for generating or parsing a stream of bytes that represents the structured data. This is the reason gRPC is preferred for the web applications that are polyglot (implemented with different technologies). The binary data format allows the communication to be lighter. gRPC can also be used with other data formats, but the preferred one is the protocol buffers. To know more about protocol buffers in detail, check out this article.
+
+
+https://github.com/MicrosoftDocs/architecture-center/blob/master/docs/patterns/materialized-view.md
+https://github.com/MicrosoftDocs/architecture-center/blob/master/docs/patterns/event-sourcing.md
+
+
+https://medium.com/trendyol-tech/designing-a-real-time-streaming-application-by-using-kafka-ksql-socket-io-4dcd678d1a00
+https://docs.snowflake.com/en/user-guide/views-materialized.html
+When 'I' is replaced by 'we', even illness become wellness 

@@ -1,0 +1,10 @@
+﻿https://capgemini.github.io/engineering/externalising-spring-boot-config-with-kubernetes/
+https://github.com/gwolverson/blogs/tree/main/config-demo
+https://engineering.linecorp.com/en/blog/monitoring-a-spring-boot-app-in-kubernetes-what-i-learned-from-devoxx-belgium-2019/
+
+https://medium.com/@patrickporto/4-branching-workflows-for-git-30d0aaee7bf
+https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
+https://danielkummer.github.io/git-flow-cheatsheet/
+
+https://blog.devgenius.io/cassandra-tombstones-simply-explained-eba7ebb86d54
+https://malikmasis.blogspot.com/2021/01/react-egitiminden-notlar.html

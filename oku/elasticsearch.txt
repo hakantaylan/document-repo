@@ -1,0 +1,25 @@
+https://alikzlda.medium.com/elasticsearch-cluster-sizing-and-performance-tuning-42c7dd54de3c
+https://alikzlda.medium.com/elasticsearch-v6-part-1-f2eafcad2fc8
+https://kulekci.medium.com/rdmsden-verileri-elasticsearch-e-atmak-b55da8a0d94c
+https://github.com/hkulekci/node-app-with-elasticsearch
+https://elasticsearch.kulekci.net/
+https://elasticsearch.kulekci.net/blog/2018/06/04/jvm-ayarlari-es-6-2-x.html
+https://kulekci.medium.com/elasticsearch-i%C3%A7in-jvm-ayarlar%C4%B1-i%C3%A7in-genel-bilgileri-7c42aa2a3921
+https://github.com/hkulekci/elastic-docker/blob/6.2.4/.docker/elasticsearch/config/jvm.options
+https://github.com/hkulekci/elastic-docker
+
+https://kulekci.medium.com/elasticsearch-s%C3%BCresi-dolmu%C5%9F-lisans-problemi-bcc919b42a79
+
+https://kulekci.medium.com/1-nodejs-ile-elasticsearch-ve-mysql-%C3%BCzerine-bir-uygulama-yapal%C4%B1m-2d65552fc623
+https://kulekci.medium.com/2-nodejs-ile-elasticsearch-ve-mysql-%C3%BCzerine-bir-uygulama-yapal%C4%B1m-49e1d93f3257
+https://kulekci.medium.com/3-nodejs-ile-elasticsearch-ve-mysql-%C3%BCzerine-bir-uygulama-yapal%C4%B1m-2fe783f71508
+https://kulekci.medium.com/4-nodejs-ile-elasticsearch-ve-mysql-%C3%BCzerine-bir-uygulama-yapal%C4%B1m-55a2db268f09
+https://kulekci.medium.com/5-nodejs-ile-elasticsearch-ve-mysql-%C3%BCzerine-bir-uygulama-yapal%C4%B1m-c3cfac720ccd
+
+https://github.com/hkulekci/elasticsearch-sorular
+
+https://medium.com/kariyertech/domain-driven-design-643c02168ecc
+https://medium.com/kariyertech/it-sekt%C3%B6r%C3%BCndeki-yeteneklerin-y%C4%B1llara-g%C3%B6re-de%C4%9Fi%C5%9Fimi-d04a666900eb
+
+
+https://datadome.co/bot-detection/store-50-million-event-per-second-in-elasticsearch/   +++++++++

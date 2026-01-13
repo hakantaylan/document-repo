@@ -1,0 +1,172 @@
+Our application defines a singleton Clock bean to get the current time as java.time.Instant instances where needed.
+
+@Configuration
+public class TimeConfig {
+
+    @Bean
+    public Clock clock() {
+        return Clock.systemUTC();
+    }
+}
+We will define a simple service receiving an input and returning an output.
+
+@Service
+@Validated
+public static class InputService {
+
+  public Output process(@Valid Input input) {
+    return new Output(input.name());
+  }
+
+  record Input(String name, @InFuture Instant time) {}
+  record Output(String name) {}
+}
+The Validated annotation on the service class level makes sure the framework performs the validation for the input parameter. It needs to be decorated with the Valid annotation to make sure the method in invoked only with valid arguments.
+
+For this simple use-case, let’s say the time field needs to be always in the future. Because we can’t really autowire the Springclock instance into a AssertTrue method, we can create a custom validation.
+
+@Documented
+@Constraint(validatedBy = InFuture.InFutureValidator.class)
+@Target({ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER, ElementType.TYPE})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface InFuture {
+
+    String message() default "should be in the future";
+
+    Class<?>[] groups() default {};
+
+    Class<? extends Instant>[] payload() default {};
+
+    class InFutureValidator implements ConstraintValidator<InFuture, Instant> {
+
+        private final Clock clock;
+
+        public InFutureValidator(Clock clock) {
+            this.clock = clock;
+        }
+
+        @Override
+        public boolean isValid(Instant instant,
+                               ConstraintValidatorContext constraintValidatorContext) {
+
+            if (instant == null) {
+                return true;
+            }
+            return clock.instant().isBefore(instant);
+        }
+    }
+}
+The InFuture annotation is linked to a ConstraintValidator that receives an instance of type Clock .
+
+SpringConstraintValidatorFactory — JSR-303 ConstraintValidatorFactory implementation that delegates to a Spring BeanFactory for creating autowired ConstraintValidator instances.
+
+This is where Spring helps us by using SpringConstraintValidatorFactory — an autowire capable factory to link our Clock instance from the ApplicationContext in the InFutureValidator object.
+
+The test for our service could look like this:
+
+@SpringBootTest
+class DemoApplicationTests {
+  @Autowired
+  Clock clock;
+  
+  @Autowired
+  DemoApplication.InputService service;
+
+  @Test
+  void testValidInput() {
+  
+      log.info("testValidInput - current time: {}", clock.instant());
+      DemoApplication.Output output = service.process(new DemoApplication.Input("junit",
+              Instant.now().plusSeconds(10)));
+  
+      assertEquals("junit", output.name());
+  }
+}
+In the test above, we always use to the current now Instant, but could we evaluate a date in the context of a past Instant value ?
+
+How can we use a particular clock instant when we execute a test?
+If we annotate our test methods with something like@AtTime(“some moment in time”) it should make our test readable enough to suggest to the reader, we execute the test at a specific moment in time.
+
+The first step is to use a specific TestConfiguration class to replace the real Clock instance with a mock.
+
+@TestConfiguration
+public class TestTimeConfig {
+
+    @Bean
+    @Primary
+    public Clock clockMock() {
+        return Mockito.mock(Clock.class);
+    }
+}
+We could force a specific Instant return value when the clock.instant() is called, but in a real application you would probably use many different values. Therefore, I wouldn’t hide the exact Instant value in this Java config class. I would instead, prefer to use an annotation like @AtTime(“2020–02–01T09:36:00Z”) to control the value the mock clock is returning. As you would expect, the test should be successful for values like: February 01, 2020 is before March 01, 2020.
+
+If you already used the @Sql annotation to populate the database you may find this approach similar. We have to use a listener to properly extract the annotation timestamp value as a String.
+
+AbstractTestExecutionListener exposes the TestContext to get the ApplicationContext containing our Clock bean.
+
+We set the Instant value for the clock.instant() method in the mock before the test. If our new annotation is not used, we fallback to the previous Instant.now() value.
+
+
+public class AtTimeExecutionListener extends AbstractTestExecutionListener {
+
+    @Override
+    public final int getOrder() {
+        return 5000;
+    }
+
+    @Override
+    public void beforeTestMethod(TestContext testContext) {
+        Method testMethod = testContext.getTestMethod();
+        Class<?> testClass = testContext.getTestClass();
+
+        AtTime annotations = AnnotatedElementUtils.getMergedAnnotation(testMethod, AtTime.class);
+        if (annotations != null) {
+            setTime(annotations, testContext);
+        } else {
+            setTime(TestContextAnnotationUtils.findMergedAnnotation(testClass, AtTime.class), testContext);
+        }
+    }
+
+    private void setTime(AtTime annotation, TestContext testContext) {
+
+        Instant instant = ofNullable(annotation)
+                .map(a -> a.value()[0])
+                .map(time -> Instant.parse(time))
+                .orElseGet(() -> Instant.now());
+
+        DefaultListableBeanFactory bf = (DefaultListableBeanFactory) testContext.getApplicationContext().getAutowireCapableBeanFactory();
+        Clock mock = bf.getBean(Clock.class);
+
+        when(mock.instant()).thenAnswer(ans -> instant);
+    }
+
+}
+The result is we can use a past Date which seems to be in the future for our test application.
+
+@Test
+@AtTime("2020-02-01T09:36:00Z")
+void testValidInputAtTime() {
+
+    log.info("contextLoads - current time: {}", clock.instant());
+    DemoApplication.Output output = service.process(new DemoApplication.Input("junit",
+            LocalDateTime.of(2020, 3, 1, 1, 0, 0, 0)
+                    .toInstant(ZoneOffset.UTC)));
+
+    assertEquals("junit", output.name());
+
+}
+For an invalid input it is enough to shift the time in the future:
+
+@Test
+@AtTime("2021-02-01T09:36:00Z")
+void testInvalidInput() {
+
+    log.info("testInvalidInput - current time: {}", clock.instant());
+    ConstraintViolationException e = assertThrows(ConstraintViolationException.class,
+            () -> service.process(new DemoApplication.Input("junit",
+                    LocalDateTime.of(2020, 3, 1, 1, 0, 0, 0)
+                            .toInstant(ZoneOffset.UTC))));
+
+    assertEquals("process.input.time: should be in the future", e.getMessage());
+
+}

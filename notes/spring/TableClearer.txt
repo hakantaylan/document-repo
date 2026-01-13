@@ -1,0 +1,98 @@
+﻿https://brightinventions.pl/blog/clear-database-in-spring-boot-tests
+
+ @DataJpaTest which by default will configure an in-memory embedded database. You can use a production type database in tests by adding @AutoConfigureTestDatabase(replace=Replace.NONE) like so:
+
+The @DataJpaTest uses @Transactional under the hood. A test is wrapped inside a transaction that is rolled back at the end. This means that when using e.g. Hibernate one needs to pay special attention to how the tested code is written. As shown in the Java example below, a manual flush is indeed required:
+
+https://dev.to/sivalabs/testing-springboot-applications-4i5p
+https://github.com/sivaprasadreddy/spring-boot-tutorials/tree/master/testing/springboot-testing-demo
+
+https://www.sivalabs.in/2015/07/my-life-as-software-developer-in-india/ takip edilecek bloglar
+
+https://github.com/sivaprasadreddy/spring-boot-tutorials/tree/master/testing
+https://robintegg.com/2019/02/09/testing-spring-boot-applications-with-testcontainers.html
+https://robintegg.com/2019/02/12/testing-spring-boot-applications-with-testcontainers-part-two
+https://robintegg.com/2019/02/24/testing-spring-boot-applications-with-testcontainers-and-selenium-webdriver-part-three
+
+Here is the Java version:
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import javax.sql.DataSource;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class TableClearer {
+    private final Logger logger = LoggerFactory.getLogger(getClass());
+
+    @Autowired
+    private DataSource dataSource;
+
+    private Connection connection;
+
+    public void clearTables() {
+        try {
+            connection = dataSource.getConnection();
+            tryToClearTables();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void tryToClearTables() throws SQLException {
+        List<string> tableNames = getTableNames();
+        clear(tableNames);
+    }
+
+    private List<string> getTableNames() throws SQLException {
+        List<string> tableNames = new ArrayList<>();
+
+        DatabaseMetaData metaData = connection.getMetaData();
+        ResultSet rs = metaData.getTables(
+                connection.getCatalog(), null, null, new String[]{"TABLE"});
+
+        while (rs.next()) {
+            tableNames.add(rs.getString("TABLE_NAME"));
+        }
+
+        return tableNames;
+    }
+
+private void clear(List<string> tableNames) throws SQLException {
+        Statement statement = buildSqlStatement(tableNames);
+
+        logger.debug("Executing SQL");
+        statement.executeBatch();
+    }
+
+    private Statement buildSqlStatement(List<string> tableNames) throws SQLException {
+        Statement statement = connection.createStatement();
+
+        statement.addBatch(sql("SET FOREIGN_KEY_CHECKS = 0"));
+        addDeleteSatements(tableNames, statement);
+        statement.addBatch(sql("SET FOREIGN_KEY_CHECKS = 1"));
+
+        return statement;
+    }
+
+    private void addDeleteSatements(List<string> tableNames, Statement statement) {
+        tableNames.forEach(tableName -> {
+            try {
+                statement.addBatch(sql("DELETE FROM " + tableName));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        });
+    }
+
+    private String sql(String sql) {
+        logger.debug("Adding SQL: {}", sql);
+        return sql;
+    }
+}
+ 

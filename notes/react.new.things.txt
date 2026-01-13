@@ -1,0 +1,2 @@
+﻿https://addyosmani.com/blog/react-server-components/
+https://dev.to/nas5w/what-is-the-difference-between-server-side-rendering-ssr-and-react-server-components-5339

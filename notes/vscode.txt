@@ -1,0 +1,26 @@
+https://itnext.io/settings-sync-with-vs-code-c3d4f126989
+https://areknawo.com/my-opinionated-vs-code-setup/
+https://www.sitepoint.com/vs-code-extensions-javascript-developers/
+https://www.sitepoint.com/visual-studio-code-power-user-guide/
+https://stackify.com/top-10-must-have-vs-code-extensions-for-javascript-developers/
+https://github.com/Microsoft/vscode-tips-and-tricks
+https://medium.com/@justintulk/improving-vs-code-path-intellisense-performance-8b7e32d40b63
+
+
+debug continue F5 stop debugger Shift + F5
+step over F10
+
+https://code.visualstudio.com/docs/editor/debugging
+https://code.visualstudio.com/docs/nodejs/nodejs-tutorial#_debug-your-express-app
+
+Partial Diff compare fiels and clipboard
+Rest Client rest.http file oluþturup http komutu çalýþtýrmak için
+
+Shortcut Menu Bar  Önceki sonraki dosyaya gitmek için
+GitLens git plugin
+Git Graph
+
+
+insomnia
+Git kraken
+

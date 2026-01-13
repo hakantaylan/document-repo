@@ -1,0 +1,76 @@
+https://github.com/johnament/arquillian-testing-guide
+https://github.com/arquillian/arquillian-examples
+https://github.com/ingwarsw/arquillian-suite-extension
+
+https://rmannibucau.wordpress.com/2014/05/22/ejbcontainer-openejb-and-single-startstop-by-test-jvm/
+https://rmannibucau.wordpress.com/2012/09/13/use-mockito-with-openejb/
+https://rmannibucau.wordpress.com/2012/08/15/jpa-and-table-prefix/
+https://rmannibucau.wordpress.com/2012/07/26/tomee-and-openejb-jpa-deploy-time-enhancement/
+https://rmannibucau.wordpress.com/2012/05/03/testing-a-jee-application-with-openejb-and-tomee/
+
+https://mvnrepository.com/artifact/org.apache.tomee/arquillian-openejb-embedded
+https://mvnrepository.com/artifact/org.apache.tomee/openejb-api
+https://mvnrepository.com/artifact/org.apache.tomee/openejb-jee
+https://mvnrepository.com/artifact/org.apache.tomee/openejb-rest
+
+
+https://rapasoft.eu/blog/posts/openejb-integration-testing.html
+https://rapasoft.eu/blog/posts/openejb-application-composer.html
+https://stackoverflow.com/questions/16560204/how-i-should-point-to-my-resource-xml-when-i-am-setting-up-arquillian-with-tomee
+
+
+https://rapasoft.eu/blog/posts/openejb-integration-testing.html
+https://www.tomitribe.com/blog/testing-persistence-with-arquillian-on-tomee/
+https://developer.jboss.org/thread/157292
+http://tomee.apache.org/configuring-datasources-in-tests.html
+https://stackoverflow.com/questions/16560204/how-i-should-point-to-my-resource-xml-when-i-am-setting-up-arquillian-with-tomee
+
+http://svn.apache.org/repos/asf/tomee/tomee/tags/tomee-1.5.2/arquillian/arquillian-openejb-embedded-4/src/test/java/org/apache/openejb/arquillian/openejb/BindingInJavaGlobalTest.java
+http://svn.apache.org/repos/asf/tomee/tomee/tags/tomee-1.5.2/arquillian/arquillian-openejb-embedded-4/src/test/java/org/apache/openejb/arquillian/openejb/ExceptionInjectionTest.java
+
+    final File destinationDir = new File("target/test-classes");
+        for (final File file : jpafiles) {
+            final JavaArchive javaArchive = ShrinkWrap.createFromZipFile(JavaArchive.class, file);
+            javaArchive.as(ExplodedExporter.class).exportExploded(destinationDir, "");
+      }
+I think your persistence.xml is in wrong place (WEB-INF/META-INF), try putting it in META-INF:
+
+war.addAsResource("META-INF/" + databaseType + "-persistence.xml", "META-INF/persistence.xml");
+
+
+public void setUp() throws Exception {
+        System.setProperty("java.naming.factory.initial", "org.apache.openejb.client.LocalInitialContextFactory");
+
+        Properties properties = new Properties();
+        properties.load(getClass().getResourceAsStream("/unittest-jndi.properties"));
+
+        context = new InitialContext(properties);
+        context.bind("inject", this);
+
+    }
+
+
+<plugin>
+    <artifactId>maven-surefire-plugin</artifactId>
+    <groupId>org.apache.maven.plugins</groupId>
+    <version>2.5</version>
+    <configuration>
+        <skipTests>false</skipTests>
+        <forkMode>always</forkMode>
+        <parallel>classes</parallel>
+        <threadCount>5</threadCount>
+        <useSystemClassLoader>true</useSystemClassLoader>
+        <testFailureIgnore>false</testFailureIgnore>
+        <failIfNoTests>true</failIfNoTests>
+        <excludedGroups>integration</excludedGroups>
+    </configuration>
+</plugin>
+
+
+https://rapasoft.eu/blog/posts/spring-boot-disable-logging.html
+
+https://developer.jboss.org/docs/DOC-52585
+Cheatsheet:  Testing with Gradle, Arquillian and WildFly
+
+https://www.jrebel.com/blog/junit-cheat-sheet
+https://github.com/RameshMF/junit5-developers-guide

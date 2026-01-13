@@ -1,0 +1,2 @@
+https://prismoskills.appspot.com/lessons/Caching_Strategies/Chapter_1_-_What_is_cache.jsp
+https://prismoskills.appspot.com/lessons/Hibernate/Chapter_01_-_Hibernate.jsp

@@ -1,0 +1,18 @@
+License ID:
+6ZGLU70JO0   ismail.yilmaz_04@metu.edu.tr   odtulu123+
+
+Hi,
+I am Hakan Taylan. I am a software engineer from Ankara, Turkey. I started working for Ericsson as of 4th April 2022.
+I have an Electronic Engineering degree from Ankara University, graduated in 2000. 
+Till now, almost whole my carrier was in defense industry. I had been working for Havelsan for 18 years, developing a huge command and control system written in Java. For all those years I had worked in different positions and roles, including Software Developer, Devops Engineer and Team Leader. I had participated in every phase of software development life cycle many times.
+Although I have a Java background, I am a constant learner and open to new technologies. I have a very good understanding of object oriented programming and design, design patterns and testing at all levels. I don't have any hands-on experience but have a good theoretical information about microsevices and microservice related patterns and best practices.
+
+I am married. I have a son who is 3 years old. He takes most of my time. In the time remaining from being a dad, I like reading, watching movies and origami. 
+
+I feel excited about putting my experience into practice in project(s) I will be participated and sharpen my knowledge and getting experience on the technologies and techniques which you guys are using in your projects.
+I would like to be a part of an organisation where people supports each other in right way and where people foster each other with their technical and intellectual knowledge. I hope, with Ericsson, we all will have such a good working environment
+
+I am looking forward to meeting you all.
+
+Kind regards,
+Hakan Taylan

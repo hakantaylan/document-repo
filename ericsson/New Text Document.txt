@@ -1,0 +1,23 @@
+https://www.mehmetcemyucel.com/2019/mikroservisler-service-mesh-nedir/
+https://www.mshowto.org/service-mesh-nedir.html
+https://faun.pub/kubernetes-introduction-service-mesh-dbf1f43d359e
+https://www.linkedin.com/posts/alex-xu-a8131b11_systemdesign-coding-interviewtips-activity-6922570843713662976-dsdE
+
+https://medium.com/@c1982/cto-olarak-%C3%BC%C3%A7-y%C4%B1lda-%C3%B6%C4%9Frendiklerim-18012275289c
+https://www.conventionalcommits.org/en/v1.0.0/
+https://www.cs.utexas.edu/users/EWD/transcriptions/EWD03xx/EWD340.html
+https://github.com/danluu/post-mortems
+
+
+https://docker-curriculum.com/
+
+https://www.cloudbees.com/blog/docker-expose-port-what-it-means-and-what-it-doesnt-mean
+The expose keyword in a Dockerfile tells Docker that a container listens for traffic on the specified port. So, for a container running a web server, you might add this to your Dockerfile: 
+
+EXPOSE 80
+you can list EXPOSE more than once. 
+EXPOSE 80/tcp
+EXPOSE 80/udp
+
+https://www.cloudbees.com/blog/ssh-into-a-docker-container-how-to-execute-your-commands
+https://www.cloudbees.com/blog/ensuring-containers-are-always-running-with-dockers-restart-policy

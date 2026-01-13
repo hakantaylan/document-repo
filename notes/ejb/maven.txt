@@ -1,0 +1,63 @@
+﻿mvn archetype:generate -DgroupId=com.openejb.deneme -DartifactId=openejb-deneme -DarchetypeArtifactId=maven-archetype-quickstart
+
+https://stackoverflow.com/questions/36176415/maven-add-external-jar-folder-to-classpath
+https://stackoverflow.com/questions/5692256/maven-best-way-of-linking-custom-external-jar-to-my-project
+https://www.studytonight.com/maven/managing-external-dependency-in-maven
+
+maven windows komut satırında parametreleri tırnak içine almayı unutma
+
+https://www.baeldung.com/maven-multi-module
+https://stackoverflow.com/questions/1114026/maven-modules-building-a-single-specific-module
+
+Say Parent pom.xml contains 6 modules and you want to run A, B and F.
+
+<modules>
+        <module>A</module>
+        <module>B</module>
+        <module>C</module>
+        <module>D</module>
+        <module>E</module>
+        <module>F</module>
+  </modules>
+1- cd into parent project
+
+ mvn --projects A,B,F --also-make clean install
+OR
+
+mvn -pl A,B,F -am clean install
+OR
+
+mvn -pl A,B,F -amd clean install
+
+
+https://blog.sonatype.com/2009/10/maven-tips-and-tricks-advanced-reactor-options/
+
+Use the Maven advanced reactor options, more specifically:
+
+-pl, --projects
+        Build specified reactor projects instead of all projects
+-am, --also-make
+        If project list is specified, also build projects required by the list
+So just cd into the parent P directory and run:
+
+mvn install -pl B -am
+And this will build B and the modules required by B.
+
+Note that you need to use a colon if you are referencing an artifactId which differs from the directory name:
+
+mvn install -pl :B -am
+As described here: https://stackoverflow.com/a/26439938/480894
+
+
+
+https://mkyong.com/maven/maven-how-to-create-a-multi-module-project/
+https://github.com/mkyong/maven-examples
+https://mkyong.com/maven/maven-spotbugs-example/
+https://spotbugs.readthedocs.io/en/latest/bugDescriptions.html
+https://spotbugs.github.io/spotbugs-maven-plugin/usage.html
+https://github.com/mkyong/maven-examples/tree/master/maven-static-code-analysis
+
+https://github.com/mkyong/spring-boot
+https://prismoskills.appspot.com/lessons/Maven/Chapter_01_-_Introduction_to_Maven.jsp
+mvn dependency:resolve
+mvn dependency:tree

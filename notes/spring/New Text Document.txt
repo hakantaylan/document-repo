@@ -1,0 +1,2 @@
+https://github.com/zezutom/spring-examples
+https://github.com/zezutom/concurrency-patterns

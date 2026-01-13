@@ -1,0 +1,72 @@
+https://sangaibisi.medium.com/spring-fundamentals-datasource-routing-d4d6d0a59a21
+https://blog.pragmatists.com/spring-events-and-transactions-be-cautious-bdb64cb49a95
+
+https://fizalihsan.github.io/technology/microservices.html
+https://fizalihsan.github.io/technology/eventsourcing.html
+
+https://betterprogramming.pub/how-to-read-the-httpservletrequest-body-multiple-times-94f7112a4d71
+https://betterprogramming.pub/5-popular-deployment-strategies-explained-simply-b1370e515b01
+
+https://ondro.inginea.eu/index.php/new-features-in-java-versions-since-java-8/
+https://ondro.inginea.eu/index.php/get-user-info-in-jakarta-ee/
+https://ondro.inginea.eu/index.php/differences-in-jpa-entity-locking-modes/
+
+https://advancedweb.hu/a-categorized-list-of-all-java-and-jvm-features-since-jdk-8-to-18/
+https://advancedweb.hu/how-to-integrate-with-elastic-stack-via-logstash/
+https://github.com/wesleyegberto/java-new-features          https://github.com/wesleyegberto/spring-study          
+https://thepracticaldeveloper.com/guide-spring-boot-controller-tests/ https://github.com/mechero/spring-boot-testing-strategies
+https://thepracticaldeveloper.com/home/
+https://thepracticaldeveloper.com/shebang-script-java/
+https://thepracticaldeveloper.com/custom-error-handling-rest-controllers-spring-boot/
+https://thepracticaldeveloper.com/spring-boot-kafka-config/
+https://thepracticaldeveloper.com/produce-and-consume-json-messages-with-spring-boot-amqp/
+
+https://thepracticaldeveloper.com/how-to-deploy-a-spring-boot-war-in-wildfly-jboss/
+
+https://thepracticaldeveloper.com/how-to-redirect-jboss-wildfly-logs-to-logstash/
+
+https://thepracticaldeveloper.com/the-six-obstacles-of-moving-to-microservices
+https://github.com/wesleyegberto/loadbalancer-layer-4-vs-layer-7
+
+
+https://ducmanhphan.github.io/2020-04-06-Understanding-about-Java-NIO-API-how-to-use-channel-buffer/
+
+
+https://moi.vonos.net/2020/12/isgitmerged/
+https://moi.vonos.net/infrastructure/prometheus-ql/
+https://moi.vonos.net/2019/10/spring-transaction-exceptions/
+https://moi.vonos.net/java/spring-transaction-exceptions/
+https://moi.vonos.net/2017/03/lambda-kappa/
+https://moi.vonos.net/programming/lambda-kappa/
+https://moi.vonos.net/bigdata/rabbitmq-exchanges/
+https://moi.vonos.net/bigdata/rabbitmq-threading/
+https://moi.vonos.net/2016/10/path-stream/
+https://tech.willhaben.at/distributed-read-models-at-willhaben-part-1-motivation-26a8ef163371
+https://medium.com/willhaben/distributed-read-models-at-willhaben-part-2-details-9a9bad6148f6
+https://reflectoring.io/spring-transactions-and-exceptions/
+https://moi.vonos.net/architecture/domain-models-rich-vs-anaemic/
+https://moi.vonos.net/java/exception-tunnel/
+https://moi.vonos.net/java/exception-checking/
+
+https://moi.vonos.net/2013/03/osgi/
+
+It can be convenient to give a bean an alternate name. In XML this is easy and well-documented:
+
+<alias bean="foo" alias="foo2"/>
+When using code-based configuration, it isn’t so well documented but also easy:
+
+@Configuration
+public class SomeConfigClass {
+    @Bean
+    public BeanFactoryPostProcessor defineAliasForFoo() {
+        return (beanFactory) -> beanFactory.registerAlias("foo", "foo2");
+    }
+}
+UNION ile iki sonucu merge edersin (duplike kayıt içermez)
+UNION ALL ile her iki taraftan gelen sonuçlar korunarak merge eder (duplike oluşur)
+
+
+https://blog.pchudzik.com/tags/communication/
+https://blog.pchudzik.com/201611/java-repository-testing/
+https://blog.pchudzik.com/201705/dynamic-beans
+https://blog.pchudzik.com/201902/beanpostprocessor/

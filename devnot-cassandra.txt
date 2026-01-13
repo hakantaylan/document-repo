@@ -1,0 +1,31 @@
+﻿A wide-column store can be interpreted as a two-dimensional key–value store. (or multi dimentional sprace array))
+
+What’s the Difference Between Columnar Database vs. Wide-column Database?
+A Columnar data store will store each column separately on disk. A Wide-column database is a type of columnar database that supports a column family stored together on disk, not just a single column.
+
+Can a Wide-column Database Support Different Columns on Some Rows?
+Wide-column databases don’t have a defined table schema, which leaves them flexible to have certain columns only apply to certain records.
+
+How Do I Add Columns in a Wide-column Database?
+Developers often encounter the need to add an attribute to a data model after deployment. For example, a business might require customer profiles to be augmented with a new attribute in order to support a new service. In a traditional relational database, the developer would add a new column to the entire table, with null or default values taking up space in all the other rows. Even worse, the developer might locate an unused legacy column to repurpose for this piece of data that didn’t fit the new schema.
+
+With a wide-column database, developers can simply add elements to a new column, without impacting existing columns or the data they hold.
+
+What are Wide-column Database Use Cases?
+Wide-column databases are ideal for use cases that require a large dataset that can be distributed across multiple database nodes, especially when the columns are not always the same for every row.
+
+Log data
+IoT (Internet of Things) sensor data
+Time-series data, such as temperature monitoring or financial trading data
+Attribute-based data, such as user preferences or equipment features
+Real-time analytics
+
+Use cases of wide column db
+-Petabayte scale data
+-Low latency writes
+-Key-based reads
+-Analytics
+-Time series applicaitons
+IoT
+Finance
+Monitoring

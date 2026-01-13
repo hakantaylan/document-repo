@@ -1,0 +1,14 @@
+https://www.confluent.io/blog/kafka-consumer-multi-threaded-messaging/
+https://medium.com/latentview-data-services/how-to-use-apache-kafka-to-guarantee-message-ordering-ac2d00da6c22
+
+https://reflectoring.io/spring-boot-kafka/
+https://github.com/thombergs/code-examples/tree/master/spring-boot/spring-boot-kafka
+http://mbukowicz.github.io/kafka/2020/09/12/implementing-kafka-consumer-in-java.html
+http://mbukowicz.github.io/kafka/2020/06/22/scaling-kafka.html
+https://kafka.apache.org/24/javadoc/org/apache/kafka/clients/consumer/KafkaConsumer.html#multithreaded
+https://www.confluent.io/blog/kafka-consumer-multi-threaded-messaging/
+https://github.com/inovatrend/mtc-demo
+https://thepracticaldeveloper.com/spring-boot-kafka-config/
+
+http://mbukowicz.github.io/java/spring-data/2020/05/12/paging-in-spring-data.html
+https://github.com/mbukowicz/spring-data-queries/tree/a02f560247354371e68503f925e4c48dc327540f

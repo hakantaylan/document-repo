@@ -1,0 +1,31 @@
+﻿https://aliakh.github.io/2020/08/26/java-sockets-io-blocking-nonblocking-and-asynchronous/
+
+https://www.callicoder.com/java-8-completablefuture-tutorial/
+https://winterbe.com/posts/2015/04/07/java8-concurrency-tutorial-thread-executor-examples/
+
+
+Concurrency vs. Parallelism
+Java ExecutorService thread pool çeşitleri   singlethredapool fixed, cached
+How to stop a thread?
+Difference between wait and sleep?
+The major difference is that wait() releases the lock while sleep() doesn’t release any lock while waiting.
+wait() is used for inter-thread communication while sleep() is used to introduce a pause on execution, generally.
+wait() should be called from inside synchronise or else we get an IllegalMonitorStateException, while sleep() can be called anywhere.
+Thread state'leri nelerdir?
+Context switching nedir?
+What is context-switching in multi-threading?
+Context Switching is the process of storing and restoring of CPU state so that Thread execution can be resumed from the same point at a later point of time. Context Switching is the essential feature for multitasking operating system and support for multi-threaded environment.
+How can two thread communicate with each other? (wait/notify)
+
+
+https://howtodoinjava.com/java/multi-threading/difference-between-yield-and-join-in-threads-in-java/
+
+https://medium.com/swlh/completablefuture-a-simplified-guide-to-async-programming-41cecb162308  +++
+completablefuture wait for another
+https://nirajsonawane.github.io/2019/01/27/Write-Clean-asynchronous-code-with-CompletableFuture-Java-8/
+
+According to Sun microsystems, there are 4 states in the java thread life cycle. They are:
+New — A thread is in the “New” state, when an object of the thread class is instantiated but the “start” method is not invoked.
+Runnable — When the “start” method has been invoked on the thread object. In this state, the thread is either waiting for the scheduler to pick it up for execution or it’s already running. Let us call the state when the thread is already picked for execution, the “running” state.
+Non-Runnable(Blocked , Timed-Waiting)— When the thread is alive, i.e., the thread class object exists, but it cannot be picked by the scheduler for execution. It is temporarily inactive.
+Terminated — When the thread completes execution of its “run” method, it goes into the “terminated” state. At this stage, the task of the thread is completed.

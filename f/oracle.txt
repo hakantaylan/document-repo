@@ -1,0 +1,5 @@
+http://www.nazmulhuda.info/use-of-sysdate-in-oracle
+http://www.nazmulhuda.info/replication
+http://www.nazmulhuda.info/table-synchronization-using-dbms_comparison
+http://www.nazmulhuda.info/table-replication-using-trigger
+http://www.nazmulhuda.info/materialized-view

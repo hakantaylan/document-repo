@@ -1,0 +1,28 @@
+﻿https://www.youtube.com/channel/UCYt1sfh5464XaDBH0oH_o7Q
+
+Cracking Java Interviews v3.5 by Munish Chandel
+
+ebook PDF - Cracking Spring Microservices Interviews for Java Developers
+
+https://preparingforcodinginterview.wordpress.com/2017/09/20/ctci-given-an-input -file-with-four-billion-integers-provide-an-algorithm-to-generate-an-integer-wh ich-is-not-contained-in-the-file/
+
+https://www.careercup.com/question?id=5683255621713920
+https://prismoskills.appspot.com/lessons/Programming_Puzzles/Missing_number_in_billion_integers_.jsp
+
+
+https://microservices.io/patterns/server-side-discovery.html
+https://microservices.io/patterns/reliability/circuit-breaker.html
+https://www.linkedin.com/pulse/microservices-client-side-load-balancing-amit-kumar-sharma/
+https://dasunhegoda.com/high-availability-deployment-architecture/1003/
+https://stackoverflow.com/questions/40601012/distributed-application-is-load-balancer-single-point-of-failure
+https://www.nginx.com/resources/glossary/dns-load-balancing/
+https://levelup.gitconnected.com/nginx-event-driven-architecture-demonstrated-in-code-51bf0061cad9
+
+
+https://medium.com/@nagamalliaditya3/coding-interview-patterns-for-microsoft-facebook-google-amazon-and-netflix-83f950bac9be
+https://hackernoon.com/14-patterns-to-ace-any-coding-interview-question-c5bb3357f6ed
+https://aaronice.gitbook.io/lintcode/
+https://yetanotherdevblog.com/lsm/
+
+
+The canonical way to address single point of failure in load balancing is indeed through redundancy. But there is no magic. Multiple instances of the load balancers are created in the network. Their IPs are all mapped to the same domain in DNS. Those IPs are returned to clients by DNS. Clients can choose any one to connect. The DNS responds with a short TTL for that domain so that clients are forced to consult DNS regularly to get the up-to-date load balancer IP addresses in case any of them fails. This one-domain-to-multiple-IPs is in itself a form of load balancing that we discussed earlier. It’s leveraged by load balancers so that clients can at least get to one load balancer where subsequent and more sophisticated routings can be invoked.

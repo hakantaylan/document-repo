@@ -1,0 +1,54 @@
+https://betterprogramming.pub/sql-query-optimization-level-up-your-sql-performance-tuning-d93af175b24b
+https://vladmihalcea.com/spring-boot-application-properties/
+https://vladmihalcea.com/spring-data-exists-query/
+https://vladmihalcea.com/spring-transactional-annotation/
+https://vladmihalcea.com/time-zones-java-web-application/
+
+https://towardsdev.com/spring-boot-data-access-layer-best-practices-c544d400de7b
+https://github.com/AnghelLeonard/Hibernate-SpringBoot/tree/master/HibernateSpringBootCountSQLStatements/src/main
+https://blog.netgloo.com/2015/07/09/spring-boot-communications-link-failure-with-mysql-and-hibernate/
+https://blog.netgloo.com/2014/09/28/spring-boot-enable-the-csrf-check-selectively-only-for-some-requests/
+https://dev.to/kirekov/spring-never-rollback-readonly-transactions-28kb
+https://github.com/SimonHarmonicMinor/spring-boot-readonly-transactions
+https://dev.to/kirekov/spring-boot-jpa-clear-tests-45he
+https://github.com/SimonHarmonicMinor/spring-boot-testing-data-patterns
+https://github.com/SimonHarmonicMinor/spring-data-jpa-efficient-testing
+https://github.com/SimonHarmonicMinor/spring-boot-testing-levels
+https://github.com/SimonHarmonicMinor/spring-boot-test-example
+https://vdzon.wordpress.com/2018/11/12/spring-web-mvc-test-samples/
+https://github.com/SimonHarmonicMinor/spring-boot-testing-data-patterns
+
+https://github.com/AnghelLeonard/Hibernate-SpringBoot
+
+
+https://dev.to/kirekov/spring-data-power-of-domain-events-2okm
+
+https://medium.com/trabe/using-hibernate-to-persist-dates-in-different-time-zones-449721b28841
+https://github.com/oscararias/test-timezones/tree/master/src
+
+https://www.baeldung.com/jpa-java-time
+https://github.com/eugenp/tutorials/tree/master/persistence-modules/java-jpa
+
+https://www.linkedin.com/pulse/practical-example-handling-time-zone-conversion-java-rest-darshana
+https://github.com/anushkadar/TimeZoneClientServer
+https://yazilimcorbasi.blogspot.com/2021/09/time-zone-handling.html
+https://github.com/yichunzhao/spring-jpa-transaction   +++++++++
+
+https://github.com/yichunzhao/docker-jdbc
+https://github.com/yichunzhao/using-mockito
+
+
+"Regarding something"
+"With regard to something"
+
+ I am writing with regard to your recent order.
+
+5. The company’s position with regard to overtime is made clear in their contracts.
+
+6. Try to view situations more objectively, especially with regard to work.
+
+7. I am writing to you with regard to your letter of 15 March.
+
+8. The department is reviewing its policy with regard to immunisation
+
+The company is being questioned regarding its employment policy.

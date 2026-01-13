@@ -1,0 +1,11 @@
+https://github.com/zezutom/spring-examples/tree/master/03_lazy_inject
+https://www.tomaszezula.com/2014/01/26/spring-series-part-4-lazy-on-injection-points/
+https://stackoverflow.com/questions/19485878/can-inject-be-made-optional-in-jsr-330-like-autowirerequired-false
+
+http://tomee.apache.org/tomee-9.0/examples/cdi-session-scope.html
+http://tomee.apache.org/tomee-9.0/examples/
+
+http://www.andygibson.net/blog/article/cdi-conversations-part-1/
+http://www.andygibson.net/blog/article/cdi-conversations-part-2/
+https://www.byteslounge.com/tutorials/jpa-entity-versioning-version-and-optimistic-locking
+https://www.byteslounge.com/tutorials/locking-in-jpa-lockmodetype

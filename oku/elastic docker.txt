@@ -1,0 +1,40 @@
+﻿https://stackoverflow.com/questions/42111566/elasticsearch-in-windows-docker-image-vm-max-map-count
+wsl -d docker-desktop
+sysctl -w vm.max_map_count=262144
+sudo sysctl -w vm.max_map_count=262144
+
+https://www.elastic.co/guide/en/elasticsearch/reference/6.8/docker.html
+
+
+https://github.com/hkulekci/node-app-with-elasticsearch
+
+
+
+https://twitter.com/ircmaxell/status/701888863233560577
+https://www.gerritcodereview.com/
+https://www.reviewboard.org/
+https://twitter.com/anthonysteele/status/701893258201473025
+
+Patterns of Enterprise Application Architecture 
+
+https://www.nyucel.com/2013/09/bilgisayar-muhendisligi-ogrencilerine.html
+
+http://localhost:9200/_cluster/health?pretty
+http://localhost:9200/
+
+http://localhost:5601/ kibana
+
+https://javabydeveloper.com/create-mysql-container-using-docker-and-docker-compose/
+
+
+https://www.bogotobogo.com/DevOps/Docker/Docker_ELK_7_6_Elastic_Stack_Docker_Compose.php
+
+
+https://www.elastic.co/guide/en/elastic-stack-get-started/current/get-started-docker.html
+
+https://medium.com/kodgemisi/docker-ile-elastic-stack-kurulumu-f447ffab2f45
+https://alimesut.wordpress.com/2019/08/15/docker-compose-ile-elk-stack-olusturma/
+
+
+https://www.elastic.co/blog/how-to-keep-elasticsearch-synchronized-with-a-relational-database-using-logstash
+https://www.fatalerrors.org/a/elasticsearch-and-elk-use-collect-and-write-data-from-database.html

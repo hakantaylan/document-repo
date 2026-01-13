@@ -1,0 +1,32 @@
+https://thecodebarbarian.com/building-your-own-load-balancer-with-express-js
+https://medium.com/techintoo/load-balancing-node-js-51b854fb4f4f
+https://medium.com/@ajay.dutta94/rest-api-design-principles-best-practices-4122cf0c3dc1
+https://stackoverflow.com/questions/389169/best-practices-for-api-versioning
+https://stackoverflow.com/questions/33088671/multiple-nodejs-workers-in-docker/33089609#33089609
+https://medium.com/@fermads/node-js-process-load-balancing-comparing-cluster-iptables-and-nginx-6746aaf38272
+https://nerdpress.org/2012/04/20/hosting-multiple-express-node-js-apps-on-port-80/
+express vhost
+
+I found that express apps are functions. Calling them with (req, res, next) is all you need to do to pass a request from one app to another.
+
+In the example below, I have one root app app and two branches app0 and app1.
+
+var app0 = require('./app0');
+var app1 = require('./app1');
+
+var app = express();
+...
+app.use(function(req, res, next) {
+  if (some_condition_on(req)) {
+    app0(req, res, next);
+  } else {
+    app1(req, res, next);
+  }
+});
+
+https://www.nginx.com/resources/glossary/reverse-proxy-vs-load-balancer/
+https://stackoverflow.com/questions/7943211/web-app-high-availability-how-to-prevent-a-single-point-of-failure
+https://dasunhegoda.com/high-availability-deployment-architecture/1003/
+
+
+SSL https://thecodebarbarian.com/building-your-own-load-balancer-with-express-js

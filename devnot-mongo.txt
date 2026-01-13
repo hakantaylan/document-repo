@@ -1,0 +1,10 @@
+﻿https://www.stackchief.com/tutorials/MongoDb%20Schema%20Design
+https://www.stackchief.com/blog/MongoDB%20Schema%20Design%3A%20The%202%20Questions%20to%20Ask%20Yourself
+https://www.stackchief.com/blog/%24lookup%20in%20MongoDB
+http://learnmongodbthehardway.com/schema/schemabasics/
+https://shanu95.medium.com/schema-patterns-mongodb-part-1-16564f1198dc
+https://shanu95.medium.com/schema-patterns-mongodb-part-2-73bfabf86c9
+https://shanu95.medium.com/schema-patterns-mongodb-part-3-e12014bcbc3e
+https://phauer.com/2016/mongodb-java-developers-m101j-lessons-learned/
+https://progressivecoder.com/2-mongodb-sharding-strategies 
+https://progressivecoder.com/mongodb-sharding-architecture/

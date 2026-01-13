@@ -1,0 +1,4 @@
+https://1kevinson.com/integration-testing-with-springboot-docker-and-tests-containers
+https://1kevinson.com/testing-service-spring-boot
+https://www.testcontainers.org/supported_docker_environment/continuous_integration/dind_patterns/
+https://medium.com/javarevisited/e2e-testing-in-ci-environment-with-testcontainers-ea7537697bd9

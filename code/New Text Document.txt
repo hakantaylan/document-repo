@@ -1,0 +1,60 @@
+﻿
+https://stackoverflow.com/questions/17431312/what-is-the-difference-between-join-and-join-fetch-when-using-jpa-and-hibernate
+https://dzone.com/articles/how-to-decide-between-join-and-join-fetch
+https://github.com/AnghelLeonard/Hibernate-SpringBoot/tree/master/HibernateSpringBootJoinVSJoinFetch
+https://stackoverflow.com/questions/5816417/how-to-properly-express-jpql-join-fetch-with-where-clause-as-jpa-2-criteriaq
+
+
+
+https://github.com/AnghelLeonard/Hibernate-SpringBoot Tüm örneklere bak hatta repoyu kendina alabilirsin
+
+
+https://persistencelayer.wixsite.com/springboot-hibernate/post/the-best-way-to-use-jpa-generationtype-auto-and-uuid-identifiers
+https://persistencelayer.wixsite.com/springboot-hibernate/post/how-to-bulk-updates
+
+https://github.com/AnghelLeonard/Hibernate-SpringBoot/tree/master/HibernateSpringBootJoinFetchPageable
+https://github.com/AnghelLeonard/Hibernate-SpringBoot/tree/master/HibernateSpringBootJoinFetch
+
+https://github.com/AnghelLeonard/Hibernate-SpringBoot/tree/master/HibernateSpringBootLogSlowQueries545
+https://github.com/AnghelLeonard/Hibernate-SpringBoot/tree/master/HibernateSpringBootLombokEqualsAndHashCode
+https://github.com/AnghelLeonard/Hibernate-SpringBoot/tree/master/HibernateSpringBootP6spy
+
+
+https://vladmihalcea.com/read-write-read-only-transaction-routing-spring/   +++++++++++++++++++++++++++++
+
+
+https://blog.mimacom.com/setting-up-a-blog-on-ghpages-in-under-90-min/
+
+https://blog.mimacom.com/testing-optimistic-locking-handling-spring-boot-jpa/
+https://blog.mimacom.com/handling-pessimistic-locking-jpa-oracle-mysql-postgresql-derbi-h2/
+https://www.jpa-buddy.com/blog/soft-deletion-in-hibernate-things-you-may-miss/
+
+https://evgeniy-khist.github.io/spring-data-examples/  +++++++++++++++++++++++
+https://evgeniy-khist.github.io/postgresql-performance-essentials/
+https://evgeniy-khist.github.io/postgresql-event-sourcing/
+https://evgeniy-khist.github.io/ksqldb-event-souring/
+
+http://myjavaadventures.com/blog/2019/11/21/spring-security-configure-httpsecurity/
+https://freecontent.manning.com/five-awkward-things-about-spring-security-that-actually-make-sense
+
+http://myjavaadventures.com/blog/docker-pages
+
+http://myjavaadventures.com/blog/spring-security
+https://www.codetd.com/en/article/11820992
+https://www.javadevjournal.com/spring/password-encoding-in-spring-security/
+
+https://github.com/abid-anjum/spring-kafka-microservice
+https://github.com/abid-anjum/spring-javamicroservices
+https://www.javadevjournal.com/spring/password-encoding-in-spring-security/
+
+https://github.com/HomoEfficio/dev-tips/blob/master/Spring-Security-Multiple-UserDetailsService-Authentication.md ingilizceye çevir
+
+https://www.marcobehler.com/guides/java-databases#plain-jdbc
+https://nuriyavuz2-71.medium.com/sql-101-ve-sql-injection-101-d2b35dff52de
+https://www.toptal.com/spring/spring-security-tutorial
+https://dzone.com/articles/how-to-specify-named-parameters-using-the-namedpar
+NamedParameterJdbcTemplate
+
+
+https://www.youtube.com/channel/UC6LgxY4YwVoE1F-v8sT9Jaw ahmet alp balkan
+https://gokhansengun.com/docker-nedir-nasil-calisir-nerede-kullanilir/

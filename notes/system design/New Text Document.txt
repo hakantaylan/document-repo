@@ -1,0 +1,10 @@
+https://www.quora.com/Is-there-anything-similar-to-Grokking-the-System-Design-interview-but-for-free
+https://gist.github.com/vasanthk/485d1c25737e8e72759f
+https://hackernoon.com/design-to-shine-how-to-ace-your-next-system-design-interview-2282bbf45c40
+https://www.youtube.com/watch?v=ZgdS0EUmn70
+
+
+https://github.com/tssovi/grokking-the-object-oriented-design-interview
+https://weifoo.gitbooks.io/systemdesign/content/chapter1/caching.html
+https://github.com/donnemartin/system-design-primer
+https://github.com/yangshun/tech-interview-handbook/tree/master/experimental/design

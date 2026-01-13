@@ -1,0 +1,78 @@
+﻿Auto generate id'ler için cache'leme opsiyonu var (Annotaysonla belirtiliyor) Örneğin her seferinde bir queue'ya gidip birer birer arttıtmaktansa bir defada 100 kere arttırmak ve bu 100 taneyi cache'leyip kullanmak, bu 100 tane tükenirse tekrar bir 100 tane id üretip onu da cache'lemek ve kullanmak
+
+OneToMany
+Parent tarafında Cascade et ve orphan removal'ı unutma. mappedBy foreign key set etme işleminin hangi tarat tarafından yapılacağını belirtir.
+@OneToMany(cascade = CascadeType.ALL, mappedBy = "author", orphanRemoval = true)
+Bidirectional OneToMany unidirectional OneToMany'e göre daha performanslıdır.
+
+Bidirecitonal OneToMany'de parent tarafından bakılırsa child varsayılan olarak lazy'dir ama bu mapping ile sadece child'ı yüklemek istersek child'ın parent'ı eagerly olarak yüklenir. Bunu istemiyorsan child tarafında parent'a aşağıdaki gibi bir işaretleme yapılabilir.
+@ManyToOne(fetch = FetchType.LAZY)
+Bu durumda child yüklenirken parent lazy yüklenir.
+
+Sadece @OneToMany(cascade = CascadeType.ALL, mappedBy = "author", orphanRemoval = true) şeklinde işaretleme yapılmışsa hibernate (ya da jpa) 3 tablo oluşturacaktır. (Parent, Parent_to_child, child)
+Bu durum performans açısından da kötüdür. 3 farklı tabloya insert/update/delete yapılması
+
+Unidirecitonal OneToMany mapping INSERT VE DELETE'de performans sıkıntısı yaşar. Tüm child'ı silip insert için yeni eklenenle birlikte tüm chil'ı join tablosuna ekler, silme için silinen dışında geri kalan tüm child'ı join tablosuna ekler.
+So, in order to insert a new book, the JPA persistence provider (Hibernate) deletes
+all associated books from the junction table. Next, it adds the new book in-memory
+and persists the result back again. This is far from being efficient and the potential
+performance penalty is quite obvious.
+Bidirectional OneToMany'de böyle bir sıkıntı yoktur.
+
+@OrderColumn anotasyonu ile child'ın hangi kolona göre sıralı gelmesi gerektiği belirtilebilir.
+
+@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+@JoinColumn(name = "author_id") şeklinde işaretleme yapılırsa sadece 2 tablo oluşacaktır. Bu şekildeki bir unidirectional OneToMany relation'da yukarıdaki örneklerde bahsedilen INSERT ve UPDATE esnasında tüm verilerin ara tablodan silinmesi (ara tablo olmadığı için) ve uygun olanların eklenmesi gibi bir performans kaybı yoktur ama bu durumda sadece child'ın parent_id 'sini set etmek için (INSERT'de parent_id'sini DELETE'de null'a) ekstra bir sql çalıştırmak gerekecektir. İlk örneğe göre performanslı bidirectional OneToMany'e göre bir tık performanssızdır.
+
+Adding @JoinColumn can provide benefits over the regular unidirectional
+@OneToMany, but is not better than a bidirectional @OneToMany association.
+The additional UPDATE statements still cause a performance degradation.
+
+Adding @JoinColumn and @OrderColumn at the same time is still not better
+than bidirectional @OneToMany. Moreover, using Set instead of List or
+bidirectional @OneToMany with @JoinColumn (e.g., @ManyToOne @Join
+Column(name = "author_id", updatable = false, insertable =
+false)) still performs worse than a bidirectional @OneToMany association.
+As a rule of thumb, a unidirectional @OneToMany association is less efficient
+than a bidirectional @OneToMany or unidirectional @ManyToOne associations.
+
+ManyToMany relation'da Cascade.ALL ve Cascade.DELETE kullanılmaz. Cascade.PERSIST ve Cascade.MERGE kullanılır.
+ManyToMany'de her iki tarafta Set kullanmak List'e göre daha performanslıdır. Örneğin bir silme işlemi yapıldığında join tablo için tek bir sql üretir. List kullanımında 3 tablo için 3 farklı sql üretilir. Önce ana kayda ait tüm veri join table'dan silinir. Sonra silinen veri dışındaki geri kalan tüm veriler join table'a tekrar insert edilir.
+So, the removal didn’t materialized in a single SQL statement. Actually, it started by
+deleting all junction entries of alicia from the junction table. Further, the junction
+entries that were not the subject of removal were reinserted to reflect the in-memory
+content (Persistence Context). The more junction entries reinserted, the longer the
+database transaction
+
+Using @OrderBy with HashSet will preserve the order of the loaded/fetched
+Set, but this is not consistent across the transient state. If this is an issue, to
+get consistency across the transient state as well, consider explicitly using
+LinkedHashSet instead of HashSet. So, for full consistency, use:
+@ManyToMany(mappedBy = "books")
+@OrderBy("name DESC")
+private Set<Author> authors = new LinkedHashSet<>();
+
+
+https://stackoverflow.com/questions/31585698/spring-boot-jpa2-hibernate-enable-second-level-cache
+https://vladmihalcea.com/things-to-consider-before-jumping-to-enterprise-caching/
+https://medium.com/mehmetcemyucel/twelve-factor-nedir-turkce-ornek-a9a7648fffb
+https://github.com/mehmetcemyucel/springboot-slf4j-log4j2
+http://www.includekarabuk.com/kategoriler/genel/Hub-Switch-Router-Modem-Gateway-ve-Access-Point-Farklari.php
+https://www.youtube.com/watch?v=bQWUyp_9SDc&feature=youtu.be JDK IO 2018 - Vlad Mihalcea - High-Performance Hibernate İzle
+OSIV öğren 
+https://thorben-janssen.com/dont-expose-entities-in-api/  öğren
+https://thorben-janssen.com/tutorials/
+https://thorben-janssen.com/database-functions/
+https://thorben-janssen.com/tips/
+https://thorben-janssen.com/data-and-communication-patterns-for-microservices-waitlist/
+
+https://thorben-janssen.com/avoid-cascadetype-delete-many-assocations/
+
+https://codesoapbox.dev/how-to-browse-spring-boot-logs-in-kibana-configuring-the-elastic-stack/
+https://sudonull.com/post/18-Open-Session-In-View-in-Spring-Boot-Hidden-Threat
+https://virgo47.wordpress.com/2012/05/01/live-architecture-with-java-spring-jpa-and-osiv/
+https://vladmihalcea.com/the-best-way-to-map-a-projection-query-to-a-dto-with-jpa-and-hibernate/
+https://vladmihalcea.com/the-open-session-in-view-anti-pattern/
+
+OSIV Spring bir intercepter oluşturur. Her httprequest için bir session açar ve bu http request sonlandırılırken aynı interceptor session'ı kapatır. Dispatcher servlet tarafından ilgili controller'a forward edilen http request için bundan sonra @Service veya @Repository sınıflarında çağırılan metodlar transactional olarak işaretlense bile metoddan çıkıca session kapatılmaz.
+https://vladmihalcea.com/the-best-way-to-handle-the-lazyinitializationexception/

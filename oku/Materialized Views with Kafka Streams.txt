@@ -1,0 +1,12 @@
+https://www.youtube.com/watch?v=s0rJxy_kVEE  Materialized Views with Kafka Streams and Spring Boot | Livestreams 011
+https://medium.com/ben-and-dion/live-now-twitter-evolving-materialized-views-on-top-of-the-raw-event-system-54858da51eaa
+
+https://www.youtube.com/watch?v=Of-luDqqr9s
+Matearilized view is a db object that stores query output and precomputed result
+
+https://www.youtube.com/watch?v=ol7rkIgG1v0 Materialized views in oracle - Part 1
+https://www.youtube.com/watch?v=JsJqJ7Pzne4 Materialized views in oracle - Part 2
+
+
+
+

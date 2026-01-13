@@ -1,0 +1,24 @@
+https://programmingsharing.com/understanding-message-in-spring-integration-5270ae2787f3
+https://github.com/spring-projects/spring-integration-samples
+http://www.java-allandsundry.com/2014/05/spring-integration-java-dsl-sample.html
+http://www.java-allandsundry.com/2014/06/spring-integration-java-dsl-sample.html
+https://github.com/eugenp/tutorials/tree/master/spring-integration
+
+https://medium.com/fintonic-engineering/spring-integration-introduction-act-i-9ab7f3334d26
+https://medium.com/fintonic-engineering/spring-integration-introduction-act-ii-7f7fdcca4e0
+https://medium.com/fintonic-engineering/spring-integration-introduction-final-act-902e036d1b99
+https://medium.com/fintonic-engineering/spring-batch-introduction-take-2-6e31af6d2c99
+
+https://medium.com/@SatyaRaj_PC/spring-integration-basic-java-config-way-ce29669a13b4
+https://medium.com/javarevisited/top-5-spring-professional-certification-exam-resources-for-java-developers-3ef9fa42fe13
+https://github.com/Apress/pivotal-cert-spring-enterprise-intg-specialist/tree/master/book-eiws-code-samples-master
+https://programmerclick.com/article/69551765942/
+https://github.com/Apress/pivotal-cert-spring-enterprise-intg-specialist/tree/master/book-eiws-code-samples-master
+https://github.com/lkrnac/book-eiws-code-samples
+https://www.javacodegeeks.com/2014/02/spring-jms-processing-messages-within-transactions.html
+https://localcoder.org/spring-integration-bridge-with-poller-not-working-as-expected-for-jms
+https://stackoverflow.com/questions/50953877/jmstemplate-with-receive-timeout-no-wait-doesnt-retrieve-messages-from-jms-queu/50968706#50968706
+https://stackoverflow.com/questions/51828441/spring-integration-redelivery-via-errorchannel-throw-with-jmstransactionmanager
+
+https://www.javacodegeeks.com/2015/09/spring-integration-fundamentals.html
+https://codenotfound.com/spring-jms-integration-example.html +++

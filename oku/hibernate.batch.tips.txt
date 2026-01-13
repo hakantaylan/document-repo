@@ -1,0 +1,3 @@
+﻿https://shekhargulati.com/2020/05/11/improving-spring-data-jpa-hibernate-bulk-insert-performance-by-more-than-100-times/
+
+https://www.kaggle.com/jealousleopard/goodreadsbooks   farklı tipte generated dataları indirebileceğin bir site

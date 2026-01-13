@@ -1,0 +1,46 @@
+﻿https://www.confluent.io/blog/stream-processing-part-1-tutorial-developing-streaming-applications/ oku++++++++
+
+https://www.striim.com/oracle-change-data-capture-cdc-tutorial-an-event-driven-architecture-for-cloud-adoption/
+https://www.striim.com/streaming-data-integration-tutorial-using-cdc-to-stream-database-changes/
+https://github.com/debezium/debezium-examples/tree/master/unwrap-smt
+https://www.infoq.com/presentations/data-streaming-kafka-debezium/
+
+https://www.freecodecamp.org/news/how-to-implement-the-change-data-capture-pattern-using-kafka-streams/
+https://github.com/elleFlorio/kafka-streams-playground
+https://www.confluent.io/blog/cdc-and-streaming-analytics-using-debezium-kafka/
+
+https://www.enterprisedb.com/blog/postgres-outperforms-mongodb-and-ushers-new-developer-reality
+
+https://dbmsmusings.blogspot.com/2019/01/its-time-to-move-on-from-two-phase.html
+https://medium.com/@sohan_ganapathy/patterns-for-microservice-interactions-command-query-and-event-79eeedb32aea
+https://blog.devgenius.io/microservices-design-api-gateway-pattern-980e8d02bdd5
+https://medium.com/@hafandhalf/micro-services-summary-from-martin-fowler-page-97c57478e607
+
+
+https://github.com/debezium/debezium-examples/tree/master/saga
+
+Postgre dene
+https://severalnines.com/database-blog/overview-logical-replication-postgresql
+https://blog.crunchydata.com/blog/postgresql-change-data-capture-with-debezium
+
+https://severalnines.com/database-blog/performing-replication-topology-changes-postgresql
+https://severalnines.com/database-blog/logical-physical-postgresql-backups
+
+https://severalnines.com/database-blog/audit-logging-mongodb
+https://debezium.io/blog/2020/02/10/event-sourcing-vs-cdc/
+https://medium.com/event-driven-utopia/a-visual-introduction-to-debezium-32563e23c6b8
+
+https://medium.com/event-driven-utopia/anatomy-of-an-event-streaming-platform-part-1-dc58eb9b2412
+https://medium.com/event-driven-utopia/anatomy-of-an-event-streaming-platform-part-2-39393e81c861
+https://medium.com/event-driven-utopia/understanding-kafka-topic-partitions-ae40f80552e8
+
+https://medium.com/event-driven-utopia/comparing-enterprise-messaging-and-event-streaming-e714f7b5fc40
+https://solutionsreview.com/data-integration/the-best-change-data-capture-tools-to-consider/
+
+https://blog.christianposta.com/microservices/02-microservices-patterns-with-envoy-proxy-part-ii-timeouts-and-retries/
+
+https://github.com/odrotbohm/spring-events-deep-dive.git   https://www.youtube.com/watch?v=4oBqCtdRIYo
+
+https://github.com/tasdemirbahadir/quality-measurement
+Capture and verify Spring Events (ApplicationEvent) when testing your Spring Boot application using @RecordApplicationEvents. Capture and verify Spring
+https://github.com/vinsguru/vinsguru-blog-code-samples

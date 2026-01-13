@@ -1,0 +1,104 @@
+﻿https://medium.com/better-programming/customize-your-mysql-database-in-docker-723ffd59d8fb
+
+https://stefanprodan.com/2016/docker-windows-powershell-cheatsheet/
+https://www.shellhacks.com/windows-grep-equivalent-cmd-powershell/
+https://serverfault.com/questions/796762/creating-a-docker-mysql-container-with-a-prepared-database-scheme
+
+For PowerShell, the command is very similar to the Linux one:
+docker ps -q | % { docker stop $_ }
+
+You could create a batch-file (.bat or .cmd) with these commands in it:
+@ECHO OFF
+FOR /f "tokens=*" %%i IN ('docker ps -q') DO docker stop %%i
+
+
+
+
+@echo off
+FOR /f "tokens=*" %%i IN ('docker ps -aq') DO docker rm %%i
+FOR /f "tokens=*" %%i IN ('docker images --format "{{.ID}}"') DO docker rmi %%i
+
+@echo off
+FOR /f "tokens=*" %%i IN ('docker ps -aq') DO docker stop %%i && docker rm %%i
+FOR /f "tokens=*" %%i IN ('docker images --format "{{.ID}}"') DO docker rmi %%i
+
+docker container stop (docker container ls -q) | Out-String
+
+As of 1.13.0, see the new prune commands:
+
+# Commands
+docker container prune # Remove all stopped containers
+docker volume prune # Remove all unused volumes
+docker image prune # Remove unused images
+docker system prune # All of the above, in this order: containers, volumes, images
+
+# Commands
+docker container prune # Remove all stopped containers
+docker volume prune # Remove all unused volumes
+docker image prune # Remove unused images
+docker system prune # All of the above, in this order: containers, volumes, images
+
+Using Powershell (windows)
+Remove all containers:
+docker ps -a -q | % { docker rm $_ }
+
+Remove all images:
+docker images -q | % { docker rmi $_ }
+
+Windows Powershell Delete All Running and Stopped Containers
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+
+
+From bash (Linux type systems)
+Remove all containers:
+docker rm $(docker ps -a -q)
+
+Remove all images:
+docker rmi $(docker images -q)
+
+Remove all volumes: 
+docker volume rm $(docker volume ls -f dangling=true -q)
+
+https://www.swtestacademy.com/manage-containers-in-java-code/
+https://medium.com/@sharmaNK/docker-basics-101-83ad2bdd1189
+https://medium.com/@sharmaNK/docker-cheat-sheet-df1a3f0fdf4b
+https://medium.com/@sharmaNK/distributed-atomic-lock-with-redis-on-elastic-cache-d9f4ee29a11a
+
+https://stackoverflow.com/questions/29600369/starting-and-populating-a-postgres-container-in-docker
+
+docker run --name my-custom-postgres -e POSTGRES_PASSWORD=postgres -d postgres
+docker exec -i my-custom-postgres psql --username postgres --password postgres recipes < aaa.sql
+docker commit my-custom-postgres v1.0
+docker image tag v1.0:latest my-custom-postgres:v1.0
+
+CREATE TABLE movie (
+	id serial PRIMARY KEY,
+	director VARCHAR ( 150 ) ,
+	title VARCHAR ( 150 ),
+	year INT
+);
+insert into movie (id, director, title, year) values (1, 'Quentin Tarantino', 'Reservoir Dogs', 1992);
+insert into movie (id, director, title, year) values (2, 'Joel Coen', 'Fargo', 1996);
+insert into movie (id, director, title, year) values (3, 'Joel Coen', 'The Big Lebowski', 1998);
+
+insert into movie (id, director, title, year) values (1, 'aaa', 'bbb', 2021);
+select * from "movie";
+ 
+docker exec -it my-custom-postgress bash
+psql -U postgres recipes
+
+docker exec -t quizzical_germain  pg_dumpall -c -U postgres  > aaa.txt
+docker exec -i my-custom-postgres psql --username postgres --password postgres recipes < aaa.sql
+
+docker exec -it vigorous_wescoff psql -U postgres recipes
+docker container exec example-db psql -U postgres -c "\dt;"
+https://markheath.net/post/exploring-postgresql-with-docker
+https://martinheinz.dev/blog/3
+https://nickjanetakis.com/blog/docker-tip-79-saving-a-postgres-database-in-a-docker-image
+https://medium.com/@kamer.dev/docker-ile-postgresql-kurulumu-6b1c4c4d25bd
+https://dev.to/shree_j/how-to-install-and-run-psql-using-docker-41j2
+https://martinheinz.dev/blog/35
+https://rancher.com/learning-paths/how-to-build-and-run-your-own-container-images/
+
+SELECT table_name FROM information_schema.tables WHERE table_schema = 'public' ORDER BY table_name;

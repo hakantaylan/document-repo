@@ -1,0 +1,584 @@
+https://github.com/goldbergyoni/nodebestpractices
+https://medium.com/javarevisited/spring-boot-jpa-clear-tests-95804529863b +++++++ test tarafında yaptıkları çok iyi. Her projede test tarafı için bir framework olabilecek şekilde
+
+https://medium.com/macoclock/how-create-multi-module-project-in-intellij-on-macos-50f07e52b7f9
+https://www.youtube.com/watch?v=mpsA3vW4Szc&list=PLViWvmuLtSyPFP0lv9Swrui8V6Zt26QMR  CKA (Certified Kubernetes Administrator)
+https://www.javacodegeeks.com/2014/04/java-ee7-and-maven-project-for-newbies-part-1-a-simple-maven-project-structure-the-parent-pom.html
+https://blog.jdriven.com/2022/10/test-jpql-queries-from-inside-intellij
+https://levelup.gitconnected.com/the-most-common-bugs-in-java-concurrent-programming-498d33330423
+https://stackoverflow.com/questions/6212144/how-to-disable-schema-validation-in-hibernate-for-certain-entities
+https://reflectoring.io/spring-data-specifications/ dynamic query by example
+https://www.baeldung.com/java-executors-cached-fixed-threadpool  +++
+
+https://roytuts.com/spring-boot-multi-module-project/
+https://www.linkedin.com/in/emreturkis/
+
+
+https://mstryoda.medium.com/kubernetes-pod-scheduling-y%C3%B6ntemleri-1f6918d69643
+https://myhistoryfeed.medium.com/kubernetes-pod-a-complete-guide-2def983352f7
+
+https://blog.zestmoney.in/handling-concurrent-updates-with-optimistic-and-pessimistic-locking-in-jpa-c26d0b6855e7
+
+https://arnoldgalovics.com/resilience4j-resttemplate/  https://github.com/galovics/resttemplate-resilience4j
+https://arnoldgalovics.com/hibernate-batching-explained/
+https://arnoldgalovics.com/spring-boot-datasource-proxy/ https://github.com/galovics/datasource-proxy-spring-boot
+https://arnoldgalovics.com/swagger-brake-api-compatibility-checker/
+https://arnoldgalovics.com/jpa-entity-encryption https://github.com/galovics/hibernate-encryption-listener
+
+
+By default RestTemplate uses SimpleClientHttpRequestFactory and that in turn uses HttpURLConnection.
+
+By default the timeout for HttpURLConnection is 0 - ie infinite, unless it has been set by these properties :
+
+-Dsun.net.client.defaultConnectTimeout=TimeoutInMiliSec 
+-Dsun.net.client.defaultReadTimeout=TimeoutInMiliSec
+
+StackWalker.getInstance()
+           .walk(s -> s.limit(5)
+           .collect(Collectors.toList()));
+
+try (Resource r1 = resource1; Resource r2 = resource2) {
+    // do something
+}
+
+try (resource1; resource2) {
+    // do something
+}
+
+https://stackoverflow.com/questions/1837651/hibernate-cache-strategy   hibernate cache strategies explained
+https://buddhiprabhath.medium.com/spring-boot-crud-example-with-caching-c2c9b7fd8f05
+
+https://www.iodigital.com/en/history/foreach/spring-cache-annotations-some-tips-tricks
+https://stackoverflow.com/questions/49973018/caching-on-methods-in-jparepository-spring-data
+
+https://medium.com/javarevisited/4-pits-of-java-bigdecimal-ec3a7a2791c7
+https://medium.com/@omgzui/list/java-e7c93884d94b
+
+https://vladmihalcea.com/best-spring-data-jparepository/
+https://blog.devgenius.io/implementing-rate-limiter-using-redis-cache-in-spring-boot-1ddd0a9cf8da
+https://medium.com/vedity/spring-boot-caching-mechanism-8ef901147e60
+https://vladmihalcea.com/how-does-hibernate-read_write-cacheconcurrencystrategy-work/   +++++
+https://github.com/tericcabrel/blog-tutorials/tree/main/springboot-caching
+https://refactorfirst.com/spring-boot-spring-cache-with-ehcache-3    offheap allocation config
+https://refactorfirst.com/spring-cloud-resiliance4j-circuitbreaker-and-retry
+
+https://refactorfirst.com/create-network-problems-with-toxiproxy
+https://refactorfirst.com/build-native-image-with-graalvm
+
+https://refactorfirst.com/spring-boot-websockets-stomp-notifications
+https://refactorfirst.com/externalize-config-with-spring-cloud-config
+https://refactorfirst.com/distributed-tracing-spring-boot-opentracing-jaeger
+https://dzone.com/articles/spring-cache-annotation-tips-and-tricks  If you do your cache operations manually, you can fetch the Cache from the CacheManager
+
+https://www.javacodemonk.com/custom-ttl-for-spring-data-redis-cache-6b38c550
+https://www.javacodemonk.com/redis-rate-limiter-in-spring-boot-6455a677
+
+Spring boot ile birden fazla CacheManager bean tanımlanabilir @Cachable anotasyonuna ilgili cacheManager parametre olarak geçilip farklı entity'ler farklı cache'lerde saklanabilir.
+@Cacheable(cacheNames = ["books"], cacheManager = "jCacheCacheManager")
+
+
+In the resources tag, we configure the tiers and capacities of our cache. I use a two-tier cache here.
+
+• Heap Store: Uses the Java heap memory to store cache entries and shares the memory with the application. The cache is also scanned by the garbage collection. This memory is very fast, but also very limited. Here I allowed only 10 entries on the heap. Eviction will occur when full.
+• Off-Heap Store: Uses the RAM to store cache entries. This memory is not subject to garbage collection. Still quite fast memory, but slower than the on-heap memory, because the cache entries have to be moved to the on-heap memory before they can be used. Here I allowed only 10 MB off-heap.
+
+
+spring.redis.host: localhost
+spring.redis.port: 6379
+spring.cache.cache-names: cache1, cache2
+spring.cache.redis.time-to-live: 600000   
+redis.time-to-live allows setting up TTL for the all caches to same value.
+The only caveat with this setting (spring.cache.redis.time-to-live) is that you cannot specify custom TTL value for individual cache.
+
+RedisConfig.java
+import org.springframework.boot.autoconfigure.cache.RedisCacheManagerBuilderCustomizer;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.RedisCacheConfiguration;
+
+import java.time.Duration;
+import java.util.HashMap;
+import java.util.Map;
+
+@Configuration
+public class RedisConfig {
+
+    @Bean
+    RedisCacheManagerBuilderCustomizer redisCacheManagerBuilderCustomizer() {
+        return (builder) -> {
+            Map<String, RedisCacheConfiguration> configurationMap = new HashMap<>();
+            configurationMap.put("cache1", RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofSeconds(20)));  
+            configurationMap.put("cache2", RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(2)));     
+            builder.withInitialCacheConfigurations(configurationMap);
+        };
+    }
+
+}
+cache1 will have expiry of 20 seconds from time of creation.
+cache2 will have expiry of 2 hours from time of creation (time-to-live).
+
+
+@Autowired
+private CacheManager cacheManager;
+
+@Scheduled(cron = "0 0/30 * * * ?")
+public void clearCache(){
+    for(String name:cacheManager.getCacheNames()){
+        cacheManager.getCache(name).clear();
+    }
+}
+
+@Bean  
+public CacheManagerCustomizer<ConcurrentMapCacheManager> cacheManagerCustomizer()   {  
+
+
+      return new CacheManagerCustomizer<ConcurrentMapCacheManager>() {  
+
+
+            @Override  
+            public void customize(ConcurrentMapCacheManager cacheManager) {  
+                  cacheManager.setAllowNullValues(false);  
+            }  
+      };  
+}
+
+
+-------------------------
+@Configuration
+@EnableCaching
+class RedisCacheConfig {
+
+  @Bean
+  RedisCacheManager redisCacheManager(
+      @Value("${spring.redis.host:localhost}") String host,
+      @Value("${spring.redis.port:6379}") int port) {
+    RedisConnectionFactory connectionFactory = new LettuceConnectionFactory(host, port);
+    StringRedisSerializer stringSerializer = new StringRedisSerializer();
+    ObjectMapper mapper = new ObjectMapper();
+    mapper.enableDefaultTyping(DefaultTyping.NON_FINAL, As.PROPERTY);
+    RedisSerializer jacksonSerializer = new GenericJackson2JsonRedisSerializer(mapper);
+    return new RedisCacheManager(
+        RedisCacheWriter.nonLockingRedisCacheWriter(connectionFactory),
+        RedisCacheConfiguration.defaultCacheConfig()
+            .serializeKeysWith(SerializationPair.fromSerializer(stringSerializer))
+            .serializeValuesWith(SerializationPair.fromSerializer(jacksonSerializer))
+    );
+  }
+}
+
+Keys of the cache entries will be simple String’s, and values will be serialized to JSON. If you wonder which serialization Spring Boot uses by default, you’d be surprised that it’s the built-in Java serialization which is slow, inefficient, insecure and has backward compatibility issues.
+Hmm… Our JSON serialization is at least better than the default.
+
+https://ilyazinkovich.github.io/2019/04/07/cacheable.html
+https://dzone.com/articles/spring-cache-annotation-tips-and-tricks   +++
+For very expensive methods, you want to optimize the cache hits as much as possible. When being accessed by multiple threads, you ideally want the first thread to do the actual calculation and all other threads to fetch it from the cache. A classic case where you would synchronize access to the method. However, the following code does not do what we want:
+@Cacheable(value = "reservationsCache", key = "#restaurand.id")
+public synchronized List<Reservation> getReservationsForRestaurant( Restaurant restaurant ) {
+}
+
+When using @Cacheable on a method, the caching code is outside of the original method body (added through AOP). This means that any form of synchronization inside or on the method itself will take place after the actual cache lookup. When calling the method the cache lookup will happen first and if there was a cache miss, then the lock will be taken and the method executed. All cache misses will effectively execute the method and then insert the result into the cache, even if the calls are identical.
+
+@Cacheable(value = "reservationsCache", key = "#restaurand.id", sync = true)
+public List<Reservation> getReservationsForRestaurant( Restaurant restaurant ) {
+}
+
+
+https://medium.datadriveninvestor.com/all-things-caching-use-cases-benefits-strategies-choosing-a-caching-technology-exploring-fa6c1f2e93aa
+https://kousiknath.medium.com/
+https://kousiknath.medium.com/all-things-sharding-techniques-and-real-life-examples-in-nosql-data-storage-systems-3e8beb98830a
+https://kousiknath.medium.com/understanding-database-scaling-patterns-ac24e5223522
+https://kousiknath.medium.com/consistency-guarantees-in-distributed-systems-explained-simply-720caa034116
+https://medium.com/geekculture/all-things-clock-time-and-order-in-distributed-systems-hybrid-logical-clock-in-depth-7c645eb03682
+https://vladmihalcea.com/immutable-entity-jpa-hibernate/
+http://buraktas.com/spring-retry-tutorial/
+
+
+https://blog.oguzhan.info/%C3%B6l%C3%A7%C3%BCmlemeniz-gereken-%C3%B6nemli-yaz%C4%B1l%C4%B1m-metrikleri-8f1b5868f5fe
+
+https://github.com/abinator-1308/urlshortener  https://marinsborg.com/url-shortener-a-detailed-explanation/ https://github.com/marinsborg/UrlShortener-API https://github.com/DenimMazuki/URLShortener https://www.geeksforgeeks.org/how-to-design-a-tiny-url-or-url-shortener/ https://www.youtube.com/watch?v=AVztRY77xxA 
+https://blog.codinghorror.com/url-shortening-hashes-in-practice/ https://www.enjoyalgorithms.com/blog/design-a-url-shortening-service-like-tiny-url
+https://medium.com/interviewnoodle/url-shortening-system-architecture-d7ae5a7e0ce9
+https://dzone.com/articles/how-a-url-shortening-application-works   imajlara bak
+https://dev.to/karanpratapsingh/system-design-url-shortener-10i5
+
+MD5 is 128 bit hash function
+So when do you need to worry about collisions? The working rule-of-thumb here comes from the birthday paradox. Basically you can expect to see the first collision after hashing 2n/2 items, or 2^64 for MD5.
+ 2^64 is a big number. If there are 100 billion urls on the web, and we MD5'd them all, would we see a collision? Well no, since 100,000,000,000 is way less than 2^64:
+
+264	18,446,744,073,709,551,616
+237	100,000,000,000
+
+For a 16-bit hash, our 2n/2 is a whopping 256; for a 32-bit hash it'd be 65,536. It's pretty clear that URL shortening services can't rely on traditional hashing techniques, at least not if they want to produce competitively small URLs. 
+
+Eğer alfabenizde N karakter varsa ve url shortener için karakter sayısını 7 ile kısıtladıysanız en fazla N^7 tane unique değer üretebilirsiniz.
+
+Rate Limiter
+https://medium.com/@SaiRahulAkarapu/rate-limiting-algorithms-using-redis-eb4427b47e33
+https://engineering.classdojo.com/blog/2015/02/06/rolling-rate-limiter/
+https://hechao.li/2018/06/25/Rate-Limiter-Part1/ https://github.com/hechaoli/simple-rate-limiters
+https://hechao.li/2018/06/27/Rate-Limiter-Part2/
+https://hechao.li/2017/10/09/troubleshooting-java-application-issues/
+
+https://github.com/hibernate/hibernate-orm/blob/main/documentation/src/main/asciidoc/userguide/chapters/caching/Caching.adoc
+https://www.youtube.com/watch?v=SmLOUhmRJjo
+
+The first-level cache provides application-level repeatable reads guarantee for entities because no matter how many times the entity is loaded from the Persistence Context, the same managed entity reference will be returned to the caller.
+• Session.evict(): to remove the cached/stored entity.
+• refresh(): method to refresh the cache.
+• clear(): method to remove all the entities from the cache.
+
+
+This delayed execution of sql queries is known as transactional write behind. On calling a transaction.commit(), Hibernate flushes all the sql to the database. This flushing also happens :
+Before a query is executed. Hibernate does not flush before every query. The flush is performed only if the sql statements in the session will affect the result of the query.
+When the application calls session.flush()
+
+
+https://hevodata.com/learn/postgresql-locks/
+https://vladmihalcea.com/how-do-postgresql-advisory-locks-work/
+https://muatik.medium.com/postgresql-locking-b8657221825
+https://muatik.medium.com/notes-on-7-postgresql-lock-tips-8b3e35458d5c
+https://www.citusdata.com/blog/2018/02/22/seven-tips-for-dealing-with-postgres-locks/
+https://engineering.nordeus.com/postgres-locking-revealed/    ++++
+https://www.postgresql.org/docs/current/explicit-locking.html
+
+
+https://github.com/donnemartin/system-design-primer
+
+https://blog.devgenius.io/10-java-shortcuts-in-intellij-idea-5ee3a8caa02d
+https://mihaita-tinta.medium.com/searching-for-vulnerabilities-in-a-spring-boot-application-bdbedb5440ba
+https://medium.com/javarevisited/async-controllers-with-spring-boot-45bad3e66eea
+https://www.ankushchoubey.com/v1/junit-bug-tracking
+
+https://vladmihalcea.com/uuid-database-primary-key/
+https://vladmihalcea.com/hibernate-and-uuid-identifiers/
+https://vladmihalcea.com/uuid-identifier-jpa-hibernate/
+https://www.oracletutorial.com/oracle-basics/oracle-identity-column/
+https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-identity-column/
+https://www.cybertec-postgresql.com/en/uuid-serial-or-identity-columns-for-postgresql-auto-generated-primary-keys/
+
+
+https://medium.com/double-pointer/system-design-interview-scalable-unique-id-generator-twitter-snowflake-or-a-similar-service-18af22d74343
+https://medium.com/@systemdesign hepsini oku
+https://betterprogramming.pub/uuid-generation-snowflake-identifiers-unique-2aed8b1771bc
+
+https://thorben-janssen.com/jpa-generate-primary-keys/
+https://www.jpa-buddy.com/blog/the-ultimate-guide-on-db-generated/
+https://www.jpa-buddy.com/blog/the-ultimate-guide-on-client/
+https://www.jpa-buddy.com/blog/the-ultimate-guide-on-composite-ids-in-jpa-entities/
+https://stackoverflow.com/questions/22479912/hibernate-generate-id-from-database-function
+
+https://apoorvtyagi.tech/generating-unique-ids-in-a-large-scale-distributed-environment
+https://blog.devgenius.io/7-famous-approaches-to-generate-distributed-id-with-comparison-table-af89afe4601f
+https://www.callicoder.com/distributed-unique-id-sequence-number-generator/
+https://apoorvtyagi.tech/generating-unique-ids-in-a-large-scale-distributed-environment
+https://medium.com/@sandeep4.verma/system-design-distributed-global-unique-id-generation-d6a440cc8e5
+https://medium.com/geekculture/how-do-tech-giants-design-and-implement-a-distributed-id-generator-bd618803035f
+https://stackoverflow.com/questions/2671858/distributed-sequence-number-generation
+https://blog.devgenius.io/7-famous-approaches-to-generate-distributed-id-with-comparison-table-af89afe4601f
+https://github.com/f4b6a3/tsid-creator
+
+
+CREATE SEQUENCE ID_SEQ START 9223372036854775500 CACHE 100;
+
+SELECT nextval('ID_SEQ');
+
+DROP SEQUENCE IF EXISTS ID_SEQ;
+Sequences are based on bigint arithmetic (-9223372036854775808 to 9223372036854775807). 2^63
+Daha küçük rakamlara ihtiyaç varsa smallint veya integer kullanılabilir. smallint, integer, and bigint. bigint is the default
+Sequence'ın yeni değerini set etmek için setval('seq_name', new_value)
+Sequence'in değerini arttırmadan o anki değerini sorgulamak için SELECT currval('myfirstsequence')
+
+https://aaronice.gitbook.io/system-design/architecture-toolbox
+https://rcoh.svbtle.com/postgres-unique-constraints-can-cause-deadlock
+https://pankajconnect.medium.com/master-postgresql-lock-in-10minutes-dffb278fcb46
+https://www.citusdata.com/blog/2018/02/22/seven-tips-for-dealing-with-postgres-locks/
+https://shiroyasha.io/understanding-postgresql-locks.html
+https://medium.com/javarevisited/safe-migration-from-lombok-to-records-using-only-intellij-tricks-150791ea00ab
+https://medium.com/javarevisited/these-3-lombok-annotations-might-skyrocket-in-popularity-after-java-17-migration-81bb628d2df9
+https://morningcoffee.io/understanding-postgresql-locks.html
+
+https://www.youtube.com/watch?v=yYrvJ0hYr8I
+
+
+https://emmer.dev/blog/creating-a-java-playground-in-docker/
+https://emmer.dev/blog/calculating-table-size-in-postgresql/
+https://emmer.dev/blog/calculating-table-size-in-mysql/
+https://emmer.dev/blog/faking-sequences-in-mysql/
+https://emmer.dev/blog/why-you-should-use-uuids-for-your-primary-keys/
+https://emmer.dev/blog/tunneling-a-database-connection-with-docker-compose/
+https://emmer.dev/blog/docker-shell-vs.-exec-form/
+https://emmer.dev/blog/you-don-t-need-an-init-system-for-node.js-in-docker/
+https://blog.adamgamboa.dev/bash-scripting-cheat-sheet/
+https://medium.com/@Zard-x/a-detailed-explanation-of-kubernetes-architecture-principles-26abcac29f7c
+http://knes1.github.io/blog/2015/2015-07-08-counting-queries-per-request-with-hibernate-and-spring.html   https://github.com/knes1/todo
+https://vladmihalcea.com/hibernate-statementinspector/
+https://www.youtube.com/watch?v=9GdOMp9AETg&list=PLGIpWs7ejSWU77WEPshqory6UyIoMSRla ElasticSearch eğitimleri
+
+quickperf / sniffy / https://github.com/Lemick/hibernate-query-asserts
+
+https://tech.asimio.net/2017/11/28/An-alternative-to-ThreadLocal-using-Spring.html
+https://plumbr.io/blog/locked-threads/how-to-shoot-yourself-in-foot-with-threadlocals
+https://javarevisited.blogspot.com/2013/01/threadlocal-memory-leak-in-java-web.html#axzz7pAwKNLXA
+https://springhow.com/servlet-filters-in-spring-boot/
+
+https://medium.com/serious-scrum/time-spent-in-scrum-meetings-75e38b08d8
+https://www.nitrobilgisayar.com/iletisim/
+• 
+•
+•
+https://medium.com/mali-m%C3%BC%C5%9Favir-evren-%C3%B6zmen/i%CC%87lk-defa-yurt-d%C4%B1%C5%9F%C4%B1na-uzaktan-%C3%A7al%C4%B1%C5%9Facaklar%C4%B1n-bilmesi-gereken-5-vergisel-konu-7a5b521c008d
+https://levelup.gitconnected.com/upgrade-java8-to-java17-every-java-developer-should-know-43358b30532a
+https://www.ciceksepeti.com/yasemin-cicegi-seramik-saksili-kcm68473344
+
+https://adevblog.site/database-and-kafka-integration-with-testcontainers-in-spring-boot/
+https://adevblog.site/configure-kafka-producer-and-consumer-in-spring-boot/
+https://adevblog.site/configure-kafka-producer-and-consumer-in-spring-boot-x2/
+
+https://codingcraftsman.wordpress.com/2017/01/27/mockito-argument-matching-in-java-8/
+https://codingcraftsman.wordpress.com/2015/02/20/java-mockito-and-mocking-a-callback/
+https://codingcraftsman.wordpress.com/2020/02/07/docker-in-windows-moving-a-mounting
+https://codingcraftsman.wordpress.com/2019/10/20/ineffective-java/
+https://anydebrid.com/
+https://www.reddit.com/r/WarezResources/comments/bdhput/premium_link_generators/
+
+
+An Application Programming Interface (API) gateway is a service that sits between a client and one or more backend services, and provides a single and consistent entry point for the requests sent to these services, regardless of their architecture.
+
+Technically speaking, it acts as a reverse proxy server responsible for:
+
+- Handling incoming API calls.
+- Directing them to the appropriate backend services.
+- Aggregating their results into a single entity.
+- Sending it as a unique response back to the client.
+
+https://blog.devgenius.io/what-is-an-api-gateway-dadd2586bc2c
+
+https://dltlabs.medium.com/using-docker-apis-to-perform-health-checks-cb70f543ef18
+https://towardsdatascience.com/10-common-software-architectural-patterns-in-a-nutshell-a0b47a1e9013
+https://fullstackdeveloper.guru/2020/05/02/how-to-modify-a-rest-service-response-without-modifying-existing-code-in-spring-boot/
+https://medium.com/microservices-in-practice/microservices-in-practice-7a3e85b6624c
+
+RestControllerAdvice Implementation
+A Class Annotating with @RestControllerAdvice annotation and implementing ResponseBodyAdvice<T> with its methods Supports and beforeBodyWrite
+
+@RestControllerAdvice
+public class DemoControllerAdvice implements ResponseBodyAdvice<Map<String, String>> {
+
+    @Override
+    public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
+        String className = returnType.getContainingClass().toString();
+        String methodName = returnType.getMethod().toString();
+        if (className.contains("DemoController_") && methodName.contains("ResponseModification")) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public Map<String, String> beforeBodyWrite(Map<String, String> body, MethodParameter returnType,
+    MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType,
+    ServerHttpRequest request, ServerHttpResponse response) {
+       body.put("body_data", "Age of the Person is 25 years");
+       return body;
+    }
+}
+-----------------------------------------------------------------
+The Cheeky Exceptional Return Workaround
+public <T> T throwCorrectException(int statusCode) {
+   if (statusCode >= 400 && statusCode < 500) {
+      throw new ClientException("Foo");
+   }
+   throw new BadHttpRequest("Bar");
+}
+ 
+public String getFromServer() {
+   Response response = getDataFromServer();
+   if (response.getStatus() == 200) {
+       return response.getBody();
+   }
+   return throwCorrectException(response.getStatus());
+}
+Although all paths result in exception, it’s perfectly ok to make throwCorrectException appear to return anything the caller wants… it doesn’t actually return anything!
+
+Similar, the throw function can be called and its (non existent) return value can be passed through the return statement on the last line of the calling function.
+
+And thus is compiles and we all wonder what we just did.
+
+I blame JavaScript!
+
+
+https://github.com/polovyivan/mongodb-init-db-inside-container
+https://github.com/polovyivan/postgres-init-container-from-dump
+https://github.com/polovyivan/mysql-init-db-on-container-startup
+https://github.com/polovyivan/docker-connection-between-containers
+
+https://oguzhankaracorlu.medium.com/springboot-projesinde-obfuscate-ger%C3%A7ekle%C5%9Ftirmek-306638e5eb52
+https://github.com/OguzhanKaracorlu/springbootobfuscate
+https://medium.com/@javatechie/the-evolution-of-switch-statement-from-java-7-to-java-17-4b5eee8d29b7
+
+https://medium.com/hmh-engineering/dive-into-kubernetes-healthchecks-part-1-73a900fa6dbd
+https://hmh.engineering/dive-into-kubernetes-healthchecks-part-2-a9f83eb712d5
+
+https://www.twitch.tv/videos/1709335880
+https://www.twitch.tv/huseyinbabal/clip/MoralCallousJayFreakinStinkin-K3EbXnqLmMZ4vSpc
+https://www.twitch.tv/huseyinbabal/clip/HeartlessShinyPlumHumbleLife-snYFTyHNRM2ooitF
+https://www.twitch.tv/huseyinbabal
+
+https://juancrg90.me/posts/optimizing-costs-in-github-actions
+https://github.com/JuanCrg90/Clean-Code-Notes
+
+https://www.confianzit.com/cit-blog/golang-vs-java/
+https://www.confianzit.com/cit-blog/pros-and-cons-of-golang/
+https://medium.com/@dexterdarwich/comparison-between-java-go-and-rust-fdb21bd5fb7c
+https://medium.com/mehmetcemyucel/spring-java-hantal-mi-graalvm-quarkus-giris-241a9614c23a
+https://hkdemircan.medium.com/jvm-jdk-jre-graalvm-ve-quarkus-nedir-a71daf16be48
+
+https://medium.com/@ddwen/understanding-hot-deployment-and-hot-reloading-in-spring-boot-172c3a66d81a
+https://betterprogramming.pub/how-to-integrate-spring-native-into-spring-boot-microservices-add2ece541b8
+
+https://github.com/spring-projects-experimental/spring-modulith
+https://www.infoq.com/news/2022/11/spring-modulith-launch/
+https://spring.io/blog/2022/10/21/introducing-spring-modulith
+https://github.com/ajavageek/spring-modulith-sample
+https://github.com/odrotbohm/arch-evident-spring
+
+
+https://maciejwalkowiak.com/blog/spring-boot-component-scan-without-annotations/
+https://reflectoring.io/spring-component-scanning/
+
+https://worador.medium.com/building-a-modular-spring-boot-monolith-b42ab3e424a8
+https://www.infoq.com/news/2022/11/spring-modulith-launch/
+https://maciejwalkowiak.com/blog/postgresql-testcontainers-sql-query-logs/
+https://maciejwalkowiak.com/blog/auto-registering-junit-5-extensions/
+https://maciejwalkowiak.com/blog/resource-as-string-junit-extension
+
+https://vladmihalcea.com/log-sql-spring-boot/
+https://vladmihalcea.com/the-best-way-to-log-jdbc-statements/
+spring-boot.repackage.skip true  // this is not an uber jar just a regular jar
+https://stackoverflow.com/questions/53932444/spring-boot-i18n-in-multi-modules-project
+https://levelup.gitconnected.com/internationalize-your-multi-module-spring-boot-application-33dc83c36dc6
+https://stackoverflow.com/questions/58607829/multi-module-spring-boot-project-messages-properties-is-not-loaded
+https://www.java-success.com/how-to-create-an-empty-multi-module-maven-project-structure/
+
+module-info vs package-info.java
+@Bean
+public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+return http.build();
+}
+
+Required JARs on classpath:
+javax.money:money-api:1.0 (JSR354 money and currency api)
+org.javamoney:moneta:1.0 (Reference implementation)
+javax:annotation-api:1.2. (Common annotations used by reference implementation)
+// Let's create non-ISO currency, such as bitcoin
+// At first, this will throw UnknownCurrencyException
+MonetaryAmount moneys = Money.of(new BigDecimal("0.1"), "BTC");
+// This happens because bitcoin is unknown to default currency
+// providers
+System.out.println(Monetary.isCurrencyAvailable("BTC")); // false
+// We will build new currency using CurrencyUnitBuilder provided by org.javamoney.moneta
+CurrencyUnit bitcoin = CurrencyUnitBuilder
+.of("BTC", "BtcCurrencyProvider") // Set currency code and currency provider name
+.setDefaultFractionDigits(2) // Set default fraction digits
+.build(true); // Build new currency unit. Here 'true' means
+// currency unit is to be registered and
+// accessible within default monetary context
+// Now BTC is available
+System.out.println(Monetary.isCurrencyAvailable("BTC")); // True
+
+Java’s generics are an example of parametric polymorphism. For example, a List<T>
+should behave the same whether T is String, Float, etc.
+Liskov can not demand more tahn parent less than parent
+
+If PrintCompilation is enabled, every time a method (or loop) is compiled, the JVM
+prints out a line with information about what has just been compiled.
+
+Log Storage and Rotation
+Whatever log driver and analysis solution you end up using, you still need to decide
+how you’re going to store your logs and for how long. If you haven’t thought about
+this at all, you likely have containers using the default logging that are slowly eating
+up all the hard disk until they crash the host.
+The Linux logrotate utility can be used to manage the growth of logfiles. Typically,
+several generations of logfiles are used, with files being moved through the generations
+at regular intervals. For example, in addition to the current log, you may have
+father, grandfather, and a great-grandfather logs. The grandfather and greatgrandfather
+are compressed to save storage. Every day, the current log is moved to the
+father log, the old father log is compressed and moved to the grandfather log, the
+grandfather becomes great-grandfather, and the old great-grandfather log is deleted.
+You can use the following logrotate configuration to achieve this, which should be
+saved to a new file under /etc/logrotate.d/ (e.g., /etc/logrotate.d/docker), or added
+to /etc/logrotate.conf:
+/var/lib/docker/containers/*/*.log {
+daily
+rotate 3
+compress
+delaycompress
+missingok
+copytruncate
+}
+
+springboot bazı veritabanları belli bir süre aktivite olmazsa otomatik kapanır. Bunu engellemek için
+testWhileIdle: true
+validationQuery: SELECT 1
+
+Rabbitmq client high availability
+factory.setAutomaticRecoveryEnabled(true);
+
+
+Closure composition andThen/Compose
+Deferred execution is one of the primary use cases for Supplier.
+
+
+https://blog.devgenius.io/spring-boot-security-configuration-practically-explained-part5-from-bfb87adc1a58
+http://bekwam.blogspot.com/2015/02/dynamic-fx-application-modules-part-1.html
+http://bekwam.blogspot.com/2015/02/dynamic-fx-application-modules-part-6.html
+
+https://cehennempass.pw/download/afzf6yybrmcj
+https://yabancidizi.co/film/wish-dragon-izle
+
+https://stackoverflow.com/questions/62742150/how-do-i-dynamically-load-modules-from-a-directory-in-java-9
+https://medium.com/bili%C5%9Fim-hareketi/full-mu-stack-developer-e64bacda48c6
+https://medium.com/t%C3%BCrkiye/yerli-uretim-82de42090c2f
+
+
+<dependency>
+    <groupid>javax</groupid>
+    <artifactid>javaee-api</artifactid>
+    <version>8.0</version>
+    <scope>provided</scope>
+</dependency>
+with this
+<dependency>
+    <groupid>jakarta.platform</groupid>
+    <artifactid>jakarta.jakartaee-api</artifactid>
+    <version>8.0.0</version>
+    <scope>provided</scope>
+</dependency>
+
+<dependency>
+    <groupid>jakarta.platform</groupid>
+    <artifactid>jakarta.jakartaee-api</artifactid>
+    <version>8.0.0</version>
+    <scope>provided</scope>
+</dependency>
+<dependency>
+    <groupid>jakarta.faces</groupid>
+    <artifactid>jakarta.faces-api</artifactid>
+    <version>2.3.2</version>
+    <scope>provided</scope>
+</dependency>
+
+https://github.com/eugenp/tutorials/tree/master/docker-modules
+https://vahid.blog/post/2022-05-05-system-design-interview-cheat-sheet/
+
+
+https://medium.com/swlh/hexagonal-architecture-a596390269fd
+
+https://medium.com/javarevisited/50-microservices-interview-questions-for-java-programmers-70a4a68c4349
+https://medium.com/javarevisited/unit-testing-backward-compatibility-of-message-format-ada50916a453
+https://stackoverflow.com/questions/2403132/merge-concat-multiple-jsonobjects-in-java
+https://github.com/SimonHarmonicMinor/unit-testing-backward-compatibility-of-messages-example
+https://medium.com/javarevisited/forward-compatible-enum-values-in-api-with-java-jackson-a86747eb07b8
+https://levelup.gitconnected.com/stop-using-postconstruct-in-your-java-applications-2a66fb202cb8 lazy initialize with supplier   The main purpose of @PostConstruct is to allow access to injected members after object creation
+
+Grokking the Spring Boot Interview

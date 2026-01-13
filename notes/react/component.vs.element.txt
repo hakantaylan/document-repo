@@ -1,0 +1,28 @@
+https://www.freecodecamp.org/news/react-interview-question-what-gets-rendered-in-the-browser-a-component-or-an-element-1b3eac777c85/
+https://ui.dev/react-elements-vs-react-components/
+https://medium.com/@fay_jai/react-elements-vs-react-components-vs-component-backing-instances-14d42729f62
+https://reacttraining.com/blog/jsx-the-confusing-parts/
+
+A React element is an object representation of a DOM node. Notice I used the word describe. It’s important to note that a React element isn’t actually the thing you’ll see on your screen. Instead, it’s just an object representation of it. There are a few reasons for this. The first is that JavaScript objects are lightweight — React can create and destroy these elements without too much overhead. The second reason is React can analyze the object, diff it with the previous object representation to see what changed. Then, React can update the actual DOM only where those changes occurred. This has some performance upsides to it.
+
+However, you never use the “new” operator to create React Components. Instead, you’ll use ReactDOM.render() to render a React Element into a particular DOM element, and the return value of ReactDOM.render() will be the React Component instance.
+
+
+// Here's a component instance
+var componentInstance = ReactDOM.render(<CustomForm />, document.getElementById("root"));
+
+// Here's a dom instance
+var domInstance = ReactDOM.findDDOMNode(componentInstance);
+
+However, accessing the underlying DOM node associated with the component instance is actually pretty easy — we use ReactDOM.findDOMNode() and pass in the component instance as the argument. So what does this have to do with the term “component backing instance?” Anticlimactically, React refers to this actual DOM node as the Component backing instance throughout its documentation.
+
+https://reacttraining.com/blog/useEffect-is-not-the-new-componentDidMount/
+// You may call setState() immediately in componentDidMount().
+// It will trigger an extra rendering, but it will happen
+// before the browser updates the screen. This guarantees that
+// even though the render() will be called twice in this case,
+// the user won’t see the intermediate state.
+
+
+https://overreacted.io/a-complete-guide-to-useeffect/
+https://overreacted.io/how-are-function-components-different-from-classes/

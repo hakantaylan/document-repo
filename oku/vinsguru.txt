@@ -1,0 +1,23 @@
+﻿https://www.vinsguru.com/
+
+https://github.com/vinsguru/vinsguru-blog-code-samples/tree/master/cqrs-pattern
+https://github.com/vinsguru/vinsguru-blog-code-samples/tree/master/db
+https://github.com/vinsguru/vinsguru-blog-code-samples/tree/master/dto-share
+https://github.com/vinsguru/vinsguru-blog-code-samples/tree/master/kafka-event-driven
+https://github.com/vinsguru/vinsguru-blog-code-samples/tree/master/kafka-saga-pattern
+
+https://github.com/vinsguru/vinsguru-blog-code-samples/tree/master/saga-pattern
+https://github.com/vinsguru/vinsguru-blog-code-samples/tree/master/architectural-pattern/saga-choreography
+https://github.com/vinsguru/vinsguru-blog-code-samples/tree/master/materialized-view
+
+https://github.com/vinsguru/vinsguru-blog-code-samples/tree/master/architectural-pattern
+
+https://www.vinsguru.com/category/design-pattern/
+https://www.vinsguru.com/architectural-pattern-orchestration-saga-pattern-implementation-using-kafka/
+https://www.vinsguru.com/choreography-saga-pattern-with-spring-boot/
+https://tuhrig.de/saga-pattern-with-spring-boot-and-activemq/
+https://www.vinsguru.com/cqrs-pattern-microservice-design-patterns/           @ConditionalOnProperty(name = "app.write.enabled", havingValue = "true")
+https://www.vinsguru.com/scatter-gather-pattern/
+
+https://www.vinsguru.com/materialized-view-postgresql-spring-boot/
+https://www.vinsguru.com/category/performance-testing/jmeter/    jmeter kaynak

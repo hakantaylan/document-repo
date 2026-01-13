@@ -1,0 +1,55 @@
+﻿https://github.com/callicoder/jpa-hibernate-tutorials    spring examples
+spring javax.validaiton ve junit4 bağımlılığını artık eklemiyor
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>2.0.1.Final</version>
+		</dependency>
+https://docs.spring.io/spring-data/data-commons/docs/1.6.1.RELEASE/reference/html/repositories.html   Spring repositories
+https://www.baeldung.com/spring-data-repositories     spring interview sorularına ekle
+Spring bean scopes açıkla
+https://codete.com/blog/5-common-spring-transactional-pitfalls/        ++++
+https://www.baeldung.com/spring-programmatic-transaction-management
+https://medium.com/@dururyener/transaction-y%C3%B6netimi-ve-spring-boot-transactional-kullan%C4%B1m%C4%B1-f894cc66c9d9
+https://gist.github.com/ydurur/b0745c193d4e68847ea8d0314c0047cf
+https://medium.com/@dururyener/spring-transaction-isolation-seviyeleri-33821aa1980
+
+
+Bir uygulamada transaction management hangi katmanda olmalı?
+
+https://blog.frankel.ch/state-jvm-desktop-frameworks/1/
+https://blog.frankel.ch/digging-hibernate-query-cache/
+
+
+https://github.com/iluwatar/java-design-patterns/tree/master/event-sourcing
+https://github.com/iluwatar/java-design-patterns
+
+
+import static org.hibernate.cfg.AvailableSettings.*;
+
+public class EntityManagerFactoryFactory {
+
+    private static EntityManagerFactory factory;
+
+    private static Map<String, Object> properties() {
+        return Map.of(JPA_JDBC_DRIVER, Driver.class.getName(),
+                JPA_JDBC_URL, "jdbc:h2:mem:testdb",
+                JPA_JDBC_USER, "sa",
+                DIALECT, H2Dialect.class,
+                HBM2DDL_AUTO, "create-only",
+                SHOW_SQL, true);
+    }
+
+Spring custom repository @NoRepositoryBean örnek
+Spring hibernate optimistik lock example
+https://github.com/harikrishna553/springboot/tree/master/jpa/ObjectOptimisticLockingFailureException
+https://github.com/harikrishna553/springboot/tree/master/jpa/deleteQuery
+
+https://medium.com/programming-sharing/data-auditing-in-spring-data-jpa-804d804f6fa9
+https://github.com/Programming-Sharing/spring-data-jpa-demo
+https://medium.com/programming-sharing/what-is-in-memory-caching-55c338801570
+
+https://github.com/harikrishna553/springboot/tree/master/jpa/readOnlyRepository
+
+https://medium.com/programming-sharing/routing-read-write-datasource-in-spring-99bcc4468f94   okuuuuu
+https://medium.com/programming-sharing/an-overview-of-spring-data-jpa-f7503f06add9

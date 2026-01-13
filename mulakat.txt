@@ -1,0 +1,96 @@
+-OOP-
+OOPnin temel özellikleri nedir?
+Polimorfizm nedir? Polimorfizmi elde etmenin yolları nelerdir?
+SOLID nedir? Kısaca açıkla
+Relation, Aggregation ve Composition nedir?
+Composition ve Inheritance arasındaki nasıl bir ilişki vardır? Hangisini kullanmayı daha çok tercih edersin?
+IOC (Invertion Of Control) nedir? Bildiğin IOC yöntemleri?
+Recursion nedir? Tail recursion nedir? Bir problemi recursive ve iterative yolla çözmenin memory açısından farkı nedir?
+
+-Java-
+Java için neden platform independent programlama dili denir?
+Stack ve Heap nedir? Bir java programı kabaca nasıl çalışır? Stackoverflow exception nedir? Hangi durumda atılır?
+Java'da kaç çeşit referans vardır? Bunlar ne için kullanılır?*******
+Memory leak nedir? Hangi durumlarda oluşur?
+Shallow Copy ve Deep Copy nedir? Java da örnek ver (clone() default impl. shallowdur.serialize/deserialize deep copy yapar)
+Marker Interface nedir? Javada bildiğin Marker Interface'leri say
+Serialization nedir?
+Refactoring nedir?
+
+Metod overloading ve metod overriding nedir?
+Java da static metodları override edebilir miyiz? overload edebilir miyiz?
+Java da constructorları override edebilir miyiz? overload edebilir miyiz?
+Javada çoklu kalıtım var mıdır? Diamond problemi nedir?
+Referance escape during object construction nedir? ******
+this ve super anahtar kelimeleri ne için kullanılır
+Javadaki istisna(Exception) yapılarından bahset. İstisna hiyerarşisinden bahset. Exception, Error, Throwable nedir?
+
+Javada bildiğin veri yapılarından bahset. (veya Java Collections framework'ünden bahset)  HashMap nasıl çalışır? Veriler hashmap'de nasıl tutulur?
+LinkedList ve ArrayList'i karşılaştır. Birinin diğerine göre avantaj ve dezavantajları nelerdir? Hangi durumda LinkedList hangi durumda ArrayList kullanmak daha avantajlıdır?
+Binary Tree'leri search etmek için hangi yaygın algoritmalar kullanılır?********
+In BFS algorithm, Queue data structure is used.
+In DFS algorithm, Stack data structure is used.
+
+-Swing- 
+Swing'de bildiğin layout manager'lardan bahset. Bana BorderLayout'u anlat/ Gridbag layout'u anlat
+Event Dispatch Thread nedir?What is EDT thread in Swing?
+Swing bileşenlerindeki paint() ve repaint() metodları arasında ne fark vardır? paint varken repaint'e neden gerek duyulmuş olabilir ki?
+Bir düğmeye(JButton) basıldığında veritabanını okuyup ekranı ilgili data ile dolduran kod yazman gerekiyor. Bu durumu nasıl ele alırsın?
+
+-Design Patterns-
+Bildiğin tasarım örüntülerinden bahset. (Factory ve Singleton olmasın lütfen :) )
+Abstraction ve Encapsulation nedir? (Java'da bunları sağlamanın yolları nelerdir?)
+Java'da Singleton'ı sağlamanın kaç yolunu biliyorsun?
+
+-MultiThread & Concurrency-
+syncronised anahtar kelimesi ne için kullanılır? Javada kaç çeşit senkronizasyon vardır.
+Which is more preferred  Synchronized method or Synchronized block?
+Dead lock oluşturacağı kesin olan bir kod örneği yaz (Psudo kod olur)
+Context Switching nedir?
+
+
+-J2EE-
+thin client thick client nedir?
+Kaç çeşit EJB vardır? Session Bean (Stateless, Statefull, Singleton) ve MDB
+Hangi durumlarda hangi bean kullanılır?
+Bean'lerin lifecycle döngülerinden kısaca bahset
+Hangi EJB çeşitleri sadece istemci tarafında kullanılır (Session bean ve Singleton Bean)
+Application Exception nedir?
+
+-RDMBS & Hibernate -
+Normalizasyon nedir? Kaç çeşit normalizasyon vardır. 1NF'den 5NF'e doğru geçtikçe nasıl bir değişiklik olur? (Referential integrity ve performans açısından)
+İlişkisel veritabanlarında transaction'ların ACID olarak kısaltılan özellikleri vardır. Bunlar nelerdir?
+İlişkisel veri tabanlarında veri tutarlılığını korumak için kullanılan kısıtlar nelerdir?
+Hibernate'de polimorfik data yapılarını kaç farklı şekilde map edebilirsin?
+N+1 Problemi nedir? Hibernate'de bunu nasıl aşarsın? (Join Fetch nedir kullandın mı?)
+Cascading nedir?
+Sana yoğun şekilde DB'ye okuma yazma yapan bir sistemde yavaşlık problemi var desem kodda ve veritabanında perfomansı arttırmak için nerelere bakarsın? Nereleri kontrol edersin?
+
+-Test-
+Bildiğin test türleri nedir? Testleri özelliklerine göre grupla
+White Box test nedir? Black Box test nedir?
+Cyclomatic complexity nedir? Birim test ile ne ilişkisi vardır?
+Birim test ve entegrasyon testi arasında ne fark vardır?
+Mocking framework kullandın mı? Mock nedir? Stub nedir?
+Yazılım geliştirirken kod kalitesi nasıl sağlanır ve korunur ?
+
+
+-Non-technical-
+Mevcut işinde neden şikayetçisin ki Havelsan'ın mülakat çağrısını kabul ettin?
+Bilmediğin bir problemi çözmen bekleniyor. Bu problemi nasıl çözersin? İzleyeceğin adımlar neler olur?
+Kendinle ilgili kuvvetli ve zayıf(geliştirmeye açık) gördüğün yönlerin nelerdir?
+İşten fırsat bulduğun zamanlarda mesleğinle ilgili teknik siteleri takip eder misin? Hangileri?
+Bugüne kadar çalıştığın en iyi çalışma arkadaşı ve en kötü çalışma arkadaşını tarif et
+Bugüne kadar çalıştığın en iyi yöneticiyi ve en kötü yöneticiyi tarif et.
+Tipik bir çalışma günün/haftan nasıl geçer?
+Yeni veya birkaç senelik mezunsa mezuniyet notun neden daha yüksek değil?
+Okuldaki hocalarına / Eski patronuna sorsaydık seni nasıl tarif ederdi?
+Mesleğinle ilgili en hoşlandığın şey ne? Mesleğinle ilgili sevmediğin şeyler ne?
+Hayatında aldığın en zor karar neydi?
+Bugüne kadar yaşadığın en büyük pişmanlık neydi?
+
+
+-Genel-
+Process nedir? Bildiğin IPC yöntemleri nelerdir?
+Bildiğin yazılım geliştirme metodolojileri nelerdir?
+Yazılım yaşam döngüsü aşamaları nedir?

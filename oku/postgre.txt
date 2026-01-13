@@ -1,0 +1,20 @@
+﻿https://demirhuseyinn-94.medium.com/postgresql-veritaban%C4%B1nda-yazma-i%CC%87%C5%9Flemlerini-etkileyen-fakt%C3%B6rler-ve-h%C4%B1zland%C4%B1rmak-f12cfa0972db
+
+https://medium.com/sql-t%C3%BCrkiye/postgresql-logical-replication-ile-online-database-upgrade-yakla%C5%9F%C4%B1m%C4%B1-a5423dac8486
+https://medium.com/swlh/pgbouncer-installation-configuration-and-use-cases-for-better-performance-1806316f3a22
+https://medium.com/trendyol-tech/y%C3%BCksek-eri%C5%9Filebilir-ve-%C3%B6l%C3%A7eklenebilir-postgresql-veritaban%C4%B1-k%C3%BCmesi-da172f637b9
+
+https://zhangjingqiang.wordpress.com/2020/03/16/haproxy-pgbouncer-and-jdbc/
+https://medium.com/trendyol-tech/postgresql-receiving-patroni-auto-failover-notification-61b226699603
+
+
+https://www.percona.com/blog/2019/10/31/postgresql-application-connection-failover-using-haproxy-with-xinetd/
+
+Patroni
+Patroni Postgresql'i dağıtık yapıda highly available şekilde kullanmak için kullanılan bir araçtır. Python ile yazılmıştır. DB node'larının konfigürasyonlarının değiştirilmesi, bootstrap edilmesi gibi işlemler için kullanılır. Zookeper, etcd, consul gibi bir koordinatöre ihtiyaç duyar. (Hangi DB nod'un konfigürasyonunun değiştirileceğini anlamak için)
+http://www.veritabaniegitimleri.com/2021/02/17/patroni-kurulum/
+https://www.opsdash.com/blog/postgres-getting-started-patroni.html
+
+
+Xinetd (Extended Internet Service Daemon) is a Super-server daemon. It can listen to requests on custom ports and respond to requests by executing custom logic.
+Basit bir shell veya bash script'i ile bir port'dan bu shell scriptinin sonucuna göre bir bilgi dönülebilir. Bu deamon service gibi çalışır.

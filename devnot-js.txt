@@ -1,0 +1,12 @@
+https://github.com/alexanderanter/JavaScript30
+https://github.com/loverajoel/jstips
+https://github.com/ryanmcdermott/clean-code-javascript
+https://github.com/h5bp/Front-end-Developer-Interview-Questions
+https://github.com/trekhleb/javascript-algorithms
+https://github.com/metagrover/ES6-for-humans
+https://github.com/Asabeneh/30-Days-Of-JavaScript
+
+https://dev.to/lydiahallie/javascript-visualized-scope-chain-13pd
+https://engineering.cimri.com/javascript-visualized-prototypal-inheritance-4120ec34f636
+https://engineering.cimri.com/javascript-visualized-the-javascript-engine-6c8f38e6faed
+https://engineering.cimri.com/javascript-visualized-scope-chain-f147b195b5d6

@@ -1,0 +1,31 @@
+﻿Arrange Given Numbers To Form The Biggest Number Possible
+Write a function that takes a number as input and outputs the biggest number with the same set of digits.
+
+For example, suppose the input is 423865, then the biggest number with these digits is 865432    Çözzz
+
+https://java2blog.com/sort-array-of-0s-1s-and-2s/
+https://java2blog.com/sliding-window-maximum-java/
+
+http://blog.gainlo.co/index.php/2016/04/08/if-a-string-contains-an-anagram-of-another-string/
+http://blog.gainlo.co/index.php/2015/10/22/a-step-by-step-guide-to-dynamic-programming/
+
+https://gist.github.com/TSiege/cbb0507082bb18ff7e4b
+https://github.com/ashish-chopra/Structures
+https://www.reddit.com/r/learnprogramming/comments/3gpvyx/algorithms_and_data_structures_cheat_sheets/
+https://github.com/phishman3579/java-algorithms-implementation
+https://algodaily.com/lessons/an-executable-data-structures-cheat-sheet
+
+https://github.com/cl2333/Grokking-the-Coding-Interview-Patterns-for-Coding-Questions
+https://github.com/cs-cordero/interview-prep
+
+
+http://blog.gainlo.co/index.php/category/system-design-interview-questions/
+https://afteracademy.com/blogs
+LRU Cache https://afteracademy.com/blog/lru-cache-implementation
+
+https://afteracademy.com/blog/reverse-a-stack-using-recursion
+
+https://www.geeksforgeeks.org/implement-a-stack-using-single-queue/?ref=rp
+
+https://www.geeksforgeeks.org/min-heap-in-java/
+https://www.geeksforgeeks.org/max-heap-in-java/

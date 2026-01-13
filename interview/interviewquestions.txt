@@ -1,0 +1,175 @@
+@Component
+@Repository
+@Controller
+@Service
+anotasyonları hangi layer'da bulunur.
+
+Spring'in out of box sunduğu repository'ler var bunları say  CrudRepository
+PagingAndSortingRepository
+JpaRepository
+
+@Controller vs RestController
+@RestController:
+This annotation is a specialized version of @Controller which adds @Controller and @ResponseBody annotation automatically. so we do not have to add @ResponseBody to our mapping methods. That means @ResponseBody is default active.
+If you use @RestController you cannot return a view (By using Viewresolver in Spring/Spring-Boot)
+@RestController also converts the response to JSON/XML automatically as @ResponseBody makes the returned objects to something that could be in the body, e.g. JSON or XML
+
+
+Spring'de scope'ları say
+https://www.genuitec.com/spring-frameworkrestcontroller-vs-controller/
+https://www.edureka.co/blog/interview-questions/spring-interview-questions/    aop explained JoinPoint Advice Proxy
+
+js scope nedir context nedir?
+Context'i nasıl değiştirirsin? (call, apply, bind)
+Call and Apply functions are used to change the context while calling a function
+bind can change context without calling that function. .bind allows you to set the this value now while allowing you to execute the function in the future, because it returns a new function object.
+
+arrow functions hangi ihtiyaçdan dolayı ortaya çıkmış, diğer fonksiyonlardan farkı ne?
+High Order Function nedir?
+Closure nedir?
+Prototypal inheritance vs classical (class based) inheritance
+Class inheritance: instances inherit from classes (class-subclass relation) and this is the most close relation between two object in OOP. This ends with hierarchical class taxonomies (vertical hierarchy)
+Prototypal inheritance: Instances inherits from other objects. It may not be only one objct but several object. (This is more like composition. selective inheritance and does not generate vertical taxonomies)
+
+What is functional programming
+Functional programming is a way of producing programs by composing functions and avoding shared or mutable state.
+
+Can you name two important programming paradigm about javascript?
+Multi-paradigm js enables both functional and OOP programming
+Prototype based inheritance
+
+
+JavaFx
+Layouts
+BorderPane
+GridPane
+HBox
+VBox
+FlowPane
+
+Platform.runLater
+@FXML anotasyonu ne için kullanılır?
+fxml ile data binding nasıl yapılır?
+
+
+Concurrency vs. Parallelism
+Java ExecutorService thread pool çeşitleri   singlethredapool fixed, cached
+How to stop a thread?
+Difference between wait and sleep
+Thread state'leri nelerdir?
+Context switching nedir?
+What is context-switching in multi-threading?
+Context Switching is the process of storing and restoring of CPU state so that Thread execution can be resumed from the same point at a later point of time. Context Switching is the essential feature for multitasking operating system and support for multi-threaded environment.
+How can two thread communicate with each other? (wait/notify)
+wait çağıran thread'in monitörü bırakıp WAITING state'ine geçmesini sağlar.  Başka bir thread notify edince wait'den sonraki kod devam eder.
+notify() aynı monitör üzerinde bekleyen (wait) thread'leri bilgilendirir. notify monitörü bırakmaz. notifiy çağırıldıktan sonra synchronized block'tan (veya metoddan) çıkınca monitör bırakılır.
+
+In general, a thread that uses the wait() method confirms that a condition does not exist (typically by checking a variable) and then calls the wait() method. When another thread establishes the condition (typically by setting the same variable), it calls the notify() method. The wait-and-notify mechanism does not specify what the specific condition/ variable value is. It is on developers hand to specify the condition to be checked before calling wait() or notify().
+
+Java Thread States
+NEW, RUNNABLE, BLOCKED, WAITING/TIMED_WAITING, TERMINATED
+RUNNING diye bir state yok !!!!
+Bir thread lock'ı vea synchronized metoda girmeyi bekliyorsa BLOCKED state'inde
+Bir thread lock üzerinde wait çağırmışsa veya başka bir thread'i join metodu ile bekliyorsa WAITING state'inde
+Bir thread lock üzerinde wait(timeout ms) çağırmışsa veya başka bir thread'i join(timeout ms) metodu ile bekliyorsa TIMED_WAITING state'inde
+
+What is context switching?
+In Context switching the state of the process (or thread) is stored so that it can be restored and execution can be resumed from the same point later. Context switching enables the multiple processes to share the same CPU.
+
+
+Mongo
+Mongo veritabanı ne çeşit bir veritabanıdır? Hangi durumlarda tercih etmek daha iyidir?
+https://www.stackchief.com/tutorials/MongoDb%20Schema%20Design
+https://betterprogramming.pub/how-to-store-documents-larger-than-16-mb-in-mongodb-aecc957bbe6c
+
+Mongo'da maximum document size nedir? Bu sorunu nasıl aşarsın?
+https://stackoverflow.com/questions/40175338/mongodb-workaround-for-document-above-16mb-size
+
+Mongo'da 2 documanı nasıl join'lersin ? lookup aggregation
+Onde drawback of using $lookup operator is that it does not work in sharded collections.
+
+MongoDB can perform aggregation in 3 ways and they are as follows:
+
+Aggregation Pipeline
+Map-Reduce Function
+Single Purpose Aggregation Method
+
+https://data-flair.training/blogs/mongodb-aggregation-tutorial/
+
+What is MongoDB ObjectId?  _id field in an inserted document
+
+It is a 12-byte binary BSON type that contains any 12 bytes. To generate MongoDB ObjectId, we will be using a default algorithm. An ObjectIds 12 bytes will then contain the following:
+
+Size	             Description
+4 bytes              A 4-byte value representing the seconds since the Unix epoch
+3 bytes	             3-byte machine identifier
+2 bytes	             2-byte process id
+3 bytes              3-byte counter, starting with a random value
+
+
+Sparse index karşılığı bulunmayan dökümanları indexlemez. Bu sayade index boyutu küçüktür.
+Sparse indexes only contain entries for documents that have the indexed field, even if the index field contains a null value. The index skips over any document that is missing the indexed field. The index is sparse because it does not include all documents of a collection. By contrast, non-sparse indexes contain all documents in a collection, storing null values for those documents that do not contain the indexed field.
+
+Both writes and reads become faster when you add more slaves to a replica set. Is this statement true or false? Why?
+False. All write operations are done only on the master. On the other hand, read operations can be made on any instance slave or master. Therefore, only reads become faster when you add more slaves to a replica set.
+
+
+
+
+C++ Questions
+template metod nedir? Ne için kullanılır
+virtual function nedir? Ne için kullanılır?   C++ polimorphism
+friend  class ya da friend metod nedir?
+struct vs class???
+std::vector and std::list 
+Vector vs ArrayList hangi durumda hangisini kullanırsın?  (Vector = array list,  arrayList = LinkedList   list = Doubly LinkedList)
+Vector thread safe, diğerleri değil.
+
+There is no concept of interface in C++,
+You can simulate the behavior using an Abstract class.
+Abstract class is a class which has atleast one pure virtual function each class inheriting from the abstract class must implement the pure virtual functions in order that it's instances can be created.
+
+virtul function vs pure virtual functions
+
+Without "virtual" you get "early binding". Which implementation of the method is used gets decided at compile time based on the type of the pointer that you call through.
+
+With "virtual" you get "late binding". Which implementation of the method is used gets decided at run time based on the type of the pointed-to object - what it was originally constructed as. This is not necessarily what you'd think based on the type of the pointer that points to that object.
+
+class Base
+{
+  public:
+            void Method1 ()  {  std::cout << "Base::Method1" << std::endl;  }
+    virtual void Method2 ()  {  std::cout << "Base::Method2" << std::endl;  }
+};
+
+class Derived : public Base
+{
+  public:
+    void Method1 ()  {  std::cout << "Derived::Method1" << std::endl;  }
+    void Method2 ()  {  std::cout << "Derived::Method2" << std::endl;  }
+};
+
+Base* obj = new Derived ();
+  //  Note - constructed as Derived, but pointer stored as Base*
+
+obj->Method1 ();  //  Prints "Base::Method1"
+obj->Method2 ();  //  Prints "Derived::Method2"
+
+class Shape {
+   protected:
+      int width, height;
+
+   public:
+      Shape(int a = 0, int b = 0) {
+         width = a;
+         height = b;
+      }
+      
+      // pure virtual function
+      virtual int area() = 0;
+};
+The = 0 tells the compiler that the function has no body and above virtual function will be called pure virtual function.
+
+
+
+

@@ -1,0 +1,4 @@
+https://nurkiewicz.com/2013/09/instanceof-operator-and-visitor-pattern.html
+https://github.com/nurkiewicz/typeof
+https://nurkiewicz.com/2015/09/displaying-progress-of-spring.html
+https://github.com/nurkiewicz/spring-startup-progress

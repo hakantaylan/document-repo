@@ -1,0 +1,11 @@
+https://www.youtube.com/playlist?list=PLeKd45zvjcDFUEv_ohr_HdUFe97RItdiB
+https://www.cl.cam.ac.uk/teaching/2021/ConcDisSys/dist-sys-notes.pdf
+https://www.cl.cam.ac.uk/teaching/2021/ConcDisSys/dist-sys-slides.pdf
+https://www.youtube.com/watch?v=bEbeZPVo98c
+https://martin.kleppmann.com/
+https://martin.kleppmann.com/2014/11/25/hermitage-testing-the-i-in-acid.html
+https://github.com/ept/hermitage
+https://www.alachisoft.com/blogs/distributed-locking-2/
+
+
+https://vimeo.com/77169207   replicated data conssitency through baseball

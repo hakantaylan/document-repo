@@ -1,0 +1,88 @@
+﻿https://www.youtube.com/watch?v=-0vi_yI6RxA
+
+https://www.javaguides.net/2019/01/spring-mvc-project-structure.html
+https://github.com/RameshMF/Hibernate-ORM-Tutorials
+
+mvn versions:display-dependency-updates
+
+https://github.com/RameshMF/Hibernate-ORM-Tutorials
+https://github.com/RameshMF/Java-Coding-Problems
+https://www.javaguides.net/p/maven.html
+https://github.com/RameshMF/javascript-algorithms
+https://github.com/RameshMF/spring-boot2-jpa-crud-example
+https://github.com/RameshMF/JDBC-Tutorial
+https://github.com/RameshMF/jackson-json-tutorial
+https://github.com/RameshMF/java-json-processing-tutorial
+https://github.com/RameshMF/JPA-Tutorial
+
+https://medium.com/@edvinsantonovs/why-development-teams-should-use-editorconfig-f58011b1cc56
+https://devhints.io/editorconfig
+
+https://medium.com/@tariqul.islam.rony/learning-java-and-spring-boot-with-visual-studio-code-vscode-part-1-54073f2fa264
+https://medium.com/@tariqul.islam.rony/spring-boot-with-visual-studio-code-visual-studio-code-part-2-7943febb52f8
+
+
+https://howtodoinjava.com/maven/
+
+https://howtodoinjava.com/microservices/hoverfly-microservices-virtualization-tutorial/
+https://howtodoinjava.com/java/exception-handling/best-practices-for-for-exception-handling/
+https://howtodoinjava.com/best-practices/13-best-practices-for-writing-spring-configuration-files/
+https://www.springboottutorial.com/
+https://howtodoinjava.com/spring-boot/actuator-endpoints-example/
+https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto-spring-boot-application
+
+https://springframework.guru/blog/
+
+https://docs.spring.io/spring-boot/docs/current/reference/html/howto.html#howto-hotswapping
+Hot swapping spring boot
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-devtools</artifactId>
+    <optional>true</optional>
+</dependency>
+
+https://lankydan.dev/2017/06/18/using-jms-in-spring-boot
+https://github.com/lankydan/spring-boot-jms
+
+Derlenmiş bir spring boot uygulamasını 3 şekilde çalıştırabiliriz
+1 - Eğer jar oluşturulmuşsa (mvn package) java -jar jarname
+2 - Spring boot maven plugin kurulu ise mvnw spring-boot:run
+3 - Ortamda mven kurulu ise mvn spring-boot:run
+
+mvn package veya mvnw package  jar oluşturur.
+https://lankydan.dev/2017/04/08/request-mapping-with-multiple-rest-controllers
+https://howtodoinjava.com/spring-boot2/logging/multiple-log-files/
+https://howtodoinjava.com/spring-boot2/logging/embedded-server-logging-config/
+https://howtodoinjava.com/spring-boot2/logging/performance-logging-aspectj-aop/
+https://howtodoinjava.com/spring-boot2/logging/multiple-log-files/
+
+Eğer persistence için hibernate kullnılıyorsa multiple insert için spring.jpa.properties.hibernate.hbm2ddl.import_files=file1.sql,file2.sql
+Eğer persistence için jpa kullanılıyorsa
+spring.datasource.data=/META-INF/sql/init-*.sql
+spring.datasource.schema=/META-INF/sql/schema-*.sql 
+spring.datasource.data=import_active_users.sql,import_inactive_users.sql
+spring.datasource.data=import_*_users.sql
+
+PA has features for DDL generation, and these can be set up to run on startup against the database. This is controlled through two external properties:
+
+spring.jpa.generate-ddl (boolean) switches the feature on and off and is vendor independent.
+spring.jpa.hibernate.ddl-auto (enum) is a Hibernate feature that controls the behavior in a more fine-grained way.
+
+https://springframework.guru/using-log4j-2-spring-boot/
+https://blog.burakkutbay.com/spring-boot-dersleri-application-properties-dosyasi-nedir-ve-ozellikleri.html/
+https://blog.burakkutbay.com/intellij-idea-spring-boot-developer-tools-ozelligini-kullanmak.html/
+
+https://blog.burakkutbay.com/spring-boot-developer-tools-nedir-ve-kullanimi.html/
+https://www.baeldung.com/spring-data
+https://mkyong.com/tag/spring-data/
+https://mkyong.com/spring-data/spring-data-add-custom-method-to-repository/
+
+https://levelup.gitconnected.com/authentication-using-json-web-tokens-part-i-4f2eeaca22d7
+https://medium.com/javarevisited/authentication-using-json-web-tokens-part-ii-b21455692a0b
+
+https://github.com/BrkSe/JwtAuthentication
+https://blog.burakkutbay.com/spring-boot-dersleri.html
+
+https://docs.spring.io/spring-boot/docs/2.0.x/reference/html/production-ready-metrics.html
+
+git HEAD@{1} öğren git reflog öğren

@@ -1,0 +1,38 @@
+﻿https://github.com/florian/reading-notes/blob/master/papers/005_Software_Engineering_at_Google.md
+
+https://medium.com/ssense-tech/event-sourcing-part-i-understanding-what-it-is-core-components-and-common-misconceptions-5dec65f6d61
+https://medium.com/ssense-tech/event-sourcing-part-ii-implementing-an-end-to-end-solution-68b7dbefe89
+https://medium.com/ssense-tech/event-sourcing-part-iii-handling-different-access-patterns-3660c00e3d24
+
+https://domaincentric.net/blog/event-sourcing-projections   event sourcing projection patterns oku
+https://orhantuncer.medium.com/
+https://medium.com/@suadev
+
+
+https://jack-vanlightly.com/blog/2018/5/20/event-driven-architectures-the-queue-vs-the-log
+https://jack-vanlightly.com/blog/2018/5/21/event-driven-architectures-queue-vs-log-case-study
+https://jack-vanlightly.com/blog/2018/4/17/processing-pipelines-series-introduction
+
+https://jack-vanlightly.com/blog/2019/1/25/building-a-simple-distributed-system-the-what
+https://jack-vanlightly.com/blog/2019/1/27/building-a-simple-distributed-system-the-protocol
+https://jack-vanlightly.com/blog/2019/1/27/building-a-simple-distributed-system-formal-verification
+https://jack-vanlightly.com/blog/2019/2/1/building-a-simple-distributed-system-the-implementation
+https://jack-vanlightly.com/blog/2019/2/9/building-a-simple-distributed-system-logging
+
+https://jack-vanlightly.com/blog/2017/6/11/improving-reliability-and-incident-response-via-a-message-lifecycle
+https://jack-vanlightly.com/blog/2018/10/25/testing-producer-deduplication-in-apache-kafka-and-apache-pulsar
+
+https://medium.com/architechtblog/mikroservis-mimarilerde-tak%C4%B1m-ve-teknoloji-se%C3%A7imine-nas%C4%B1l-karar-verilir-9cbebebf4dec
+https://medium.com/architechtblog/teknoloji-radar-nedir-a63f24c925b7
+
+
+two sum problem
+https://www.geeksforgeeks.org/find-the-largest-number-multiple-of-3/
+https://stackoverflow.com/questions/12967896/converting-integers-to-roman-numerals-java
+
+
+https://towardsdatascience.com/redis-unsafe-at-any-speed-f2731f738a25
+https://towardsdatascience.com/you-can-replace-kafka-with-a-database-39e13b610b63
+https://towardsdatascience.com/the-design-of-an-event-store-8c751c47db6f
+https://codeburst.io/combining-strict-order-with-massive-parallelism-using-kafka-83dc1ec9be03
+https://rmoff.net/   kafka blog

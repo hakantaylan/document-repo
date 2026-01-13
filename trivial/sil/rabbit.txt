@@ -1,0 +1,156 @@
+https://stackoverflow.com/questions/48747564/how-to-set-shutdown-parameters-for-rabbit-mq-listener
+https://stackoverflow.com/questions/56883620/how-to-perform-a-graceful-application-shutdown-when-using-spring-cloud-stream-wi
+
+
+
+https://chrzaszcz.dev/2019/06/kafka-heartbeat-thread/
+https://strimzi.io/blog/2021/01/07/consumer-tuning/
+https://strimzi.io/blog/2023/11/09/kafka-consumer-client-essentials/
+https://strimzi.io/blog/2020/10/15/producer-tuning/
+
+https://jessyt.tistory.com/151
+https://jessyt.tistory.com/category/Study/message-queue
+https://jessyt.tistory.com/145
+https://jessyt.tistory.com/143
+
+https://docs.spring.io/spring-kafka/reference/kafka/pause-resume.html
+https://medium.com/@akhil.bojedla/start-stop-pause-and-resume-spring-kafka-consumer-at-runtime-45b44b9be44b
+https://github.com/bytecodehq/kafka-consumer-toggle-demo
+
+https://stackoverflow.com/questions/53751427/kafka-consumer-concurrency-on-spring-boot-application-startup
+https://medium.com/codex/dealing-with-long-running-jobs-using-apache-kafka-192f053e1691
+
+https://www.mkammerer.de/blog/jacksons-polymorphic-deserialization/
+https://stackoverflow.com/questions/55243350/polymorphic-deserialization-in-jackson-without-annotations
+
+https://refactorizando.com/comunicacion-mutual-tls-spring-boot/
+https://github.com/refactorizando-web/Mutual-TLS
+https://refactorizando.com/en/circuit-breaker-with-resilience4j-in-spring-boot
+
+https://medium.com/codex/dealing-with-long-running-jobs-using-apache-kafka-192f053e1691
+https://github.com/Xavyr-R/kafka-long-running-jobs
+https://refactorizando.com/en/kafka-in-spring-boot-with-example/
+
+https://refactorizando.com/en/exactly-once-with-kafka-in-spring-boot/
+
+https://github.com/Microflash/guides/tree/main/java/jackson-polymorphic-requests
+https://stackoverflow.com/questions/55243350/polymorphic-deserialization-in-jackson-without-annotations
+https://github.com/Microflash/guides/tree/main/java/jackson-polymorphic-requests
+https://www.naiyerasif.com/post/2023/05/14/rewriting-git-history/
+
+https://www.naiyerasif.com/post/2022/09/18/detecting-a-connection-leak-with-hikari
+
+https://nooblinux.com/how-to-use-netcat/
+
+https://blog.devgenius.io/devops-in-linux-http-keep-alive-vs-tcp-keepalive-bf8f1f3afc9
+https://stackoverflow.com/questions/53375222/how-to-set-tcp-keep-alive-from-httpclient
+https://www.baeldung.com/java-9-http-client
+How to tune the performance of Java 11 HttpClients
+https://www.mastertheboss.com/java/how-to-tune-the-performance-of-java-11-httpclients
+
+
+
+
+https://stackoverflow.com/questions/44756872/spring-core-default-bean-destroy-method
+https://reflectoring.io/spring-bean-lifecycle/ https://github.com/BootcampToProd/spring-bean-life-cycle
+https://blog.gtiwari333.com/2021/04/spring-boot-shutdown-and-restart.html
+https://blog.gtiwari333.com/2021/02/git-delete-merged-branches.html
+https://howtodoinjava.com/spring-core/spring-bean-life-cycl e   https://bootcamptoprod.com/spring-bean-life-cycle-explained/
+https://bootcamptoprod.com/resilience4j-rate-limiter
+https://bootcamptoprod.com/java-var 
+https://bootcamptoprod.com/category/java/
+https://bootcamptoprod.com/category/spring-boot 
+https://bootcamptoprod.com/intellij-idea-folder https://github.com/BootcampToProd/spring-boot-cache-management https://github.com/BootcampToProd/spring-boot-retry-with-custom-retry-policy
+
+kafka validation https://jessyt.tistory.com/165?category=966697
+
+https://howtoprogram.xyz/2016/09/25/spring-kafka-multi-threaded-message-consumption/
+https://talentify.com/consume-kafka-events-using-spring-kafka-example/     dene
+https://moderntechnologist.com/common-microservices-interview-questions-and-answers/
+https://www.programmersought.com/article/89926248939/
+
+
+https://medium.com/@rishabh171192/kafka-basics-and-producer-configs-part-1-47842da1e05b
+https://blog.devgenius.io/kafka-consumer-and-offsets-commit-strategy-part-2-3c5365797867
+
+https://github.com/Interhyp/spring-kafka-acceptance-test-example
+
+https://digital.interhyp.de/2022/01/27/convenient-api-testing-intellij-ideas-http-client/
+https://www.jetbrains.com/help/idea/http-client-in-product-code-editor.html
+
+https://digital.interhyp.de/2021/02/25/using-git-commands-that-will-make-you-look-like-a-senior-developer/
+https://blog.devgenius.io/transactional-integration-kafka-with-database-7eb5fc270bdc
+
+https://huisam.tistory.com/entry/kafka-consumer ingilizceye çevirip not al
+https://huisam.tistory.com/entry/kafka-producer?category=849126
+https://www.youtube.com/watch?v=fKeJy4ndjnc
+https://www.youtube.com/watch?v=KeRFrF7au5c
+https://www.youtube.com/watch?v=A-Z4eaTmcwY
+
+https://www.baeldung.com/spring-retry-kafka-consumer  ++++
+
+https://github.com/Microflash/guides/tree/main/java
+
+https://docs.spring.io/spring-integration/reference/jdbc/message-store.html#postgresql-push
+https://github.com/making/demo-graceful-shutdown-webflux/blob/master/src/main/java/com/example/demogracefulshutdownwebflux/DrainFilter.java
+
+https://livebook.manning.com/book/activemq-in-action/chapter-5/7 JDBC Message Store
+https://github.com/making/spring-cloud-stream-tutorial
+https://github.com/making/outbox-pattern-demo https://github.com/making/demo-outbox
+https://ik.am/entries/745/en
+
+
+Spring MVC metrics
+Spring Boot Actuator automatically collects the following metrics related to Spring MVC:
+
+1- Request Count:
+Number of requests received by the application.
+
+2- Error Count:
+Number of requests that resulted in an error (such as 4xx or 5xx HTTP status codes).
+
+3- Average Response Time:
+Average time taken to process a request and send a response.
+
+4- Max Response Time:
+Maximum time taken to process a request and send a response.
+
+5- Min Response Time:
+Minimum time taken to process a request and send a response.
+
+6- Response Time Distribution:
+Distribution of response times across different percentiles (e.g., 50th, 75th, 90th percentile).
+
+7- Request Rate:
+Rate at which requests are being received by the application.
+
+8- Host Metrics:
+Metrics related to the host where the application is running, such as CPU usage, memory usage, and disk space.
+
+9- JVM Metrics:
+Metrics related to the Java Virtual Machine (JVM) where the application is running, such as CPU usage, memory usage, and garbage collection statistics.
+
+These metrics can be exposed via HTTP endpoints provided by Spring Boot Actuator, and they can be monitored and analyzed using various
+
+
+
+https://www.baeldung.com/java-type-erasure   MongoDB for SQL Professionals
+https://levelup.gitconnected.com/transactions-in-apache-kafka-ee1c469fc090
+transactionIdPrefix
+With EOSMode.V2 (aka BETA), the only supported mode, it is no longer necessary to use the same transactional.id, even for consumer-initiated transactions; in fact, it must be unique on each instance the same as for producer-initiated transactions. This property must have a different value on each application instance.
+https://stackoverflow.com/questions/74944062/springboot-kafka-clarification-on-consumer-initiated-transactions  https://developer.confluent.io/courses/architecture/transactions/
+
+https://readmedium.com/implementing-unit-tests-for-a-kafka-producer-and-consumer-that-uses-spring-cloud-stream-f7a98a89fcf2
+https://readmedium.com/implementing-end-to-end-testing-for-a-kafka-producer-and-consumer-that-uses-spring-cloud-stream-fbf5e666899e
+https://medium.com/folksdev/spring-security-h2-database-without-websecurityconfigureradapter-fc4a83b6f60d
+https://github.com/gurkanucar/basic-auth-without-websecurityconfigureradapter
+
+https://readmedium.com/how-to-create-java-soap-web-service-server-side-d5fa57f621a1
+https://medium.com/ibscts/how-why-to-use-jdbctemplate-for-data-manipulation-in-spring-boot-e5c24547a509
+https://medium.com/@ibsleah/how-to-upgrade-spring-boot-2-to-spring-boot-3-4ff111f79b67
+https://medium.com/ibscts/publish-a-soap-web-service-with-security-header-in-place-b451a1737c96
+https://medium.com/ibscts/java-soap-web-service-server-side-step-2-publish-700dafec89a5
+https://medium.com/ibscts/how-to-create-java-soap-web-service-server-side-d5fa57f621a1
+https://github.com/ibscts/tutorial-soap-webservice-server-side   https://github.com/ibscts
+
+Collabora Office

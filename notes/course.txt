@@ -1,0 +1,56 @@
+https://freesoff.com/t/get-codewithmosh-the-ultimate-git-course/5743
+https://coursehunter.net/course/ultimate-git-kurs
+
+https://pragmaticwebsecurity.com/articles/spasecurity/react-xss-part1.html
+https://expressjs.com/en/advanced/best-practice-security.html
+
+https://github.com/loverajoel/jstips#readme
+https://github.com/azat-co/cheatsheets/tree/master/express4
+https://github.com/standard/awesome-standard#readme
+https://github.com/mattdesl/module-best-practices
+https://github.com/dustinspecker/awesome-eslint#readme
+https://github.com/30-seconds/30-seconds-of-code#readme
+https://github.com/fcambus/nginx-resources#readme
+https://github.com/tiimgreen/github-cheat-sheet#readme
+
+https://www.zainrizvi.io/blog/git-cheat-sheet/
+
+
+https://www.manning.com/books/street-coder
+
+
+https://github.com/wg/wrk/wiki/Installing-wrk-on-Windows-10
+
+
+React security fundementals  --->
+https://courses.reactsecurity.io/react-security-fundamentals
+
+Travis
+
+mongo index vs sparse index
+
+https://dzone.com/articles/safe-database-migration-pattern-without-downtime
+https://thorben-janssen.com/update-database-schema-without-downtime/
+https://spring.io/blog/2016/05/31/zero-downtime-deployment-with-a-database
+https://www.youtube.com/watch?v=SJRY0N2fm9k
+https://deepthought.blog/2018/10/zero-downtime-database-migration
+https://www.mongodb.com/blog/post/your-ultimate-guide-to-rolling-upgrades
+https://engineering.checkr.com/mongodb-cluster-migration-with-zero-downtime-f4e294c29bef
+
+https://tecadmin.net/delete-commit-history-in-github/
+https://www.willandskill.se/en/deleting-your-git-commit-history-without-removing-repo-on-github-bitbucket/
+
+https://github.com/khan4019/front-end-Interview-Questions
+https://www.youtube.com/watch?v=85XY7H2JPbs   nassar güzel konular var
+https://www.firatboyan.com/
+
+Default Gateaway
+https://www.youtube.com/watch?v=ozhe__GdWC8 Proxy vs. Reverse Proxy (Explained by Example)
+https://www.youtube.com/watch?v=WC2-hNNBWII nginx crash course
+https://www.youtube.com/watch?v=aKMLgFVxZYk HAPPRoxy crash course
+
+
+https://hackernoon.com/high-availability-concepts-and-theory-980c58cbf87b
+
+
+Functional Programming for the Object-Oriented Programmer    ebook

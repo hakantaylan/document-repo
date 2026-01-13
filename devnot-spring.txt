@@ -1,0 +1,75 @@
+https://stackoverflow.com/questions/47264688/spring-integration-persistent-and-transactional-queuechannel
+https://stackoverflow.com/questions/47139386/jdbcmessagestore-is-not-optimized-for-use-in-a-messagegroupqueue
+https://reflectoring.io/spring-boot-profiles/
+https://www.confluent.io/blog/kafka-connect-deep-dive-jdbc-source-connector/
+JdbcChannelMessageStore
+https://vikasverma.tech/post/messagechannel/
+
+https://reflectoring.io/spring-boot-web-controller-test/
+https://www.baeldung.com/spring-boot-testing-pitfalls
+
+https://burcakulug.wordpress.com/2017/09/09/using-jsr310-java-8-datetime-and-optional-with-spring-boot/
+
+https://blog.pragmatists.com/spring-events-and-transactions-be-cautious-bdb64cb49a95
+https://www.javacodegeeks.com/2014/02/spring-jms-processing-messages-within-transactions.html
+
+https://www.javainuse.com/spring/boot_swagger
+https://medium.com/@hala3k/setting-up-swagger-3-with-spring-boot-2-a7c1c3151545
+https://www.baeldung.com/spring-rest-openapi-documentation
+https://www.techgeeknext.com/spring-boot/spring-boot-swagger3-example
+
+https://www.youtube.com/watch?v=gduKpLW_vdY
+https://www.youtube.com/watch?v=8s9I1G4tXhA
+
+https://medium.com/geekculture/resolve-hibernate-n-1-problem-f0e049e689ab
+https://nurkiewicz.com/2011/11/spring-pitfalls-transactional-tests.html
+
+https://www.2ndquadrant.com/en/blog/bulk-transactions-with-restful-crud-api-using-postgresql-and-spring-boot/
+https://javabydeveloper.com/spring-jdbctemplate-batch-update-with-maxperformance/   rewriteBatchedStatements=true
+https://javabydeveloper.com/spring-jdbctemplate-get-auto-generated-keys/
+https://github.com/javabydeveloper/spring-boot/tree/master/spring-boot-jdbc-example
+https://javabydeveloper.com/spring-data-jdbc-pagination-and-sorting-example/
+
+https://medium.com/@harittweets/how-to-connect-to-h2-database-during-development-testing-using-spring-boot-44bbb287570
+https://imalsha-sg.medium.com/how-to-migrate-your-h2-databases-to-the-latest-h2-version-14b514ec7577
+https://www.baeldung.com/spring-boot-access-h2-database-multiple-apps
+In short, Long polling a technique to hang the connection between client and server until the data is available.
+https://www.baeldung.com/spring-mvc-long-polling
+https://www.bemyaficionado.com/long-polling-with-java-and-spring-boot/
+https://junhyunny.github.io/information/spring-boot/polling-long-polling-and-spring-example/
+https://github.com/Junhyunny/blog-in-action/tree/master/2022-01-04-polling-long-polling-and-spring-async-task
+https://www.bemyaficionado.com/swagger-ui-enable-token-based-authentication-spring-boot/
+https://www.bemyaficionado.com/how-to-break-a-big-pull-request-into-multiple-smaller-prs/ ++++
+https://www.bemyaficionado.com/mock-security-context-holder-spring-security-using-mockito/
+
+https://medium.com/javarevisited/caching-made-easy-in-spring-boot-27d1a545905c 
+https://github.com/Ruhshan/spring-boot-caching-demo
+https://medium.com/javarevisited/what-are-the-new-features-of-springboot3-6ddba9af664
+
+https://medium.com/predictly-on-tech/jpa-search-using-spring-data-example-3bb1d5c46e3b
+https://medium.com/predictly-on-tech/complex-jpa-queries-with-specifications-46654f118fe3
+https://faun.pub/select-an-entity-by-child-properties-using-springboot-and-spring-data-jpa-fb145f96c31e
+
+https://mkyong.com/spring/spring-jdbctemplate-querying-examples/
+https://github.com/mkyong/spring-boot/tree/master/spring-jdbc
+https://www.thetechnojournals.com/2019/12/multiple-data-source-with-spring-boot.html
+https://github.com/sureshgadupu/springboot-testcontainers-example1
+https://github.com/sureshgadupu/springboot-testcontainers-example2
+https://github.com/sureshgadupu/springboot-testcontainers-example3
+https://www.javainuse.com/spring/boot-jwt
+
+https://curity.io/resources/learn/the-token-handler-pattern/ +++++++++++++++++
+https://github.com/murraco/spring-boot-jwt
+
+https://github.com/amrutprabhu/spring-boot-jpa-bulk-insert-performance
+
+https://www.xavierbouclet.com/2023/03/26/functional-webmvc.html +++++++
+https://gist.github.com/senoritadeveloper01/400a6d361881482e1904de63c4bd6083 openAPI documentation for JWT token in header as parameter
+
+https://www.amitph.com/spring-boot-graceful-shutdown/
+https://www.amitph.com/spring-tutorials/
+https://www.amitph.com/spring-inject-collection-of-beans/
+
+https://github.com/alexatiks/spring-security-jwt-csrf   backend'i çevir güzel bir örnek
+https://dev.to/kubadlo/spring-security-with-jwt-3j76
+https://www.baeldung.com/spring-security-session oku not al

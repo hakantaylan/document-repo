@@ -1,0 +1,1 @@
+get-childitem *.mp4 -recurse | foreach { rename-item $_ $_.Name.Replace("-scikit", "") }

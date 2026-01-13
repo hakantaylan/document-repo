@@ -1,0 +1,23 @@
+hwclock --show
+hwclock --hctosys
+
+sudo date -s "11 JUN 2022 23:59:40"
+sudo date -s "$(ssh eocdb@10.0.2.15 date)"   uzaktaki makinenin saatine ayarlama
+sudo date -s "$(sudo hwclock --hctosys)"
+. .bash_profile
+
+
+sudo systemctl restart sscm_jboss rfe_master_1 ffe_master_1 so
+sudo systemctl disable rfe_reserve_2 ffe_reserve_2
+sudo netstat -nlp | grep 24217
+
+
+https://medium.com/bb-tutorials-and-thoughts/kubernetes-learn-sidecar-container-pattern-6d8c21f873d
+https://www.containiq.com/post/kubernetes-sidecar-container
+
+https://www.linkedin.com/posts/alex-xu-a8131b11_systemdesign-coding-interviewtips-activity-6925471018350252032-jpDg
+
+https://learnk8s.io/kafka-ha-kubernetes
+
+
+alex wu system design interview 2nd and 1th edition digital copy

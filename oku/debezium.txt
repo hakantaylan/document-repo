@@ -1,0 +1,45 @@
+﻿https://github.com/Venkaiah552/springboot-cdc-debezium
+https://github.com/spring-cloud-stream-app-starters/cdc-debezium
+https://github.com/uuhnaut69/debezium-without-kafka
+https://github.com/uuhnaut69/monitoring-debezium-mysql-elasticsearch-rest
+
+https://github.com/sohangp/outbox-pattern
+https://github.com/sohangp/embedded-debezium
+
+https://turkogluc.com/postgresql-capture-data-change-with-debezium/
+
+https://www.sderosiaux.com/articles/2020/01/06/learnings-from-using-kafka-connect-debezium-postgresql/
+
+
+
+Tüm bunlardan sonra fırsat bulursan 
+https://thenewstack.io/quickstart-to-apache-kafka-stream-processing-with-ksqldb/  ksql ile event streaming çalış
+
+
+Redis neden önemli oku
+https://thenewstack.io/how-redis-simplifies-microservices-design-patterns/
+
+https://github.com/bslota/transactional-event-listener
+
+
+https://github.com/dashsaurabh/multi-app-event-sourcing-cqrs-app
+https://github.com/dashsaurabh/event-sourcing-cqrs-axon-spring-boot
+
+
+
+https://github.com/ddd-by-examples/event-source-cqrs-sample
+https://github.com/ddd-by-examples/all-things-cqrs
+
+
+https://www.javacodegeeks.com/2016/10/event-sourcing-cqrs-practise.html
+https://github.com/altfatterz/application-events-with-spring
+
+https://zoltanaltfatter.com/2017/06/09/publishing-domain-events-from-aggregate-roots/
+https://github.com/altfatterz/publishing-domain-events
+https://dkublik.github.io/2015/09/24/transaction-troubles.html
+https://github.com/dkublik/transaction-troubles
+
+
+https://github.com/lucasdeabreu/eventual-consistency-example    incele
+https://github.com/lucasdeabreu/poc-outbox-pattern
+https://github.com/lucasdeabreu/poc-outbox-pattern/tree/with-quartz    İkisine de bak

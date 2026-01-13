@@ -1,0 +1,8 @@
+https://www.vojtechruzicka.com/idea-editorconfig/
+https://www.vojtechruzicka.com/intellij-idea-tips-tricks-synchronization-sharing-settings/
+https://www.vojtechruzicka.com/intellij-idea-tips-tricks-improving-performance/
+https://www.vojtechruzicka.com/idea-best-plugins/
+https://www.vojtechruzicka.com/intellij-idea-tips-tricks-testing-restful-web-services/
+https://www.vojtechruzicka.com/idea-compare-files-and-folders/
+https://www.vojtechruzicka.com/intellij-idea-tips-tricks-testing-restful-web-services/
+https://medium.com/litslink/stop-using-third-party-applications-for-http-requests-if-you-are-using-jetbrains-ide-819413f64495

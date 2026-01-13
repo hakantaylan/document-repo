@@ -1,0 +1,18 @@
+﻿https://medium.com/rahasak/monitor-elasticsearch-with-prometheus-and-grafana-687a0b6712
+https://blog.pvincent.io/2017/12/prometheus-blog-series-part-1-metrics-and-labels/
+https://blog.pvincent.io/2017/12/prometheus-blog-series-part-2-metric-types/
+https://blog.pvincent.io/2017/12/prometheus-blog-series-part-3-exposing-and-collecting-metrics/
+https://blog.pvincent.io/2017/12/prometheus-blog-series-part-4-instrumenting-code-in-go-and-java/
+https://blog.pvincent.io/2017/12/prometheus-blog-series-part-5-alerting-rules/
+https://blog.pvincent.io/2019/05/prometheus-workshops-follow-up-frequently-asked-questions/
+https://www.youtube.com/watch?v=lC5SfTMFK3M  Avoiding Alerts Overload from Microservices
+
+https://www.mokkapps.de/blog/monitoring-spring-boot-application-with-micrometer-prometheus-and-grafana-using-custom-metrics/
+
+https://medium.com/containerum/4-tools-to-monitor-your-kubernetes-cluster-efficiently-ceaf62818eea
+
+https://phoenixnap.com/kb/prometheus-grafana
+https://phoenixnap.com/kb/prometheus-kubernetes-monitoring
+
+
+https://github.com/kyverno/grafana-dashboard

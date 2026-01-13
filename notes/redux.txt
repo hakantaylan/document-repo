@@ -1,0 +1,78 @@
+https://blog.logrocket.com/react-redux-connect-when-and-how-to-use-it-f2a1edab2013/
+https://blog.bitsrc.io/using-react-redux-hooks-97654aff01e4
+https://thoughtbot.com/blog/using-redux-with-react-hooks
+https://www.valentinog.com/blog/redux/
+https://dev.to/dylanmesty/redux-basics-explained-from-a-beginner-s-perspective-abm
+https://levelup.gitconnected.com/react-functional-components-managing-state-with-redux-and-hooks-a372b1a77514
+
+https://dev.to/markusclaus/fetching-data-from-an-api-using-reactredux-55ao
+
+https://blog.jakoblind.no/learn-redux-by-coding-a-mini-redux/
+https://blog.jakoblind.no/learn-react-redux-by-coding-the-connect-function-yourself/
+https://medium.com/@patrykandrzejewski/how-to-create-your-own-redux-9f89a80875e5
+
+
+
+https://codesandbox.io/s/rocket-with-connectedstore-xpkq1rn8kz?from-embed=&file=/src/mini-redux/connect.js
+https://levelup.gitconnected.com/learn-redux-by-building-redux-from-scratch-dcbcbd31b0d0
+
+
+https://medium.com/swlh/how-to-enforce-formatting-in-continuous-integration-47dace8a203c
+
+https://github.com/google/google-java-format
+https://www.baeldung.com/checkstyle-java
+https://medium.com/@aru_sha4/java-check-style-and-formatting-using-maven-a1a1b4e6e10a
+https://stackoverflow.com/questions/50857698/how-to-format-code-according-to-google-java-format
+https://bjurr.com/java-code-formatting-with-google-java-format/
+
+https://dev.to/mateuszjarzyna/intellij-idea-s-plugins-i-m-using-2d0d
+https://www.youtube.com/watch?v=-qdv6bjOEg0   Adding Google Code Formatter to the intellij IDEA
+https://www.youtube.com/watch?v=vjVWjocENLg Code Formatting in IntelliJ IDEA
+
+
+https://medium.com/@alexprut/integrate-jacoco-in-a-java-project-687d8d9678dc
+
+https://medium.com/@alexprut/integrate-locally-sonarqube-in-a-java-project-7f447c744b9d
+
+
+https://dev.to/bahdcoder/the-ultimate-guide-to-jwt-client-side-auth-stop-using-local-storage-3an9
+https://www.youtube.com/watch?v=WA6IINpg_34   Use Spring Boot DevTools for Automatic Restart and LiveReload
+https://github.com/sivaprasadreddy/spring-boot-tutorials/tree/master/testing  spring test example
+https://www.javainuse.com/webseries/spring-security-jwt/chap7
+https://marmelab.com/blog/2020/07/02/manage-your-jwt-react-admin-authentication-in-memory.html
+
+https://stackoverflow.com/questions/60941326/how-to-handle-jwt-refresh-token-on-client-side-with-multiple-requests-api-call
+
+https://www.valentinog.com/blog/cookies/
+https://medium.com/@alexeykhr/jwt-multiple-request-refresh-token-693bb24e3a68   JWT Multiple Request Refresh Token
+Avoid race conditions when refreshing the token
+https://github.com/Godofbrowser/axios-refresh-multiple-request
+https://gist.github.com/Godofbrowser/bf118322301af3fc334437c683887c5f
+https://marmelab.com/blog/2020/07/02/manage-your-jwt-react-admin-authentication-in-memory.html
+
+https://dev.to/rdegges/please-stop-using-local-storage-1i04
+https://github.com/marmelab/ra-in-memory-jwt
+
+
+https://medium.com/swlh/stateless-jwt-authentication-with-spring-boot-a-better-approach-1f5dbae6c30f
+
+https://medium.facilelogin.com/jwt-jws-and-jwe-for-not-so-dummies-b63310d201a3
+https://cyberpolygon.com/materials/security-of-json-web-tokens-jwt/
+https://stormpath.com/blog/jwt-the-right-way
+https://medium.com/@piyumimdasanayaka/json-web-token-jwt-vs-opaque-token-984791a3e715
+https://scotch.io/tutorials/jwt-vs-opaque-access-tokens-use-both-with-spring-boot
+https://stackoverflow.com/questions/27301557/if-you-can-decode-jwt-how-are-they-secure
+
+https://supertokens.io/blog/are-you-using-jwts-for-user-sessions-in-the-correct-way
+https://supertokens.io/blog/all-you-need-to-know-about-user-session-security
+https://supertokens.io/blog/the-best-way-to-securely-manage-user-sessions
+
+https://www.youtube.com/watch?v=8Z7giG2-GZM   Build a Spring Boot Application That Uses BOTH Opaque and JWT Access Tokens
+https://www.youtube.com/watch?v=55OXKx1z6dM
+https://www.youtube.com/watch?v=aU9RsE4fcRM
+https://www.youtube.com/watch?v=KT8ybowdyr0
+https://www.youtube.com/watch?v=rH-FnPC_xCA
+
+https://github.com/Geonovum/KP-APIs/issues/193
+
+https://svlada.com/jwt-token-authentication-with-spring-boot/

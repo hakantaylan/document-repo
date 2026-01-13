@@ -1,0 +1,3 @@
+https://gist.github.com/jwgmeligmeyling/e409362ad3f3923a72a5efb42f92ff74 Persist Recursive relationships with Hibernate
+
+https://gist.github.com/jwgmeligmeyling/d22656e91e3851dc4ed0fcbd92da15ff   cucumber example

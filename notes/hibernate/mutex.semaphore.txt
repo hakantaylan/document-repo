@@ -1,0 +1,5 @@
+https://stackoverflow.com/questions/34519/what-is-a-semaphore/40238#40238
+https://stackoverflow.com/questions/62814/difference-between-binary-semaphore-and-mutex
+http://niclasw.mbnet.fi/MutexSemaphore.html
+
+https://www.geeksforgeeks.org/semaphore-in-java/
