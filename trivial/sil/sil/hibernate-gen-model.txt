@@ -1,0 +1,507 @@
+Show me examples of multi-value filters (IN) using springboot4 java 25 Specifications
+
+Below are practical examples of multi-value filters (IN) using Spring Data JPA Specification, compatible with Spring Boot 4.x and Java 25.
+(The API for Specification itself hasn’t changed—these patterns are the recommended way.)
+
+1. Basic IN filter on a simple field
+Entity
+@Entity
+public class User {
+    @Id
+    private Long id;
+
+    private String status;
+}
+
+Specification
+public class UserSpecifications {
+
+    public static Specification<User> statusIn(Collection<String> statuses) {
+        return (root, query, cb) -> {
+            if (statuses == null || statuses.isEmpty()) {
+                return cb.conjunction(); // no filtering
+            }
+            return root.get("status").in(statuses);
+        };
+    }
+}
+
+Usage
+List<String> statuses = List.of("ACTIVE", "SUSPENDED");
+
+List<User> users = userRepository.findAll(
+    UserSpecifications.statusIn(statuses)
+);
+
+2. IN filter with Enum values
+Entity
+public enum OrderStatus {
+    NEW, PAID, SHIPPED, CANCELLED
+}
+
+@Entity
+public class Order {
+    @Id
+    private Long id;
+
+    @Enumerated(EnumType.STRING)
+    private OrderStatus status;
+}
+
+Specification
+public class OrderSpecifications {
+
+    public static Specification<Order> statusIn(Set<OrderStatus> statuses) {
+        return (root, query, cb) ->
+            statuses == null || statuses.isEmpty()
+                ? cb.conjunction()
+                : root.get("status").in(statuses);
+    }
+}
+
+3. IN filter on numeric IDs
+public static Specification<User> idIn(Collection<Long> ids) {
+    return (root, query, cb) ->
+        ids == null || ids.isEmpty()
+            ? cb.conjunction()
+            : root.get("id").in(ids);
+}
+
+4. IN filter with a JOIN
+Entities
+@Entity
+public class Order {
+    @Id
+    private Long id;
+
+    @ManyToOne
+    private Customer customer;
+}
+
+@Entity
+public class Customer {
+    @Id
+    private Long id;
+
+    private String country;
+}
+
+Specification
+public static Specification<Order> customerCountryIn(List<String> countries) {
+    return (root, query, cb) -> {
+        if (countries == null || countries.isEmpty()) {
+            return cb.conjunction();
+        }
+
+        Join<Order, Customer> customer = root.join("customer");
+        return customer.get("country").in(countries);
+    };
+}
+
+5. Combining multiple IN filters
+Specification<Order> spec =
+        Specification.where(OrderSpecifications.statusIn(statuses))
+                     .and(OrderSpecifications.customerCountryIn(countries));
+
+List<Order> orders = orderRepository.findAll(spec);
+
+6. Case-insensitive IN filter (String)
+public static Specification<User> usernameInIgnoreCase(Collection<String> usernames) {
+    return (root, query, cb) -> {
+        if (usernames == null || usernames.isEmpty()) {
+            return cb.conjunction();
+        }
+
+        CriteriaBuilder.In<String> inClause =
+                cb.in(cb.lower(root.get("username")));
+
+        usernames.stream()
+                 .map(String::toLowerCase)
+                 .forEach(inClause::value);
+
+        return inClause;
+    };
+}
+
+7. Dynamic filter from request parameters (common REST use case)
+public static Specification<User> buildFilter(
+        List<String> statuses,
+        List<Long> ids
+) {
+    return Specification.where(statusIn(statuses))
+                         .and(idIn(ids));
+}
+
+Key Best Practices (Spring Boot 4)
+
+Always guard against empty collections → return cb.conjunction()
+
+Prefer Collection<?> over List<?> in method signatures
+
+Use JOIN + IN for relational filtering instead of subqueries
+
+Combine specs with Specification.where().and().or()
+
+Avoid large IN lists (>1000) for performance reasons
+
+If you want, I can also show:
+
+IN with subqueries
+
+Pagination + IN
+
+Criteria API equivalent (without Specification)
+
+Dynamic IN from query parameters (@RequestParam List<?>)
+
+Complete code of 7
+Pagination + IN, Dynamic In from query parameters
+
+Below is a complete, end-to-end example showing:
+
+✅ Dynamic IN filters from query parameters
+✅ Pagination (Pageable)
+✅ Spring Boot 4.x + Java 25
+✅ Spring Data JPA Specifications
+
+1. Entity
+@Entity
+@Table(name = "users")
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String username;
+
+    private String status;
+
+    // getters & setters
+}
+
+2. Repository
+public interface UserRepository
+        extends JpaRepository<User, Long>,
+                JpaSpecificationExecutor<User> {
+}
+
+
+JpaSpecificationExecutor is required for Specifications + pagination.
+
+3. Specifications (IN filters)
+public final class UserSpecifications {
+
+    private UserSpecifications() {}
+
+    public static Specification<User> idIn(Collection<Long> ids) {
+        return (root, query, cb) ->
+                (ids == null || ids.isEmpty())
+                        ? cb.conjunction()
+                        : root.get("id").in(ids);
+    }
+
+    public static Specification<User> statusIn(Collection<String> statuses) {
+        return (root, query, cb) ->
+                (statuses == null || statuses.isEmpty())
+                        ? cb.conjunction()
+                        : root.get("status").in(statuses);
+    }
+
+    public static Specification<User> usernameIn(Collection<String> usernames) {
+        return (root, query, cb) ->
+                (usernames == null || usernames.isEmpty())
+                        ? cb.conjunction()
+                        : root.get("username").in(usernames);
+    }
+}
+
+4. Dynamic Specification Builder
+
+This combines filters only when parameters are present.
+
+public final class UserSpecificationBuilder {
+
+    private UserSpecificationBuilder() {}
+
+    public static Specification<User> build(
+            List<Long> ids,
+            List<String> statuses,
+            List<String> usernames
+    ) {
+        return Specification.where(UserSpecifications.idIn(ids))
+                            .and(UserSpecifications.statusIn(statuses))
+                            .and(UserSpecifications.usernameIn(usernames));
+    }
+}
+
+5. Service Layer (Pagination + IN)
+@Service
+public class UserService {
+
+    private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
+    public Page<User> searchUsers(
+            List<Long> ids,
+            List<String> statuses,
+            List<String> usernames,
+            Pageable pageable
+    ) {
+        Specification<User> spec =
+                UserSpecificationBuilder.build(ids, statuses, usernames);
+
+        return userRepository.findAll(spec, pageable);
+    }
+}
+
+6. REST Controller (Dynamic IN from Query Params)
+
+Spring automatically converts repeated params into List<?>.
+
+@RestController
+@RequestMapping("/api/users")
+public class UserController {
+
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping
+    public Page<User> searchUsers(
+            @RequestParam(required = false) List<Long> ids,
+            @RequestParam(required = false) List<String> statuses,
+            @RequestParam(required = false) List<String> usernames,
+            @PageableDefault(size = 20, sort = "id") Pageable pageable
+    ) {
+        return userService.searchUsers(ids, statuses, usernames, pageable);
+    }
+}
+
+7. Example HTTP Requests
+Multiple IN values
+GET /api/users?statuses=ACTIVE&statuses=SUSPENDED&usernames=john&usernames=jane
+
+Pagination
+GET /api/users?statuses=ACTIVE&page=0&size=10&sort=username,asc
+
+IDs only
+GET /api/users?ids=1&ids=5&ids=9
+
+8. Resulting SQL (conceptual)
+select *
+from users
+where status in ('ACTIVE', 'SUSPENDED')
+  and username in ('john', 'jane')
+order by username asc
+limit 10 offset 0;
+
+Best Practices Recap
+
+✔ Empty lists → cb.conjunction() (no filter)
+✔ Use JpaSpecificationExecutor for pagination
+✔ Let Spring bind @RequestParam List<?> automatically
+✔ Keep spec logic out of controllers
+✔ Combine specs using Specification.where().and()
+
+If you want, I can also provide:
+
+DTO projection + pagination
+
+Case-insensitive IN
+
+IN with JOINs
+
+Handling very large IN lists safely
+
+Just tell me 👍
+
+Using maven how can I generate hibernate meta model only specified entities and specified attributes of specified entities because these metamodel files makes jar bigger
+
+This is a very common and very reasonable concern 👍
+Hibernate’s JPA static metamodel (*_) can indeed bloat your JAR if generated for everything.
+
+Below is the correct, Maven-friendly, Hibernate-supported way to:
+
+✔ Generate metamodel only for selected entities
+✔ Generate metamodel only for selected attributes
+✔ Keep the solution compatible with Spring Boot 4 / Hibernate 6 / Java 25
+
+1️⃣ Important reality check (what Hibernate supports)
+
+Hibernate’s annotation processor (hibernate-jpamodelgen) supports:
+
+✅ Filtering entities → YES
+⚠ Filtering attributes → NO (not directly)
+
+However, attribute filtering can be achieved safely using:
+
+@Transient
+
+@StaticMetamodel partial classes
+
+Processor include/exclude options
+
+Separate module for metamodel generation (best practice)
+
+I’ll show all valid approaches, starting with the best one.
+
+2️⃣ Best Practice (Recommended)
+Generate metamodel only for selected entities
+Maven configuration
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <version>3.13.0</version>
+
+    <configuration>
+        <annotationProcessorPaths>
+            <path>
+                <groupId>org.hibernate.orm</groupId>
+                <artifactId>hibernate-jpamodelgen</artifactId>
+                <version>6.5.2.Final</version>
+            </path>
+        </annotationProcessorPaths>
+
+        <compilerArgs>
+            <!-- Only generate metamodel for these entities -->
+            <arg>-Ahibernate.jpamodelgen.include=com.example.domain.User</arg>
+            <arg>-Ahibernate.jpamodelgen.include=com.example.domain.Order</arg>
+
+            <!-- Disable XML processing -->
+            <arg>-Ahibernate.jpamodelgen.xml=false</arg>
+        </compilerArgs>
+    </configuration>
+</plugin>
+
+Result
+
+Only:
+
+User_.java
+Order_.java
+
+
+will be generated.
+
+3️⃣ Include entire package (cleaner)
+<arg>-Ahibernate.jpamodelgen.include=com.example.domain.*</arg>
+
+4️⃣ Excluding entities (alternative)
+<arg>-Ahibernate.jpamodelgen.exclude=com.example.domain.AuditLog</arg>
+
+
+You can mix include + exclude.
+
+5️⃣ Limiting attributes (⚠ indirect but effective)
+
+Hibernate does NOT provide attribute-level filtering.
+
+Option A — @Transient (most reliable)
+@Entity
+public class User {
+
+    @Id
+    private Long id;
+
+    private String username;
+
+    @Transient // ❌ Not included in metamodel
+    private String internalCache;
+}
+
+
+Hibernate metamodel only includes persistent attributes.
+
+Option B — Manually define partial metamodel
+
+You can override generated metamodels:
+
+@StaticMetamodel(User.class)
+public class User_ {
+
+    public static volatile SingularAttribute<User, Long> id;
+    public static volatile SingularAttribute<User, String> username;
+}
+
+
+Then disable generation for User:
+
+<arg>-Ahibernate.jpamodelgen.exclude=com.example.domain.User</arg>
+
+
+✔ Full control
+✔ Smallest output
+⚠ Manual maintenance required
+
+6️⃣ Best size-optimized architecture (Advanced, highly recommended)
+Separate metamodel module
+Structure
+domain/
+  └── entities
+criteria/
+  └── specifications (uses metamodel)
+
+Metamodel module pom.xml
+<dependencies>
+    <dependency>
+        <groupId>com.example</groupId>
+        <artifactId>domain</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>org.hibernate.orm</groupId>
+        <artifactId>hibernate-jpamodelgen</artifactId>
+        <scope>provided</scope>
+    </dependency>
+</dependencies>
+
+Benefits
+
+✔ Metamodel not packaged in main app
+✔ Zero JAR size impact
+✔ Faster compilation
+✔ Clean separation
+
+7️⃣ Disable metamodel entirely for non-needed builds
+<arg>-proc:none</arg>
+
+
+Or profile-based:
+
+<profiles>
+    <profile>
+        <id>metamodel</id>
+        <build>
+            <plugins>
+                <!-- compiler plugin with jpamodelgen -->
+            </plugins>
+        </build>
+    </profile>
+</profiles>
+
+8️⃣ Verify generated output
+mvn clean compile -X
+
+
+Generated files:
+
+target/generated-sources/annotations
+
+9️⃣ Summary table
+Requirement	Supported	Recommended
+Select entities	✅ Yes	-Ahibernate.jpamodelgen.include
+Select attributes	❌ No	@Transient or manual metamodel
+Reduce JAR size	✅ Yes	Separate module
+Spring Boot 4 safe	✅ Yes	Fully compatible
+Hibernate 6	✅ Yes	Fully supported
+🔑 Final Recommendation
+
+👉 Use entity-level filtering + separate metamodel module
+👉 Avoid attribute-level hacks unless absolutely necessary
+👉 Manual metamodel only for performance-critical paths
