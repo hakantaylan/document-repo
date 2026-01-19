@@ -74,4 +74,4 @@ public class TagAttribute {
     @ManyToOne(fetch = FetchType.LAZY)
     private ItemTag itemTag;
 }
-I have these JPA Entities. Using spring 4 and java25 how can I organize springboot Specifications so that each specification lays in its own class but ı should search Order entities according to deep nested attributes and same joins may not occur because similar specs are called more than once
+I have these JPA Entities. Using springboot 4 and java25 how can I organize springboot Specifications so that each specification lays in its own class but ı should search Order entities according to deep nested attributes and same joins may not occur because similar specs are called more than once
