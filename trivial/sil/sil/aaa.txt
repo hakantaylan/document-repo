@@ -1,0 +1,141 @@
+package com.example.repo.poc.repository;
+
+import com.example.repo.poc.repository.annotation.LockTimeout;
+import com.example.repo.poc.repository.exception.LockExpiredException;
+import jakarta.persistence.EntityManager;
+import org.springframework.core.annotation.AnnotatedElementUtils;
+import org.springframework.data.jpa.repository.support.JpaEntityInformation;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.function.Supplier;
+
+public class LockAwareRepositoryImpl2<T, ID> extends SimpleJpaRepository<T, ID> implements LockAwareRepository<ID>{
+
+    private final EntityManager em;
+    private final JpaEntityInformation<T, ?> entityInfo;
+
+    public LockAwareRepositoryImpl2(JpaEntityInformation<T, ?> entityInfo, EntityManager em) {
+        super(entityInfo, em);
+        this.em = em;
+        this.entityInfo = entityInfo;
+    }
+
+    @Override
+    @Transactional
+    public boolean tryLock(ID id, Duration duration) {
+        LocalDateTime now = LocalDateTime.now();
+        int updated = em.createQuery("""
+            UPDATE %s e
+               SET e.lockUser = :user,
+                   e.lockExpireDate = :until
+             WHERE e.id = :id
+               AND (
+                    e.lockExpireDate IS NULL
+                 OR e.lockExpireDate < :now
+                 OR e.lockUser = :user
+               )
+        """.formatted(entityInfo.getEntityName()))
+                .setParameter("id", id)
+                .setParameter("user", getCurrentUser())
+                .setParameter("now", now)
+                .setParameter("until", now.plus(duration))
+                .executeUpdate();
+        return updated == 1;
+    }
+
+    @Override
+    @Transactional
+    public boolean tryLock(ID id) {
+        return tryLock(id, getLockDuration());
+    }
+
+    @Transactional public boolean tryLock2(ID id, Duration duration) {
+// compute expiration on app side (note: slight clock-skew risk)
+ LocalDateTime until = LocalDateTime.now(ZoneOffset.UTC).plus(duration);
+        int updated = em.createQuery("""
+        UPDATE %s e
+           SET e.lockUser = :user,
+               e.lockExpireDate = :until
+         WHERE e.id = :id
+           AND (
+                e.lockExpireDate IS NULL
+             OR e.lockExpireDate < CURRENT_TIMESTAMP
+             OR e.lockUser = :user
+           )
+    """.formatted(entityInfo.getEntityName()))
+                .setParameter("id", id)
+                .setParameter("user", getCurrentUser())
+                .setParameter("until", until)
+                .executeUpdate();
+
+        return updated == 1;
+    }
+
+    @Transactional
+    public void releaseLock2(ID id) {
+        int updatedRowCount = em.createQuery("""
+            UPDATE %s e
+                SET e.lockUser = NULL,
+                    e.lockExpireDate = NULL
+             WHERE e.id = :id AND e.lockUser = :user AND e.lockExpireDate > CURRENT_TIMESTAMP 
+             """.formatted(entityInfo.getEntityName()))
+                .setParameter("id", id)
+                .setParameter("user", getCurrentUser())
+                .executeUpdate();
+        if (updatedRowCount != 1) {
+            throw new LockExpiredException();
+        }
+    }
+
+    @Override
+    @Transactional
+    public void releaseLock(ID id) {
+        int updatedRowCount = em.createQuery("""
+            UPDATE %s e
+               SET e.lockUser = NULL,
+                   e.lockExpireDate = NULL
+             WHERE e.id = :id
+               AND e.lockUser = :user
+               AND e.lockExpireDate < :now
+        """.formatted(entityInfo.getEntityName()))
+                .setParameter("id", id)
+                .setParameter("user", getCurrentUser())
+                .setParameter("now", LocalDateTime.now())
+                .executeUpdate();
+        if(updatedRowCount != 1) {
+            throw new LockExpiredException();
+        }
+    }
+
+    @Transactional
+    public <R> R executeWithLock(ID id, Duration duration, Supplier<R> action) {
+        if (!tryLock(id, duration)) {
+            throw new LockExpiredException();
+        }
+        try {
+            // business logic (find/save/delete) runs here
+            return action.get();
+        } finally {
+            releaseLock(id);
+        }
+    }
+
+    private Duration getLockDuration() {
+        LockTimeout annot = AnnotatedElementUtils.findMergedAnnotation(entityInfo.getJavaType(), LockTimeout.class);
+        return annot != null ? Duration.ofSeconds(annot.value()) : Duration.ofMinutes(15);
+    }
+
+    private String getCurrentUser() {
+        return "John Doe";
+//        return SecurityContextHolder.getContext().getAuthentication().getName();
+    }
+
+    @Override
+    public String getLockHolder(Object o) {
+        return "";
+    }
+}
