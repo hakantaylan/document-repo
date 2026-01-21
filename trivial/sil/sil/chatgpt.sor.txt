@@ -1,0 +1,99 @@
+import jakarta.persistence.EntityManager;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.support.JpaRepositoryFactoryBean;
+import org.springframework.data.repository.core.support.RepositoryFactorySupport;
+
+public class ConditionalRepositoryFactoryBean<R extends JpaRepository<T, I>, T, I>
+        extends JpaRepositoryFactoryBean<R, T, I> {
+
+    private final OutboxPublisher<T> publisher;
+
+    public ConditionalRepositoryFactoryBean(Class<? extends R> repositoryInterface,
+                                            OutboxPublisher<T> publisher) {
+        super(repositoryInterface);
+        this.publisher = publisher;
+    }
+
+    @Override
+    protected RepositoryFactorySupport createRepositoryFactory(EntityManager em) {
+        return new ConditionalRepositoryFactory<>(em, publisher);
+    }
+}
+
+import com.example.repo.poc.data.IEmptySpec;
+import com.example.repo.poc.data.IOutbox;
+import com.example.repo.poc.outbox.OutboxPublisher;
+import com.example.repo.poc.repository.BaseRepositoryImpl;
+import com.example.repo.poc.repository.EmptySpecOutboxRepositoryImpl;
+import com.example.repo.poc.repository.EmptySpecRepositoryImpl;
+import com.example.repo.poc.repository.OutboxRepositoryImpl;
+import jakarta.persistence.EntityManager;
+import org.springframework.data.jpa.repository.support.*;
+import org.springframework.data.repository.core.RepositoryInformation;
+import org.springframework.data.repository.core.RepositoryMetadata;
+
+public class ConditionalRepositoryFactory<T, ID> extends JpaRepositoryFactory {
+
+    private final EntityManager em;
+    private final OutboxPublisher<T> publisher;
+
+    public ConditionalRepositoryFactory(EntityManager em, OutboxPublisher<T> publisher) {
+        super(em);
+        this.em = em;
+        this.publisher = publisher;
+    }
+
+    @Override
+    protected JpaRepositoryImplementation<?, ?> getTargetRepository(RepositoryInformation information, EntityManager em) {
+        Class<?> domainClass = information.getDomainType();
+        JpaEntityInformation<?, ?> entityInformation = JpaEntityInformationSupport.getEntityInformation(information.getDomainType(), em);
+        if (IEmptySpec.class.isAssignableFrom(domainClass) && IOutbox.class.isAssignableFrom(domainClass)) {
+            return new EmptySpecOutboxRepositoryImpl<>(entityInformation, em, publisher);
+        } else if (IEmptySpec.class.isAssignableFrom(domainClass)) {
+            return new EmptySpecRepositoryImpl<>(entityInformation, em);
+        } else if (IOutbox.class.isAssignableFrom(domainClass)) {
+            return new OutboxRepositoryImpl<>(entityInformation, em, publisher);
+        } else {
+            return super.getTargetRepository(information, em);
+        }
+    }
+
+    @Override
+    protected Class<?> getRepositoryBaseClass(RepositoryMetadata metadata) {
+        Class<?> domainClass = metadata.getDomainType();
+
+        if (IEmptySpec.class.isAssignableFrom(domainClass) && IOutbox.class.isAssignableFrom(domainClass)) {
+            return EmptySpecOutboxRepositoryImpl.class;
+        } else if (IEmptySpec.class.isAssignableFrom(domainClass)) {
+            return EmptySpecRepositoryImpl.class;
+        } else if (IOutbox.class.isAssignableFrom(domainClass)) {
+            return OutboxRepositoryImpl.class;
+        } else {
+            return BaseRepositoryImpl.class;
+        }
+    }
+
+@Repository
+public interface PersonRepository extends BaseJpaRepository<Person, Long> {
+    @EntityGraph(attributePaths = "addresses")
+        // spring-data-jpa annotation
+    List<Person> findByLastName(String lastName);
+
+    @Override
+    @EntityGraph(attributePaths = "addresses")
+    Page<Person> findAll(@Nullable Specification<Person> spec, Pageable pageable);
+}
+
+@Repository
+public interface SampleRepository extends JpaRepository<Person, Long> {
+    @EntityGraph(attributePaths = "addresses")
+        // spring-data-jpa annotation
+    List<Person> findByLastName(String lastName);
+
+    @Override
+    @EntityGraph(attributePaths = "addresses")
+    Page<Person> findAll(@Nullable Specification<Person> spec, Pageable pageable);
+}
+
+I am trying to configure baseclass for my repositories
+For PersonRepository it should use BaseRepositoryImpl as bas class and BaseRepository as interface but if a repository deliberatly extends from JpaRepository it should not interfare spring boot's default mechanism. Fix the code considering this into account
