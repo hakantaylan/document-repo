@@ -1,0 +1,51 @@
+@Transactional
+public void updateResource(Long id, String token) {
+    // 1️⃣ Validate fencing token
+    validateToken(id, token);
+
+    // 2️⃣ Mutate the aggregate graph (parent → child → grandchild)
+    mutateAggregate();
+
+    // 3️⃣ Save the entity graph
+    repository.save(entity);
+
+    // 4️⃣ Flush changes to DB to ensure entity graph is persisted
+    repository.flush();
+
+    // 5️⃣ Last-resort atomic check using last_checked_at column
+    int rowsAffected = repository.updateLastCheckedAt(
+        id, 
+        token, 
+        LocalDateTime.now()
+    );
+
+    if (rowsAffected == 0) {
+        // Token is no longer valid, rollback transaction
+        throw new SoftLockExpiredException(
+            "Soft lock expired or token invalid during commit"
+        );
+    }
+}
+Repository method example (Spring Data JPA)
+java
+Copy code
+@Modifying
+@Query("""
+    UPDATE Resource r
+    SET r.lastCheckedAt = :now
+    WHERE r.id = :id
+      AND r.fencingToken = :token
+      AND r.lockExpiresAt > now()
+""")
+int updateLastCheckedAt(
+    @Param("id") Long id,
+    @Param("token") String token,
+    @Param("now") LocalDateTime now
+);
+
+
+UPDATE resource
+SET last_checked_at = now()
+WHERE id = ?
+  AND fencing_token = ?
+  AND lock_expires_at > now();

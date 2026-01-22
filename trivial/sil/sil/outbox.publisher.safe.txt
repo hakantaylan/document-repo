@@ -1,0 +1,605 @@
+Project Layout
+outbox-spring-boot-starter/
+├── pom.xml
+├── src/
+│   ├── main/
+│   │   ├── java/com/example/outbox/
+│   │   │   ├── annotation/
+│   │   │   │   ├── AggregateRepository.java
+│   │   │   │   └── NoOutbox.java
+│   │   │   ├── autoconfig/
+│   │   │   │   ├── OutboxAutoConfiguration.java
+│   │   │   │   └── OutboxProperties.java
+│   │   │   ├── hibernate/
+│   │   │   │   ├── AggregateInsertListener.java
+│   │   │   │   ├── AggregateUpdateListener.java
+│   │   │   │   ├── AggregateDeleteListener.java
+│   │   │   │   └── HibernateListenerRegistrar.java
+│   │   │   ├── model/
+│   │   │   │   ├── OutboxMessage.java
+│   │   │   │   └── OutboxRepository.java
+│   │   │   ├── publish/
+│   │   │   │   ├── OutboxPublisher.java
+│   │   │   │   └── OutboxMapper.java
+│   │   │   ├── registry/
+│   │   │   │   ├── AggregateRootRegistry.java
+│   │   │   │   └── AggregateValidation.java
+│   │   │   └── tracker/
+│   │   │       ├── AggregateChange.java
+│   │   │       ├── AggregateChangeTracker.java
+│   │   │       └── ChangeType.java
+│   │   └── resources/
+│   │       └── META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports
+│   └── test/
+│       └── java/com/example/outbox/
+│           ├── integration/
+│           │   ├── OutboxIntegrationTest.java
+│           │   └── TestEntities.java
+│           └── support/
+│               └── H2TestConfig.java
+
+2️⃣ pom.xml
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.example</groupId>
+  <artifactId>outbox-spring-boot-starter</artifactId>
+  <version>1.0.0</version>
+
+  <properties>
+    <java.version>25</java.version>
+    <spring-boot.version>4.0.0</spring-boot.version>
+  </properties>
+
+  <dependencies>
+    <!-- Spring Boot -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+
+    <!-- Spring Data JPA -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+
+    <!-- H2 for tests -->
+    <dependency>
+      <groupId>com.h2database</groupId>
+      <artifactId>h2</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <!-- Jackson 3 -->
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+    </dependency>
+
+    <!-- Spring Boot Test -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+</project>
+
+3️⃣ Annotation Package
+AggregateRepository.java
+package com.example.outbox.annotation;
+
+import java.lang.annotation.*;
+
+@Target(ElementType.TYPE)
+@Retention(RetentionPolicy.RUNTIME)
+@Documented
+public @interface AggregateRepository {
+}
+
+NoOutbox.java
+package com.example.outbox.annotation;
+
+import java.lang.annotation.*;
+
+@Target({ElementType.TYPE, ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
+public @interface NoOutbox {
+}
+
+4️⃣ Auto-configuration Package
+OutboxAutoConfiguration.java
+package com.example.outbox.autoconfig;
+
+import org.springframework.boot.autoconfigure.AutoConfiguration;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+
+@AutoConfiguration
+@EnableConfigurationProperties(OutboxProperties.class)
+public class OutboxAutoConfiguration {}
+
+OutboxProperties.java
+package com.example.outbox.autoconfig;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+@ConfigurationProperties(prefix = "outbox")
+public record OutboxProperties(
+    boolean enabled,
+    boolean failIfNoAggregates,
+    int batchSize
+) {
+    public OutboxProperties {
+        if (batchSize <= 0) batchSize = 100;
+    }
+}
+
+5️⃣ Registry Package
+AggregateRootRegistry.java
+package com.example.outbox.registry;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+import org.springframework.stereotype.Component;
+import org.springframework.core.ResolvableType;
+import org.springframework.aop.support.AopUtils;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
+
+@Component
+public class AggregateRootRegistry implements ApplicationContextAware {
+
+    private final Set<Class<?>> roots = ConcurrentHashMap.newKeySet();
+
+    @Override
+    public void setApplicationContext(ApplicationContext ctx) {
+        Map<String, Object> beans = ctx.getBeansWithAnnotation(com.example.outbox.annotation.AggregateRepository.class);
+
+        beans.values().forEach(repo -> {
+            Class<?> domainType = resolveDomainType(repo);
+            roots.add(domainType);
+        });
+    }
+
+    public boolean isAggregateRoot(Class<?> type) {
+        return roots.contains(type);
+    }
+
+    public Set<Class<?>> all() {
+        return Set.copyOf(roots);
+    }
+
+    private Class<?> resolveDomainType(Object repo) {
+        ResolvableType type =
+            ResolvableType.forClass(AopUtils.getTargetClass(repo))
+                .as(JpaRepository.class);
+
+        Class<?> domain = type.getGeneric(0).resolve();
+        if (domain == null)
+            throw new IllegalStateException("Cannot resolve domain type");
+        return domain;
+    }
+}
+
+AggregateValidation.java
+package com.example.outbox.registry;
+
+import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
+
+@Component
+public class AggregateValidation {
+
+    private final AggregateRootRegistry registry;
+
+    @Autowired
+    public AggregateValidation(AggregateRootRegistry registry) {
+        this.registry = registry;
+    }
+
+    @EventListener
+    public void onApplicationReady(ApplicationReadyEvent event) {
+        if (registry.all().isEmpty()) {
+            throw new IllegalStateException(
+                "No @AggregateRepository found — Outbox cannot function."
+            );
+        }
+    }
+}
+
+6️⃣ Tracker Package
+ChangeType.java
+package com.example.outbox.tracker;
+
+public enum ChangeType { CREATE, UPDATE, DELETE }
+
+AggregateChange.java
+package com.example.outbox.tracker;
+
+public record AggregateChange(
+        Class<?> aggregateType,
+        Object aggregateId,
+        ChangeType changeType
+) {}
+
+AggregateChangeTracker.java
+package com.example.outbox.tracker;
+
+import java.util.*;
+import org.springframework.stereotype.Component;
+import org.hibernate.Hibernate;
+import org.hibernate.persister.entity.EntityPersister;
+
+@Component
+public class AggregateChangeTracker {
+
+    private final Map<Object, AggregateChange> changes = new LinkedHashMap<>();
+
+    public void record(Object entity, ChangeType type, EntityPersister persister) {
+        Object id = persister.getIdentifier(entity, null);
+        Class<?> entityClass = Hibernate.getClass(entity);
+
+        AggregateChange newChange = new AggregateChange(entityClass, id, type);
+        changes.merge(entity, newChange, this::merge);
+    }
+
+    private AggregateChange merge(AggregateChange oldC, AggregateChange newC) {
+        if (oldC.changeType() == ChangeType.CREATE) return oldC;
+        if (newC.changeType() == ChangeType.DELETE) return newC;
+        return oldC;
+    }
+
+    public Collection<AggregateChange> drain() {
+        Collection<AggregateChange> result = List.copyOf(changes.values());
+        changes.clear();
+        return result;
+    }
+}
+
+7️⃣ Hibernate Package
+AggregateInsertListener.java
+package com.example.outbox.hibernate;
+
+import com.example.outbox.registry.AggregateRootRegistry;
+import com.example.outbox.tracker.AggregateChangeTracker;
+import com.example.outbox.tracker.ChangeType;
+import org.hibernate.event.spi.*;
+import org.hibernate.Hibernate;
+
+public class AggregateInsertListener implements PostInsertEventListener {
+
+    private final AggregateRootRegistry registry;
+    private final AggregateChangeTracker tracker;
+
+    public AggregateInsertListener(AggregateRootRegistry registry, AggregateChangeTracker tracker) {
+        this.registry = registry;
+        this.tracker = tracker;
+    }
+
+    @Override
+    public void onPostInsert(PostInsertEvent event) {
+        Object entity = event.getEntity();
+        if (!registry.isAggregateRoot(Hibernate.getClass(entity))) return;
+        tracker.record(entity, ChangeType.CREATE, event.getPersister());
+    }
+}
+
+
+public class AggregateUpdateListener
+        implements PostUpdateEventListener {
+
+    private final AggregateRootRegistry registry;
+    private final AggregateChangeTracker tracker;
+
+    @Override
+    public void onPostUpdate(PostUpdateEvent event) {
+        if (!event.isDirty()) return;
+
+        Object entity = event.getEntity();
+        Class<?> type = Hibernate.getClass(entity);
+
+        if (!registry.isAggregateRoot(type)) return;
+
+        tracker.record(entity, ChangeType.UPDATE, event.getPersister());
+    }
+}
+
+
+public class AggregateDeleteListener
+        implements PostDeleteEventListener {
+
+    private final AggregateRootRegistry registry;
+    private final AggregateChangeTracker tracker;
+
+    @Override
+    public void onPostDelete(PostDeleteEvent event) {
+        Object entity = event.getEntity();
+        Class<?> type = Hibernate.getClass(entity);
+
+        if (!registry.isAggregateRoot(type)) return;
+
+        tracker.record(entity, ChangeType.DELETE, event.getPersister());
+    }
+}
+
+HibernateListenerRegistrar.java
+package com.example.outbox.hibernate;
+
+import org.springframework.stereotype.Component;
+import org.hibernate.boot.spi.SessionFactoryOptions;
+import org.hibernate.event.service.spi.EventListenerRegistry;
+import org.hibernate.event.spi.EventType;
+import org.hibernate.internal.SessionFactoryImpl;
+import jakarta.persistence.EntityManagerFactory;
+
+@Component
+public class HibernateListenerRegistrar {
+
+    public HibernateListenerRegistrar(EntityManagerFactory emf,
+                                      AggregateInsertListener insert,
+                                      AggregateUpdateListener update,
+                                      AggregateDeleteListener delete) {
+        var sessionFactory = emf.unwrap(SessionFactoryImpl.class);
+        EventListenerRegistry registry = sessionFactory.getServiceRegistry().getService(EventListenerRegistry.class);
+
+        registry.getEventListenerGroup(EventType.POST_INSERT).appendListener(insert);
+        registry.getEventListenerGroup(EventType.POST_UPDATE).appendListener(update);
+        registry.getEventListenerGroup(EventType.POST_DELETE).appendListener(delete);
+    }
+}
+
+8️⃣ Model Package
+OutboxMessage.java
+package com.example.outbox.model;
+
+import jakarta.persistence.*;
+import java.time.Instant;
+import java.util.UUID;
+
+@Entity
+@Table(name = "outbox")
+public class OutboxMessage {
+
+    @Id
+    @GeneratedValue
+    private UUID id;
+
+    private String aggregateType;
+    private String aggregateId;
+    private String eventType;
+
+    @Column(columnDefinition = "CLOB")
+    private String payload;
+
+    private Instant occurredAt;
+
+    // getters and setters
+    public UUID getId() { return id; }
+    public void setId(UUID id) { this.id = id; }
+    public String getAggregateType() { return aggregateType; }
+    public void setAggregateType(String aggregateType) { this.aggregateType = aggregateType; }
+    public String getAggregateId() { return aggregateId; }
+    public void setAggregateId(String aggregateId) { this.aggregateId = aggregateId; }
+    public String getEventType() { return eventType; }
+    public void setEventType(String eventType) { this.eventType = eventType; }
+    public String getPayload() { return payload; }
+    public void setPayload(String payload) { this.payload = payload; }
+    public Instant getOccurredAt() { return occurredAt; }
+    public void setOccurredAt(Instant occurredAt) { this.occurredAt = occurredAt; }
+}
+
+OutboxRepository.java
+package com.example.outbox.model;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.UUID;
+
+public interface OutboxRepository extends JpaRepository<OutboxMessage, UUID> {}
+
+9️⃣ Publish Package
+OutboxMapper.java
+package com.example.outbox.publish;
+
+import com.example.outbox.tracker.AggregateChange;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Component;
+
+@Component
+public class OutboxMapper {
+
+    private final ObjectMapper mapper = new ObjectMapper();
+
+    public String toJson(AggregateChange change) {
+        try { return mapper.writeValueAsString(change); }
+        catch (Exception e) { throw new RuntimeException(e); }
+    }
+}
+
+OutboxPublisher.java
+package com.example.outbox.publish;
+
+import com.example.outbox.tracker.AggregateChange;
+import com.example.outbox.tracker.AggregateChangeTracker;
+import com.example.outbox.model.OutboxMessage;
+import com.example.outbox.model.OutboxRepository;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionalEventListener;
+import org.springframework.transaction.event.TransactionPhase;
+
+import java.time.Instant;
+
+@Component
+public class OutboxPublisher {
+
+    private final AggregateChangeTracker tracker;
+    private final OutboxRepository repo;
+    private final OutboxMapper mapper;
+
+    public OutboxPublisher(AggregateChangeTracker tracker,
+                           OutboxRepository repo,
+                           OutboxMapper mapper) {
+        this.tracker = tracker;
+        this.repo = repo;
+        this.mapper = mapper;
+    }
+
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    public void publish(Object ignored) {
+        for (AggregateChange change : tracker.drain()) {
+            OutboxMessage msg = new OutboxMessage();
+            msg.setAggregateType(change.aggregateType().getName());
+            msg.setAggregateId(String.valueOf(change.aggregateId()));
+            msg.setEventType(change.changeType().name());
+            msg.setPayload(mapper.toJson(change));
+            msg.setOccurredAt(Instant.now());
+            repo.save(msg);
+        }
+    }
+}
+
+🔟 Auto-configuration registration
+
+src/main/resources/META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports
+
+com.example.outbox.autoconfig.OutboxAutoConfiguration
+
+1️⃣1️⃣ H2 Test Config
+package com.example.outbox.support;
+
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import javax.sql.DataSource;
+
+@TestConfiguration
+public class H2TestConfig {
+    @Bean
+    public DataSource dataSource() {
+        var ds = new DriverManagerDataSource();
+        ds.setDriverClassName("org.h2.Driver");
+        ds.setUrl("jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE");
+        ds.setUsername("sa");
+        ds.setPassword("");
+        return ds;
+    }
+}
+
+1️⃣2️⃣ Test Entities + Repos
+package com.example.outbox.integration;
+
+import jakarta.persistence.*;
+import com.example.outbox.annotation.AggregateRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+@Entity
+public class TestOrder {
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
+    private String status;
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+}
+
+@Entity
+public class TestOrderLine {
+    @Id @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
+    private String product;
+    @ManyToOne private TestOrder order;
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+    public String getProduct() { return product; }
+    public void setProduct(String product) { this.product = product; }
+    public TestOrder getOrder() { return order; }
+    public void setOrder(TestOrder order) { this.order = order; }
+}
+
+@AggregateRepository
+public interface TestOrderRepository extends JpaRepository<TestOrder, Long> {}
+
+public interface TestOrderLineRepository extends JpaRepository<TestOrderLine, Long> {}
+
+1️⃣3️⃣ Integration Test
+package com.example.outbox.integration;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.example.outbox.model.OutboxRepository;
+import static org.assertj.core.api.Assertions.assertThat;
+
+@SpringBootTest
+@Transactional
+public class OutboxIntegrationTest {
+
+    @Autowired TestOrderRepository orderRepo;
+    @Autowired TestOrderLineRepository lineRepo;
+    @Autowired OutboxRepository outboxRepo;
+
+    @Test
+    void testOutboxFiresOncePerAggregate() {
+        var order = new TestOrder();
+        order.setStatus("NEW");
+        orderRepo.save(order);
+
+        order.setStatus("SHIPPED");
+        orderRepo.save(order);
+
+        var line = new TestOrderLine();
+        line.setOrder(order);
+        line.setProduct("Widget");
+        lineRepo.save(line); // should NOT create outbox
+
+        outboxRepo.flush();
+
+        assertThat(outboxRepo.findAll())
+            .hasSize(1)
+            .allMatch(m -> m.getAggregateType().equals(TestOrder.class.getName()));
+    }
+}
+
+1️⃣4️⃣ Constraints of This Design
+
+Aggregate ID must exist before insert
+
+Use @GeneratedValue(strategy = GenerationType.SEQUENCE) or similar.
+
+Hibernate listeners rely on the ID to create a single outbox message per aggregate.
+
+Bulk updates / deletes
+
+JPQL UPDATE / DELETE or native queries bypass Hibernate events → no outbox generated.
+
+Native SQL bypasses events
+
+Only entity manager operations (persist, merge, remove) trigger outbox.
+
+Single outbox message per aggregate per transaction
+
+Multiple child entity updates do NOT trigger separate messages.
+
+Transaction boundaries
+
+Outbox events are published AFTER COMMIT.
+
+Requires proper transactional context.
+
+Child repositories
+
+Entities not marked as aggregate root do not generate outbox events, even if saved independently.
+
+Jackson serialization
+
+AggregateChange payload uses Jackson 3 — cyclic references in entities must be avoided.
+
+H2 vs Production DB
+
+Works in H2 tests, production must support sequences for IDs if using SEQUENCE generation.
