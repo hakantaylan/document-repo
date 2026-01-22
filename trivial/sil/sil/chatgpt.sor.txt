@@ -1,26 +1,3 @@
-Custom RepositoryFactoryBean (clean DI, no hacks)
-public class ConditionalRepositoryFactoryBean<
-        R extends Repository<T, ID>, T, ID>
-        extends JpaRepositoryFactoryBean<R, T, ID> {
-
-    private OutboxPublisher<?> publisher;
-
-    public ConditionalRepositoryFactoryBean(
-            Class<? extends R> repositoryInterface) {
-        super(repositoryInterface);
-    }
-
-    @Autowired
-    public void setPublisher(OutboxPublisher<?> publisher) {
-        this.publisher = publisher;
-    }
-
-    @Override
-    protected RepositoryFactorySupport createRepositoryFactory(
-            EntityManager em) {
-        return new ConditionalRepositoryFactory(em, publisher);
-    }
-}
 ---------------------------------------------------------------------------
 PART A — Debug repository instantiation (step-by-step)
 
