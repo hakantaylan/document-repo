@@ -1,0 +1,1861 @@
+microserviceA heavly depends on microserviceB's lookup data. Data don't change frequently. microserviceA makes deep nested searches including this lookup data. MicroserviceA provides soap/rest services for integration purposes (provides daat to other parties) where/how should i18n handled because we don’t want to share lookup related message bundles with other parties
+ChatGPT said:
+Good question — this is a very common pain point when a service both depends on lookup data and exposes APIs to external consumers.
+
+Let me frame it cleanly and then give you a few concrete, practical patterns.
+
+First, separate the concerns (this is the key)
+You actually have three different things mixed together right now:
+
+Lookup data (codes, enums, reference data)
+
+Business APIs (SOAP/REST contracts exposed to other parties)
+
+Human-readable text (i18n labels, descriptions)
+
+👉 The mistake to avoid is letting human-readable labels leak into service-to-service or external integration contracts.
+
+Golden rule for i18n in microservices
+Services exchange stable codes, not localized text.
+Localization happens at the boundary closest to the user.
+
+If you follow this, the “don’t want to share message bundles” problem mostly disappears.
+
+Recommended approach (most robust)
+1️⃣ Microservice B owns the lookup data codes only
+Microservice B should expose:
+
+{
+  "countryCode": "DE",
+  "statusCode": "ACTIVE"
+}
+Not:
+
+{
+  "countryCode": "DE",
+  "countryLabel": "Germany"
+}
+or worse:
+
+{
+  "countryLabel": "Deutschland"
+}
+✅ Codes are:
+
+Stable
+
+Language-agnostic
+
+Safe to share
+
+2️⃣ Microservice A caches lookup codes, not labels
+Since data doesn’t change frequently:
+
+Cache lookup tables from B
+
+Use them only for filtering / joins / nested searches
+
+Treat them as technical reference data
+
+This keeps your deep nested searches fast without introducing i18n coupling.
+
+3️⃣ Microservice A’s public APIs return codes only
+Your SOAP / REST contracts should look like:
+
+<status>ACTIVE</status>
+<country>DE</country>
+or JSON equivalent.
+
+📌 This is critical:
+
+External consumers must not depend on your labels
+
+Otherwise you lock yourself into their language and wording forever
+
+4️⃣ i18n is handled at the consumer boundary
+There are two clean options here — pick based on your ecosystem.
+
+Option A (Best for integrations): Consumers localize themselves ⭐
+You provide:
+
+Codes
+
+Optionally a lookup API that returns:
+
+code
+
+default (neutral) description (optional)
+
+Consumers:
+
+Map codes → labels using their own i18n bundles
+
+Or call a dedicated lookup service
+
+This keeps your service language-neutral.
+
+Option B (If you must provide localized text): Facade / BFF layer
+If some consumers truly need localized text:
+
+[Client] → [BFF / API Gateway / Facade] → [Microservice A] → [Microservice B]
+Microservice A stays code-only
+
+The facade layer:
+
+Knows the consumer’s locale
+
+Applies i18n using its own message bundles
+
+Translates codes → labels
+
+✅ Your internal services remain clean
+✅ No lookup bundles leaked to external parties
+
+What you should NOT do ❌
+❌ Don’t embed i18n bundles inside Microservice A’s domain logic
+
+❌ Don’t expose localized labels in SOAP/WSDL or REST schemas
+
+❌ Don’t let Microservice B return localized text
+
+❌ Don’t let external consumers depend on your wording
+
+All of these create tight coupling and versioning nightmares.
+
+SOAP-specific note (important)
+With SOAP especially:
+
+WSDLs become contracts for years
+
+Localized strings in WSDL-defined responses are almost impossible to change safely
+
+So:
+
+SOAP responses should be code-based, not text-based
+
+If you want a concrete pattern
+A very common, safe payload looks like this:
+
+{
+  "status": {
+    "code": "ACTIVE"
+  },
+  "country": {
+    "code": "DE"
+  }
+}
+Optionally add:
+
+"meta": {
+  "lookupVersion": "2026-01"
+}
+…but no labels.
+
+TL;DR
+i18n does NOT belong in core microservices
+
+Exchange codes only
+
+Cache lookup data for performance
+
+Localize:
+
+in the UI
+
+or in a BFF / gateway
+
+or in the consuming system
+
+Never leak lookup message bundles to external parties
+
+If you want, tell me:
+
+how many external consumers you have
+
+whether you control their UIs
+
+and whether this is internal-only or public APIs
+
+…and I can recommend a very concrete architecture (including caching + versioning strategy).
+
+You said:
+How abaout generating a common library for i18n. Lookup codes and language property bundles can hold in here. And microservices use this library for generating json/xml appropriate i18n 
+ChatGPT said:
+Short answer: don’t do it for microservices that expose integration APIs 🙂
+Long answer: it can work, but it usually creates more problems than it solves. Let me explain why, and then I’ll show you when it is acceptable and what a safer alternative looks like.
+
+Why a shared i18n library is a trap in microservices
+At first glance, a common library with:
+
+lookup codes
+
+language property bundles
+
+helper methods to generate i18n JSON/XML
+
+sounds clean and DRY.
+
+In practice, it introduces tight coupling on three levels:
+
+1️⃣ Deployment & version coupling 🚨
+If Microservice A and B both depend on:
+
+common-i18n-lib:1.7.3
+Then:
+
+Changing a label = new library version
+
+New library version = redeploy all services
+
+External consumers now implicitly depend on your wording
+
+This breaks one of the core microservice promises: independent deployment.
+
+2️⃣ Contract coupling with external parties 🚨
+The moment your services generate localized text:
+
+That text becomes part of the API contract
+
+Consumers start parsing, displaying, or even validating it
+
+Changing wording becomes a breaking change (yes, even typos)
+
+This is especially dangerous with SOAP.
+
+3️⃣ Hidden business logic leakage 🚨
+Lookup labels are often not “just UI”:
+
+“ACTIVE” vs “ENABLED”
+
+“CANCELLED” vs “TERMINATED”
+
+Different consumers want different wording.
+
+A shared library forces one semantic interpretation on everyone.
+
+When a shared i18n library can be acceptable ✅
+There are limited cases where it’s reasonable:
+
+✔ Internal-only system
+All services + UIs owned by one team/org
+
+No external integration contracts
+
+Fast redeploys are acceptable
+
+✔ BFF / API Gateway layer
+Library used only at the boundary
+
+Core microservices stay code-only
+
+i18n applied right before returning to clients
+
+✔ Admin / ops APIs
+Not long-lived contracts
+
+Not consumed by external parties
+
+If any external consumers exist → shared i18n library in core services is a bad idea.
+
+The safer alternative (recommended)
+🧠 Centralized Lookup / Localization Service
+Instead of a library, use a service.
+
+Microservice A ─┐
+Microservice B ─┼──> Lookup / Localization Service
+Gateway / BFF ──┘
+What it does:
+Stores:
+
+lookup codes
+
+labels per locale
+
+Exposes:
+
+GET /lookups/status?locale=de-DE
+What your core services return:
+{
+  "status": "ACTIVE",
+  "country": "DE"
+}
+What the BFF / Gateway returns:
+{
+  "status": {
+    "code": "ACTIVE",
+    "label": "Aktiv"
+  }
+}
+Why service > shared library
+Problem	Library	Service
+Independent deploy	❌	✅
+Versioning	Painful	Explicit
+Locale changes	Redeploy	Config-only
+External contracts	Leaky	Controlled
+Polyglot stack	Hard	Easy
+If you still want a shared library (damage control)
+If politics or constraints force it, limit the blast radius:
+
+Rules you must enforce
+Library is NOT used in domain models
+
+Library is NOT used in SOAP/REST response generation
+
+Library may:
+
+Validate lookup codes
+
+Provide default (neutral) descriptions for logs only
+
+Localization happens:
+
+in Gateway
+
+or in UI
+
+or in consumer system
+
+Never allow:
+response.setStatusLabel(i18n.get("status.ACTIVE", locale));
+Practical recommendation for your scenario
+Given that:
+
+Microservice A does deep nested searches
+
+Lookup data is stable
+
+You expose SOAP/REST to external parties
+
+You explicitly don’t want to share message bundles
+
+👉 Do not generate i18n JSON/XML inside microservices.
+
+Use:
+
+Codes internally
+
+Cache lookup data
+
+Localize at:
+
+API Gateway / BFF
+
+or consumer side
+
+TL;DR
+Shared i18n library in core microservices = tight coupling
+
+It turns text into an API contract (very bad)
+
+If you need i18n:
+
+do it at the boundary
+
+or via a localization service
+
+Libraries are okay only for boundary layers or internal-only systems
+
+If you want, I can:
+
+sketch a concrete API contract (SOAP + REST)
+
+show a caching strategy for lookup service
+
+or help you decide between BFF vs localization service
+
+Just tell me 👍
+
+You said:
+I insist on defining these lookup codes as enum and make a common library. How can you design this
+ChatGPT said:
+Got it 🙂 If the non-negotiable constraint is:
+
+✔ lookup codes must be enums
+✔ enums live in a common library
+✔ multiple microservices use them
+
+…then the goal shifts from “perfect microservice purity” to containing the coupling and preventing i18n leakage.
+
+Below is a design that works safely enough in real-world systems and won’t blow up your integrations.
+
+Core design principles (these are mandatory)
+Enums represent codes, never labels
+
+Enums are stable API contracts
+
+i18n is strictly optional & externalized
+
+No localized text in SOAP/REST schemas
+
+Locale affects representation, not meaning
+
+If you break any of these, the design collapses.
+
+1️⃣ Common library structure
+Split the library into hard boundaries:
+
+common-lookup/
+├── lookup-api/
+│   ├── enums/
+│   │   ├── StatusCode.java
+│   │   ├── CountryCode.java
+│   └── LookupCode.java
+│
+├── lookup-i18n/           (OPTIONAL MODULE)
+│   ├── messages_en.properties
+│   ├── messages_de.properties
+│   └── LookupMessageResolver.java
+│
+└── lookup-serialization/
+    ├── JsonLookupSerializer.java
+    ├── XmlLookupAdapter.java
+Why modules matter
+Core services depend only on lookup-api
+
+lookup-i18n is not transitively included
+
+Only Gateway / BFF depends on i18n module
+
+2️⃣ Enum design (this is critical)
+Base interface
+public interface LookupCode {
+    String code();          // stable external value
+    String domain();        // grouping (STATUS, COUNTRY, etc.)
+}
+Example enum
+public enum StatusCode implements LookupCode {
+    ACTIVE,
+    INACTIVE,
+    SUSPENDED;
+
+    @Override
+    public String code() {
+        return name(); // or explicit value if needed
+    }
+
+    @Override
+    public String domain() {
+        return "STATUS";
+    }
+}
+🚨 Rules:
+
+name() or explicit code never changes
+
+No getLabel()
+
+No locale awareness
+
+No business logic
+
+3️⃣ Serialization strategy (SOAP + REST safe)
+JSON
+{
+  "status": "ACTIVE"
+}
+XML (SOAP)
+<status>ACTIVE</status>
+👉 Enums serialize to string codes only.
+
+No wrappers, no labels, no language attributes.
+
+4️⃣ Optional i18n module (STRICTLY controlled)
+This module exists only for boundary layers.
+
+Properties
+# messages_en.properties
+STATUS.ACTIVE=Active
+STATUS.INACTIVE=Inactive
+# messages_de.properties
+STATUS.ACTIVE=Aktiv
+STATUS.INACTIVE=Inaktiv
+Resolver
+public class LookupMessageResolver {
+
+    private final MessageSource messageSource;
+
+    public String resolve(LookupCode code, Locale locale) {
+        return messageSource.getMessage(
+            code.domain() + "." + code.code(),
+            null,
+            locale
+        );
+    }
+}
+🚨 This module:
+
+Must never be used in core microservices
+
+Must never affect API schemas
+
+Can be excluded by dependency rules
+
+5️⃣ JSON/XML enrichment pattern (Gateway/BFF only)
+At the edge, you may enrich responses:
+
+{
+  "status": {
+    "code": "ACTIVE",
+    "label": "Aktiv"
+  }
+}
+Internally, the service still returns:
+
+{
+  "status": "ACTIVE"
+}
+This keeps:
+
+Contracts stable
+
+i18n optional
+
+Consumers not locked in
+
+6️⃣ Versioning strategy (VERY important)
+Enums are append-only
+Allowed:
+
+✅ add new enum values
+
+Forbidden:
+
+❌ rename
+
+❌ delete
+
+❌ reuse old codes
+
+Library versioning
+MAJOR: breaking enum changes (avoid at all costs)
+
+MINOR: new enum values
+
+PATCH: documentation / tooling
+
+7️⃣ Preventing misuse (real-world guardrails)
+Build-time enforcement
+Separate Maven/Gradle modules
+
+lookup-i18n not visible to core services
+
+Enforcer rules to block dependency usage
+
+Code review rules
+❌ getLabel()
+
+❌ Locale in domain code
+
+❌ MessageSource outside gateway
+
+8️⃣ Handling lookup data from Microservice B
+If B is the source of truth:
+
+B publishes enum updates via library version
+
+A caches enum-based lookup data
+
+Data storage uses enum codes, not labels
+
+What this design gives you
+✅ Enum safety
+✅ Shared understanding of lookup codes
+✅ No message bundle leakage
+✅ SOAP-safe contracts
+✅ Optional localization
+✅ Controlled coupling
+
+What it does NOT give you (be honest about this)
+❌ Independent evolution of lookup semantics
+❌ Zero coupling
+❌ Freedom to rename things later
+
+That’s the tradeoff you’re explicitly accepting.
+
+TL;DR
+If you insist on enums + common library:
+
+Enums = codes only
+
+i18n = separate optional module
+
+Localization only at boundaries
+
+Never serialize labels in core APIs
+
+Append-only enums
+
+If you want, I can:
+
+show a concrete Maven/Gradle setup
+
+design SOAP XSDs using enums safely
+
+or give you a checklist for reviewers to enforce this
+
+Just say the word 👌
+
+You said:
+But how can do searches. For instance if user's locale is english he/she will serach status = "Active" for Turkish status = "Aktif"
+ChatGPT said:
+Ah — this is the real crux 👍
+You’re describing localized search inputs, not just localized output. That changes things, but it’s still solvable without leaking i18n into core services.
+
+Key insight first, then the design.
+
+Key insight (non-negotiable)
+Searching must always happen on codes, never on localized labels.
+Localized text is just a user input convenience, not a search key.
+
+So when a user types:
+
+"Active" (en)
+
+"Aktif" (tr)
+
+…both must be translated to the same enum code:
+
+StatusCode.ACTIVE
+before the search hits Microservice A.
+
+Correct architecture for localized search
+[UI / Client]
+      ↓ (locale + text)
+[Gateway / BFF / Search Adapter]
+      ↓ (code-based criteria)
+[Microservice A]
+      ↓
+[DB / Cache / Index]
+Microservice A never sees localized text.
+
+1️⃣ Reverse lookup (label → enum code)
+Your i18n module must support reverse resolution.
+
+Message bundles (same as before)
+# messages_en.properties
+STATUS.ACTIVE=Active
+STATUS.INACTIVE=Inactive
+# messages_tr.properties
+STATUS.ACTIVE=Aktif
+STATUS.INACTIVE=Pasif
+Build a reverse index at startup
+public class LookupReverseIndex {
+
+    private final Map<Locale, Map<String, LookupCode>> index = new HashMap<>();
+
+    public LookupReverseIndex(
+            Collection<? extends LookupCode> codes,
+            MessageSource messageSource,
+            List<Locale> supportedLocales) {
+
+        for (Locale locale : supportedLocales) {
+            Map<String, LookupCode> map = new HashMap<>();
+            for (LookupCode code : codes) {
+                String label = messageSource.getMessage(
+                    code.domain() + "." + code.code(),
+                    null,
+                    locale
+                );
+                map.put(label.toLowerCase(locale), code);
+            }
+            index.put(locale, map);
+        }
+    }
+
+    public Optional<LookupCode> resolve(String text, Locale locale) {
+        return Optional.ofNullable(
+            index.getOrDefault(locale, Map.of())
+                 .get(text.toLowerCase(locale))
+        );
+    }
+}
+🚨 This lives in Gateway/BFF only, not in core services.
+
+2️⃣ Search request flow (example)
+User input
+GET /orders?status=Aktif
+Accept-Language: tr-TR
+Gateway transforms request
+GET /internal/orders?status=ACTIVE
+Microservice A search logic
+WHERE status_code = 'ACTIVE'
+Clean. Fast. Indexable.
+
+3️⃣ Handling partial / fuzzy search (real life)
+Users won’t always type exact labels.
+
+Options (pick based on UX needs)
+Option A: Prefix match
+"Akt" → ACTIVE
+Option B: Synonyms
+STATUS.ACTIVE.synonyms=Active,Enabled,Open
+Option C: Autocomplete API (best UX)
+GET /lookups/status?locale=tr&query=Ak
+Returns:
+
+[
+  { "code": "ACTIVE", "label": "Aktif" }
+]
+User selects → code sent to backend.
+
+4️⃣ Preventing ambiguity
+What if two labels are the same in a language?
+
+Example:
+
+STATUS.OPEN
+STATUS.ACTIVE
+Both → "Açık" 😬
+
+Rules to enforce
+Reverse lookup must detect duplicates
+
+Fail fast at startup
+
+Force disambiguation (UI selection)
+
+if (map.containsKey(label)) {
+    throw new IllegalStateException(
+        "Duplicate lookup label: " + label + " for locale " + locale
+    );
+}
+5️⃣ Where this logic must NOT live
+❌ Microservice A
+❌ Domain models
+❌ Persistence layer
+
+Localized search translation is presentation logic, not business logic.
+
+6️⃣ Common library usage (safe version)
+Your common library may include:
+
+Enums (StatusCode)
+
+Lookup metadata (domain)
+
+i18n bundles
+
+Reverse resolver utilities
+
+But only the Gateway/BFF depends on:
+
+lookup-i18n
+
+reverse lookup logic
+
+Core services depend only on:
+
+enum API module
+
+7️⃣ SOAP note (important)
+For SOAP searches:
+
+<status>Aktif</status>   ❌
+<status>ACTIVE</status>  ✅
+If consumers insist on localized input:
+
+expose a separate adapter service
+
+or document locale-aware input transformation
+
+Never overload core SOAP operations.
+
+TL;DR
+Users search by localized text
+
+Backend searches by enum codes
+
+Translate label → code at the boundary
+
+Use reverse i18n lookup
+
+Enforce uniqueness per locale
+
+Core microservices stay language-agnostic
+
+If you want next:
+
+I can design the exact REST/SOAP search contract
+
+or show how to implement autocomplete safely
+
+or discuss Elasticsearch-style multilingual indexing
+
+Just tell me where you want to go next 🚀
+
+You said:
+How about not exact equlas search. Searches status like "Akt*"
+ChatGPT said:
+Yep — once you allow "Akt*" / prefix / contains searches, you cannot treat this as a simple enum lookup anymore. But it’s still very doable without pushing i18n into core services.
+
+The trick is:
+👉 do wildcard matching on labels at the boundary, then translate to a set of enum codes.
+
+Let’s walk it step-by-step.
+
+Core rule (still holds)
+Wildcard / fuzzy search happens on localized labels,
+filtering happens on enum codes.
+
+Microservice A never sees "Akt*".
+
+High-level flow
+User (tr-TR):  status=Akt*
+        ↓
+Gateway / BFF:
+  - locale aware
+  - label-based wildcard search
+  - resolve → [ACTIVE]
+        ↓
+Microservice A:
+  - status IN ('ACTIVE')
+1️⃣ Precompute a locale-specific label index
+At Gateway startup (or refreshable cache):
+
+class LocalizedLookupIndex {
+
+    record Entry(LookupCode code, String labelLower) {}
+
+    private final Map<Locale, List<Entry>> index = new HashMap<>();
+
+    public LocalizedLookupIndex(
+            Collection<? extends LookupCode> codes,
+            MessageSource messageSource,
+            List<Locale> locales) {
+
+        for (Locale locale : locales) {
+            List<Entry> entries = new ArrayList<>();
+            for (LookupCode code : codes) {
+                String label = messageSource.getMessage(
+                    code.domain() + "." + code.code(),
+                    null,
+                    locale
+                );
+                entries.add(new Entry(code, label.toLowerCase(locale)));
+            }
+            index.put(locale, entries);
+        }
+    }
+
+    public Set<LookupCode> search(String pattern, Locale locale) {
+        String normalized = normalize(pattern, locale); // "Akt*" → "akt"
+
+        return index.getOrDefault(locale, List.of())
+                .stream()
+                .filter(e -> e.labelLower.startsWith(normalized))
+                .map(Entry::code)
+                .collect(Collectors.toSet());
+    }
+
+    private String normalize(String input, Locale locale) {
+        return input.replace("*", "").toLowerCase(locale);
+    }
+}
+2️⃣ Gateway search transformation
+Incoming request
+GET /orders?status=Akt*
+Accept-Language: tr-TR
+Gateway logic
+Set<LookupCode> statuses =
+    lookupIndex.search("Akt*", locale);
+
+if (statuses.isEmpty()) {
+    // no match → return empty result early or 400
+}
+
+internalRequest.setStatusCodes(statuses);
+Internal request
+GET /internal/orders?status=ACTIVE
+(or IN (...) if multiple matches)
+
+3️⃣ Microservice A search logic
+Now it’s dead simple and fast:
+
+WHERE status_code IN ('ACTIVE')
+Indexes work. Caching works. No locale issues.
+
+4️⃣ Handling multiple matches (important!)
+Example (Turkish):
+
+Akt* →
+  Aktif   → ACTIVE
+  Aktarım → TRANSFERRED
+Gateway result:
+
+status IN (ACTIVE, TRANSFERRED)
+This is correct behavior.
+
+If that’s not desired:
+
+UI should force disambiguation
+
+or require minimum length (e.g. 3 chars)
+
+5️⃣ Contains search (*tif*)
+Just change the matcher:
+
+.filter(e -> e.labelLower.contains(normalized))
+⚠️ Be careful:
+
+contains search is expensive
+
+may produce many codes
+
+better suited for autocomplete than filtering
+
+6️⃣ Performance & caching
+Lookup data is small and static → perfect for caching.
+
+Best practices:
+
+Precompute index per locale
+
+Refresh on config change
+
+O(lookups × locales) is tiny in practice
+
+7️⃣ Elasticsearch / full-text engines (if used)
+If Microservice A uses ES:
+
+❌ Don’t index localized labels
+✅ Index enum codes
+
+Use Gateway to translate:
+
+"Akt*" → ["ACTIVE"]
+Then query:
+
+{
+  "terms": {
+    "status": ["ACTIVE"]
+  }
+}
+8️⃣ Why NOT do wildcard search in core service?
+Because:
+
+Locale-specific collation
+
+Case folding rules (Turkish i/I 😈)
+
+Ambiguity handling
+
+UI semantics
+
+All of that belongs outside your domain.
+
+TL;DR
+"Akt*" is a presentation-level search
+
+Gateway does:
+
+locale-aware wildcard matching on labels
+
+label → enum code(s)
+
+Core services filter by codes only
+
+Supports prefix, contains, autocomplete
+
+No i18n leakage
+
+If you want next:
+
+exact REST/SOAP search contract examples
+
+how to expose an autocomplete endpoint
+
+how to handle right-to-left or Asian languages
+
+or how to guard against ambiguous matches
+
+Just say 👍
+
+You said:
+Can you give me example project for this. All code enums and compatible message bundles are defined in a common library. And correct i18n can be get according to specified enum or lookup code
+ChatGPT said:
+Perfect — below is a minimal but realistic example project that shows exactly what you asked for:
+
+✔ lookup codes as enums
+✔ enums + message bundles in a common library
+✔ correct i18n resolution by enum / lookup code
+✔ support for reverse lookup + wildcard search
+✔ no i18n leakage into core microservices
+
+I’ll keep it concrete and copy-pasteable.
+
+🧱 Project structure
+example-project/
+├── common-lookup/
+│   ├── src/main/java/com/example/lookup/
+│   │   ├── LookupCode.java
+│   │   ├── StatusCode.java
+│   │   └── CountryCode.java
+│   │
+│   ├── src/main/java/com/example/lookup/i18n/
+│   │   ├── LookupMessageResolver.java
+│   │   ├── LookupIndex.java
+│   │
+│   ├── src/main/resources/
+│   │   ├── messages_en.properties
+│   │   └── messages_tr.properties
+│   └── pom.xml
+│
+├── gateway-service/
+│   └── (uses lookup + i18n)
+│
+└── core-service/
+    └── (uses enums only)
+1️⃣ Common lookup API (enums only)
+LookupCode.java
+package com.example.lookup;
+
+public interface LookupCode {
+    String code();     // stable external value
+    String domain();   // STATUS, COUNTRY, etc.
+}
+StatusCode.java
+package com.example.lookup;
+
+public enum StatusCode implements LookupCode {
+
+    ACTIVE,
+    INACTIVE,
+    SUSPENDED;
+
+    @Override
+    public String code() {
+        return name();
+    }
+
+    @Override
+    public String domain() {
+        return "STATUS";
+    }
+}
+CountryCode.java
+package com.example.lookup;
+
+public enum CountryCode implements LookupCode {
+
+    TR,
+    DE,
+    US;
+
+    @Override
+    public String code() {
+        return name();
+    }
+
+    @Override
+    public String domain() {
+        return "COUNTRY";
+    }
+}
+🚨 No labels. No locale. No logic.
+
+2️⃣ Message bundles (in the SAME common library)
+messages_en.properties
+STATUS.ACTIVE=Active
+STATUS.INACTIVE=Inactive
+STATUS.SUSPENDED=Suspended
+
+COUNTRY.TR=Turkey
+COUNTRY.DE=Germany
+COUNTRY.US=United States
+messages_tr.properties
+STATUS.ACTIVE=Aktif
+STATUS.INACTIVE=Pasif
+STATUS.SUSPENDED=Askıya Alındı
+
+COUNTRY.TR=Türkiye
+COUNTRY.DE=Almanya
+COUNTRY.US=Amerika Birleşik Devletleri
+3️⃣ Lookup → localized label (forward i18n)
+LookupMessageResolver.java
+package com.example.lookup.i18n;
+
+import com.example.lookup.LookupCode;
+import org.springframework.context.MessageSource;
+
+import java.util.Locale;
+
+public class LookupMessageResolver {
+
+    private final MessageSource messageSource;
+
+    public LookupMessageResolver(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
+    public String resolve(LookupCode code, Locale locale) {
+        return messageSource.getMessage(
+            code.domain() + "." + code.code(),
+            null,
+            locale
+        );
+    }
+}
+Usage example (Gateway / UI layer):
+
+resolver.resolve(StatusCode.ACTIVE, Locale.ENGLISH); // Active
+resolver.resolve(StatusCode.ACTIVE, new Locale("tr")); // Aktif
+4️⃣ Localized wildcard / reverse search (Akt*)
+LookupIndex.java
+package com.example.lookup.i18n;
+
+import com.example.lookup.LookupCode;
+import org.springframework.context.MessageSource;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+public class LookupIndex {
+
+    record Entry(LookupCode code, String labelLower) {}
+
+    private final Map<Locale, List<Entry>> index = new HashMap<>();
+
+    public LookupIndex(
+            Collection<? extends LookupCode> codes,
+            MessageSource messageSource,
+            List<Locale> locales) {
+
+        for (Locale locale : locales) {
+            List<Entry> entries = new ArrayList<>();
+            for (LookupCode code : codes) {
+                String label = messageSource.getMessage(
+                    code.domain() + "." + code.code(),
+                    null,
+                    locale
+                );
+                entries.add(
+                    new Entry(code, label.toLowerCase(locale))
+                );
+            }
+            index.put(locale, entries);
+        }
+    }
+
+    public Set<LookupCode> search(String pattern, Locale locale) {
+        String normalized = normalize(pattern, locale);
+
+        return index.getOrDefault(locale, List.of())
+            .stream()
+            .filter(e -> e.labelLower.startsWith(normalized))
+            .map(Entry::code)
+            .collect(Collectors.toSet());
+    }
+
+    private String normalize(String input, Locale locale) {
+        return input.replace("*", "").toLowerCase(locale);
+    }
+}
+Example usage
+LookupIndex index = new LookupIndex(
+    List.of(StatusCode.values()),
+    messageSource,
+    List.of(Locale.ENGLISH, new Locale("tr"))
+);
+
+index.search("Akt*", new Locale("tr"));
+// → [StatusCode.ACTIVE]
+
+index.search("Ac*", Locale.ENGLISH);
+// → [StatusCode.ACTIVE]
+5️⃣ Gateway behavior (example REST flow)
+External request
+GET /orders?status=Akt*
+Accept-Language: tr-TR
+Gateway logic
+Set<LookupCode> statuses =
+    lookupIndex.search("Akt*", locale);
+
+internalRequest.setStatuses(statuses);
+Internal request to core service
+GET /internal/orders?status=ACTIVE
+6️⃣ Core service (NO i18n)
+Controller
+@GetMapping("/internal/orders")
+public List<Order> find(@RequestParam StatusCode status) {
+    return orderRepository.findByStatus(status);
+}
+Database
+WHERE status_code = 'ACTIVE'
+🔥 Clean, fast, language-agnostic.
+
+7️⃣ Optional: localized response enrichment (Gateway)
+{
+  "status": {
+    "code": "ACTIVE",
+    "label": "Aktif"
+  }
+}
+Core service still returns:
+
+{
+  "status": "ACTIVE"
+}
+8️⃣ Key guarantees this design gives you
+✅ Enums as single source of truth
+✅ Common library for codes + bundles
+✅ Localized output by enum
+✅ Localized wildcard search
+✅ SOAP / REST safe
+✅ No i18n leakage into domain
+
+TL;DR
+You can have:
+
+enums in a common library
+
+message bundles in the same library
+
+localized search like "Akt*"
+
+IF AND ONLY IF:
+
+i18n resolution happens at the boundary
+
+microservices operate on enum codes only
+
+If you want next, I can:
+
+put this into a GitHub-style repo layout
+
+add SOAP/XSD examples
+
+show Spring Boot auto-config for this
+
+or add autocomplete endpoints
+
+Just tell me 👌
+
+You said:
+show me all except SOAP
+ChatGPT said:
+Nice, then let’s make this concrete and end-to-end — everything except SOAP, with REST, Gateway, enums, i18n, wildcard search, autocomplete, and clean boundaries.
+
+Below is a working reference design you could almost drop into a real project.
+
+🧱 Final architecture (
+You said:
+springboot 4 java 25
+ChatGPT said:
+Nice, that narrows it perfectly 👍
+Below is a complete, Spring Boot 4 + Java 25 compatible example, REST-only, showing:
+
+✔ common library with enums + message bundles
+✔ i18n resolution by enum
+✔ localized wildcard search (Akt*)
+✔ Gateway translating localized input → enum codes
+✔ Core service using enums only
+✔ clean separation (no SOAP)
+
+I’ll keep it realistic but minimal.
+
+🧱 Overall architecture
+springboot4-i18n-example/
+├── common-lookup/
+├── gateway-service/
+└── core-service/
+1️⃣ common-lookup (shared library)
+pom.xml
+<project>
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.example</groupId>
+  <artifactId>common-lookup</artifactId>
+  <version>1.0.0</version>
+
+  <properties>
+    <java.version>25</java.version>
+    <spring.boot.version>4.0.0</spring.boot.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+    </dependency>
+  </dependencies>
+</project>
+Lookup API (enums only)
+LookupCode.java
+package com.example.lookup;
+
+public sealed interface LookupCode
+        permits StatusCode, CountryCode {
+
+    String code();
+    String domain();
+}
+(Java 25 + sealed interfaces 👍)
+
+StatusCode.java
+package com.example.lookup;
+
+public enum StatusCode implements LookupCode {
+
+    ACTIVE,
+    INACTIVE,
+    SUSPENDED;
+
+    @Override
+    public String code() {
+        return name();
+    }
+
+    @Override
+    public String domain() {
+        return "STATUS";
+    }
+}
+Message bundles
+messages_en.properties
+STATUS.ACTIVE=Active
+STATUS.INACTIVE=Inactive
+STATUS.SUSPENDED=Suspended
+messages_tr.properties
+STATUS.ACTIVE=Aktif
+STATUS.INACTIVE=Pasif
+STATUS.SUSPENDED=Askıya Alındı
+i18n utilities (used by Gateway only)
+LookupMessageResolver.java
+package com.example.lookup.i18n;
+
+import com.example.lookup.LookupCode;
+import org.springframework.context.MessageSource;
+
+import java.util.Locale;
+
+public class LookupMessageResolver {
+
+    private final MessageSource messageSource;
+
+    public LookupMessageResolver(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
+    public String resolve(LookupCode code, Locale locale) {
+        return messageSource.getMessage(
+            code.domain() + "." + code.code(),
+            null,
+            locale
+        );
+    }
+}
+LookupIndex.java (wildcard search)
+package com.example.lookup.i18n;
+
+import com.example.lookup.LookupCode;
+import org.springframework.context.MessageSource;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
+public final class LookupIndex {
+
+    record Entry(LookupCode code, String labelLower) {}
+
+    private final Map<Locale, List<Entry>> index = new HashMap<>();
+
+    public LookupIndex(
+            Collection<? extends LookupCode> codes,
+            MessageSource messageSource,
+            List<Locale> locales) {
+
+        for (Locale locale : locales) {
+            List<Entry> entries = new ArrayList<>();
+            for (LookupCode code : codes) {
+                String label = messageSource.getMessage(
+                    code.domain() + "." + code.code(),
+                    null,
+                    locale
+                );
+                entries.add(
+                    new Entry(code, label.toLowerCase(locale))
+                );
+            }
+            index.put(locale, entries);
+        }
+    }
+
+    public Set<LookupCode> prefixSearch(String pattern, Locale locale) {
+        String normalized = normalize(pattern, locale);
+
+        return index.getOrDefault(locale, List.of())
+            .stream()
+            .filter(e -> e.labelLower.startsWith(normalized))
+            .map(Entry::code)
+            .collect(Collectors.toSet());
+    }
+
+    private String normalize(String input, Locale locale) {
+        return input.replace("*", "").toLowerCase(locale);
+    }
+}
+2️⃣ gateway-service (localized input/output)
+pom.xml
+<dependencies>
+  <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+  </dependency>
+
+  <dependency>
+    <groupId>com.example</groupId>
+    <artifactId>common-lookup</artifactId>
+    <version>1.0.0</version>
+  </dependency>
+</dependencies>
+Spring configuration
+I18nConfig.java
+@Configuration
+public class I18nConfig {
+
+    @Bean
+    MessageSource messageSource() {
+        var source = new ReloadableResourceBundleMessageSource();
+        source.setBasename("classpath:messages");
+        source.setDefaultEncoding("UTF-8");
+        return source;
+    }
+
+    @Bean
+    LookupIndex lookupIndex(MessageSource messageSource) {
+        return new LookupIndex(
+            List.of(StatusCode.values()),
+            messageSource,
+            List.of(Locale.ENGLISH, new Locale("tr"))
+        );
+    }
+
+    @Bean
+    LookupMessageResolver lookupMessageResolver(
+            MessageSource messageSource) {
+        return new LookupMessageResolver(messageSource);
+    }
+}
+REST controller (localized search)
+OrderGatewayController.java
+@RestController
+@RequestMapping("/api/orders")
+public class OrderGatewayController {
+
+    private final LookupIndex lookupIndex;
+    private final LookupMessageResolver resolver;
+    private final CoreClient coreClient;
+
+    public OrderGatewayController(
+            LookupIndex lookupIndex,
+            LookupMessageResolver resolver,
+            CoreClient coreClient) {
+        this.lookupIndex = lookupIndex;
+        this.resolver = resolver;
+        this.coreClient = coreClient;
+    }
+
+    @GetMapping
+    public List<OrderDto> search(
+            @RequestParam String status,
+            Locale locale) {
+
+        var codes = lookupIndex.prefixSearch(status, locale);
+
+        var orders = coreClient.findByStatus(codes);
+
+        return orders.stream()
+            .map(o -> new OrderDto(
+                o.id(),
+                o.status().code(),
+                resolver.resolve(o.status(), locale)
+            ))
+            .toList();
+    }
+}
+DTOs
+public record OrderDto(
+    Long id,
+    String statusCode,
+    String statusLabel
+) {}
+3️⃣ core-service (NO i18n)
+pom.xml
+<dependencies>
+  <dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+  </dependency>
+
+  <dependency>
+    <groupId>com.example</groupId>
+    <artifactId>common-lookup</artifactId>
+    <version>1.0.0</version>
+  </dependency>
+</dependencies>
+Domain model
+public record Order(
+    Long id,
+    StatusCode status
+) {}
+REST controller
+@RestController
+@RequestMapping("/internal/orders")
+public class OrderController {
+
+    @GetMapping
+    public List<Order> find(
+            @RequestParam Set<StatusCode> status) {
+
+        return List.of(
+            new Order(1L, StatusCode.ACTIVE),
+            new Order(2L, StatusCode.INACTIVE)
+        ).stream()
+         .filter(o -> status.contains(o.status()))
+         .toList();
+    }
+}
+4️⃣ Example request flow
+Request (Turkish user)
+GET /api/orders?status=Akt*
+Accept-Language: tr-TR
+Gateway resolves
+Akt* → [ACTIVE]
+Core service receives
+GET /internal/orders?status=ACTIVE
+Response
+[
+  {
+    "id": 1,
+    "statusCode": "ACTIVE",
+    "statusLabel": "Aktif"
+  }
+]
+5️⃣ Why this design works
+✅ Spring Boot 4 ready
+✅ Java 25 friendly (records, sealed types)
+✅ Enums as single source of truth
+✅ Localized wildcard search
+✅ No i18n in core service
+✅ Clean REST contracts
+
+If you want next
+I can:
+
+add autocomplete endpoint
+
+add Elasticsearch version
+
+add multi-field search
+
+turn this into a real GitHub repo
+
+show test strategy for i18n
+
+Just tell me 🚀
+
+You said:
+show test strategy for i18n
+ChatGPT said:
+Great question — i18n breaks silently, so testing it properly is crucial.
+Below is a practical, layered test strategy tailored exactly to the architecture we discussed (Spring Boot 4, Java 25, enums + common library, gateway localization).
+
+I’ll show what to test, why, and how, with concrete examples.
+
+🎯 i18n Test Strategy (Layered)
+You should test i18n at four levels, each catching different classes of bugs.
+
+1. Message bundle correctness (static)
+2. Enum ↔ label resolution (forward lookup)
+3. Label → enum resolution (reverse / wildcard)
+4. End-to-end REST behavior (locale-aware)
+1️⃣ Message bundle correctness tests (FAST, STATIC)
+Goal
+Catch:
+
+missing keys
+
+typos
+
+duplicate labels (dangerous for reverse lookup)
+
+inconsistent locales
+
+What to test
+Every enum value has a message in every supported locale
+
+No duplicate labels within the same domain + locale
+
+Example (JUnit 5)
+class MessageBundleTest {
+
+    static final List<Locale> LOCALES =
+        List.of(Locale.ENGLISH, new Locale("tr"));
+
+    static final List<LookupCode> CODES =
+        List.of(StatusCode.values());
+
+    @Test
+    void allEnumsHaveTranslations() {
+        MessageSource ms = messageSource();
+
+        for (Locale locale : LOCALES) {
+            for (LookupCode code : CODES) {
+                assertDoesNotThrow(() ->
+                    ms.getMessage(
+                        code.domain() + "." + code.code(),
+                        null,
+                        locale
+                    )
+                );
+            }
+        }
+    }
+
+    @Test
+    void noDuplicateLabelsPerLocale() {
+        MessageSource ms = messageSource();
+
+        for (Locale locale : LOCALES) {
+            Map<String, LookupCode> seen = new HashMap<>();
+
+            for (LookupCode code : CODES) {
+                String label = ms.getMessage(
+                    code.domain() + "." + code.code(),
+                    null,
+                    locale
+                );
+
+                assertFalse(
+                    seen.containsKey(label),
+                    () -> "Duplicate label '" + label +
+                          "' for " + locale
+                );
+
+                seen.put(label, code);
+            }
+        }
+    }
+
+    private MessageSource messageSource() {
+        var source = new ReloadableResourceBundleMessageSource();
+        source.setBasename("classpath:messages");
+        source.setDefaultEncoding("UTF-8");
+        return source;
+    }
+}
+✅ Catches 90% of i18n mistakes early
+✅ Runs in milliseconds
+✅ No Spring context needed
+
+2️⃣ Forward lookup tests (enum → localized label)
+Goal
+Verify:
+
+correct label returned per locale
+
+locale-specific casing rules (Turkish i/I!)
+
+stable output for APIs
+
+Example
+class LookupMessageResolverTest {
+
+    LookupMessageResolver resolver =
+        new LookupMessageResolver(messageSource());
+
+    @Test
+    void resolvesEnglishLabel() {
+        assertEquals(
+            "Active",
+            resolver.resolve(StatusCode.ACTIVE, Locale.ENGLISH)
+        );
+    }
+
+    @Test
+    void resolvesTurkishLabel() {
+        assertEquals(
+            "Aktif",
+            resolver.resolve(StatusCode.ACTIVE, new Locale("tr"))
+        );
+    }
+
+    private MessageSource messageSource() {
+        var source = new ReloadableResourceBundleMessageSource();
+        source.setBasename("classpath:messages");
+        source.setDefaultEncoding("UTF-8");
+        return source;
+    }
+}
+3️⃣ Reverse + wildcard lookup tests (Akt* → ACTIVE)
+Goal
+Verify:
+
+prefix search
+
+locale-specific normalization
+
+multiple-match behavior
+
+no false positives
+
+Example
+class LookupIndexTest {
+
+    LookupIndex index = new LookupIndex(
+        List.of(StatusCode.values()),
+        messageSource(),
+        List.of(Locale.ENGLISH, new Locale("tr"))
+    );
+
+    @Test
+    void turkishPrefixSearch() {
+        var result = index.prefixSearch(
+            "Akt*", new Locale("tr")
+        );
+
+        assertEquals(
+            Set.of(StatusCode.ACTIVE),
+            result
+        );
+    }
+
+    @Test
+    void englishPrefixSearch() {
+        var result = index.prefixSearch(
+            "Act*", Locale.ENGLISH
+        );
+
+        assertTrue(result.contains(StatusCode.ACTIVE));
+    }
+
+    @Test
+    void noMatchReturnsEmptySet() {
+        var result = index.prefixSearch(
+            "XYZ*", Locale.ENGLISH
+        );
+
+        assertTrue(result.isEmpty());
+    }
+
+    private MessageSource messageSource() {
+        var source = new ReloadableResourceBundleMessageSource();
+        source.setBasename("classpath:messages");
+        source.setDefaultEncoding("UTF-8");
+        return source;
+    }
+}
+🔥 This is where most systems break — you’re explicitly testing it.
+
+4️⃣ Gateway REST tests (END-TO-END i18n)
+Goal
+Verify:
+
+Accept-Language handling
+
+localized input
+
+localized output
+
+internal service receives codes only
+
+Use
+@SpringBootTest
+
+MockMvc or WebTestClient
+
+Stub core-service
+
+Example (MockMvc)
+@SpringBootTest
+@AutoConfigureMockMvc
+class OrderGatewayIT {
+
+    @Autowired
+    MockMvc mockMvc;
+
+    @Test
+    void localizedSearchAndResponse_tr() throws Exception {
+        mockMvc.perform(
+            get("/api/orders")
+                .param("status", "Akt*")
+                .header("Accept-Language", "tr-TR")
+        )
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$[0].statusCode")
+            .value("ACTIVE"))
+        .andExpect(jsonPath("$[0].statusLabel")
+            .value("Aktif"));
+    }
+
+    @Test
+    void localizedSearchAndResponse_en() throws Exception {
+        mockMvc.perform(
+            get("/api/orders")
+                .param("status", "Act*")
+                .header("Accept-Language", "en-US")
+        )
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$[0].statusLabel")
+            .value("Active"));
+    }
+}
+5️⃣ Negative & edge-case tests (often forgotten)
+You should also test:
+
+🚫 Unsupported locale
+Accept-Language: fr-FR
+→ fallback to default (en)
+🚫 Ambiguous prefix
+"Akt*" → [ACTIVE, ARCHIVED]
+→ either:
+  - return both
+  - or 400 Bad Request
+🚫 Case-insensitivity
+"akt*" → ACTIVE
+🚫 Turkish casing bug
+"I" vs "ı" vs "İ"
+(Test this explicitly — Java locales matter.)
+
+6️⃣ What you do NOT test
+❌ i18n in core-service
+❌ database localized values
+❌ enum labels inside domain tests
+
+If you need those, your boundaries are wrong.
+
+✅ Test pyramid summary
+REST IT tests        (few, expensive)
+Reverse lookup tests (medium)
+Resolver tests       (cheap)
+Bundle tests         (very cheap, many)
+This gives you:
+
+fast feedback
+
+high confidence
+
+zero runtime surprises
+
+TL;DR
+To test i18n properly:
+
+Fail fast on missing/duplicate translations
+
+Test enum → label
+
+Test label → enum (wildcards!)
+
+Test REST with Accept-Language
+
+Never test i18n in core domain services
+
+If you want next, I can:
+
+add property-based tests for labels
+
+show contract tests for external consumers
+
+add CI checks for new enum values
+
+or show how to auto-generate tests from enums
