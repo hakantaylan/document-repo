@@ -1,0 +1,1492 @@
+Where does localization live?
+
+The golden rule for i18n in microservices
+Text shown to users must be localized at the edge, not deep inside services.
+Translation is a presentation concern, not a domain concern.
+
+Services exchange stable codes, not localized text.
+Localization happens at the boundary closest to the user.
+
+✅ The recommended solution (clean & scalable)
+🥇 Code + Key, not Text
+
+Service B should never send translated text.
+
+Instead, it sends:
+
+{
+  "statusCode": "ORDER_STATUS_SHIPPED",
+  "i18nKey": "order.status.shipped"
+}
+
+
+Or even just:
+
+{
+  "code": "SHIPPED"
+}
+
+🥈 Service A owns localization
+
+Service A:
+
+Has its own message bundles
+
+Maps lookup codes → i18n keys
+
+Translates based on Accept-Language
+
+Example:
+
+order.status.shipped=Shipped
+order.status.shipped.de=Versendet
+
+
+Service A does:
+
+messageSource.getMessage(i18nKey, null, locale)
+
+Why this works so well
+
+No cross-service i18n dependency
+
+No shared message bundles
+
+No runtime calls
+
+Each service localizes only what it presents
+
+Perfect for localized lookup data
+
+But what if lookup values change?
+
+Good question 👍
+
+Option A – Versioned lookup events (best)
+
+Service B emits:
+
+{
+  "code": "SHIPPED",
+  "semanticMeaning": "ORDER_STATUS_SHIPPED"
+}
+Spring Boot configuration (simple & solid)
+@Bean
+MessageSource messageSource() {
+    ReloadableResourceBundleMessageSource ms =
+        new ReloadableResourceBundleMessageSource();
+    ms.setBasename("classpath:messages");
+    ms.setDefaultEncoding("UTF-8");
+    ms.setFallbackToSystemLocale(false);
+    return ms;
+}
+Usage:
+
+String label = messageSource.getMessage(
+    "ORDER_STATUS." + statusCode,
+    null,
+    locale
+);
+
+
+2️⃣ Sample ADR (Architecture Decision Record)
+
+Create a file:
+docs/adr/001-i18n-key-policy.md
+
+# ADR 001: i18n Key Naming Convention
+
+## Context
+Our microservices rely on lookup codes from other services. We need to display user-facing text in multiple languages. We want to:
+
+- Avoid cross-service i18n coupling
+- Prevent key collisions
+- Make keys deterministic and predictable
+
+## Decision
+- Lookup codes are **domain-owned** (e.g., `ORDER_STATUS.SHIPPED`)
+- Message keys are **local to each service**, derived from domain codes
+- **Key convention**: `<domain>.<lookupType>.<code>`  
+  - lowercase, dot-separated
+  - example: `order.status.shipped`
+- No shared message bundle libraries
+- No runtime translation service
+- Build-time check enforces convention via Maven
+
+## Consequences
+- Services remain autonomous
+- New lookup codes require only **local bundle additions**
+- Avoids conflicts across services
+- Eventual consistency is maintained if new codes appear
+
+ADR (Architecture Decision Record)
+
+docs/adr/002-domain-enum-i18n.md
+
+# ADR 002: Domain Enums + Local i18n Policy
+
+## Context
+Multiple microservices rely on the same lookup codes (ORDER_STATUS, PAYMENT_STATUS).  
+We need consistent codes across services and localized user-facing text.
+
+## Decision
+- Create a shared domain library with **enums/constants** for all lookup codes
+- Each microservice:
+  - Depends on shared library
+  - Maintains **local message bundles**
+  - Derives i18n keys from enum values (lowercase, dot-separated)
+- Maven build-time validation ensures:
+  - All enums have a corresponding i18n key
+  - i18n key naming convention is respected
+- No shared message bundles
+- No runtime REST calls for translations
+
+## Consequences
+- Codes are guaranteed consistent across microservices
+- Localization stays fully local
+- Builds fail early if translation is missing
+- Services remain autonomous
+
+
+✅ Result
+
+Domain code consistency: Guaranteed by shared enum library
+
+Localization: Local to each service
+
+Automation: Maven validation enforces rules
+
+Scalable: Adding new codes is easy and safe
+Add Reflections dependency
+
+In your microservice pom.xml:
+
+<dependency>
+    <groupId>org.reflections</groupId>
+    <artifactId>reflections</artifactId>
+    <version>0.10.2</version>
+</dependency>
+
+
+This lets us scan all classes in a package dynamically, including enums.
+
+2️⃣ Dynamic Enum + i18n Validator
+package com.example.i18n;
+
+import org.reflections.Reflections;
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Modifier;
+import java.util.*;
+import java.util.regex.Pattern;
+
+public class EnumI18nValidatorDynamic {
+
+    private static final List<String> SUPPORTED_LOCALES = Arrays.asList("en", "de");
+
+    // Package of your shared domain enums
+    private static final String ENUM_PACKAGE = "com.example.domain";
+
+    // Key naming convention
+    private static final Pattern KEY_PATTERN =
+            Pattern.compile("^[a-z]+\\.[a-z]+\\.[a-z0-9_]+$");
+
+    public static void main(String[] args) throws IOException {
+        boolean hasError = false;
+
+        // 1️⃣ Dynamically scan all enums in the package
+        Reflections reflections = new Reflections(ENUM_PACKAGE);
+        Set<Class<? extends Enum>> enumClasses = reflections.getSubTypesOf(Enum.class);
+
+        for (Class<? extends Enum> enumClass : enumClasses) {
+            if (Modifier.isAbstract(enumClass.getModifiers())) continue;
+
+            String domain = enumClass.getSimpleName().toLowerCase();
+            Enum<?>[] constants = enumClass.getEnumConstants();
+
+            // 2️⃣ Validate all locales
+            for (String locale : SUPPORTED_LOCALES) {
+                Properties props = loadProperties(locale);
+
+                for (Enum<?> constant : constants) {
+                    String code = constant.name().toLowerCase();
+                    String key = domain + "." + code;
+
+                    // Naming convention
+                    if (!KEY_PATTERN.matcher(key).matches()) {
+                        System.err.printf("[ERROR] Invalid key format: %s%n", key);
+                        hasError = true;
+                    }
+
+                    // Missing translation
+                    if (!props.containsKey(key)) {
+                        System.err.printf("[ERROR] Missing translation for key '%s' in locale '%s'%n",
+                                key, locale);
+                        hasError = true;
+                    }
+                }
+            }
+        }
+
+        if (hasError) {
+            System.err.println("i18n validation failed!");
+            System.exit(1);
+        } else {
+            System.out.println("i18n validation passed.");
+        }
+    }
+
+    private static Properties loadProperties(String locale) throws IOException {
+        Properties props = new Properties();
+        String fileName = String.format("messages_%s.properties", locale);
+        InputStream is = EnumI18nValidatorDynamic.class.getClassLoader().getResourceAsStream(fileName);
+        if (is != null) props.load(is);
+        return props;
+    }
+}
+
+3️⃣ Maven Plugin Setup
+<plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>exec-maven-plugin</artifactId>
+    <version>3.1.0</version>
+    <executions>
+        <execution>
+            <id>validate-enum-i18n-dynamic</id>
+            <phase>validate</phase>
+            <goals>
+                <goal>java</goal>
+            </goals>
+            <configuration>
+                <mainClass>com.example.i18n.EnumI18nValidatorDynamic</mainClass>
+                <classpathScope>compile</classpathScope>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+
+
+Runs in validate phase
+
+Automatically scans all enums in com.example.domain
+
+Fails build if:
+
+Enum → missing translation key
+
+Message key violates naming convention
+
+4️⃣ How it works
+Shared Library
+  └── OrderStatus, PaymentStatus, etc.
+
+Service A/B
+  ├── Depends on shared library
+  ├── messages_en.properties, messages_de.properties
+  └── Validator scans enums dynamically → checks i18n keys
+-------------------------------------------------------------------------------------------
+Perfect! Now let’s extend this solution so your CI/build can enforce domain code + i18n consistency across multiple microservices in the same repo. This is ideal for your setup where you have multiple Spring Boot microservices depending on shared lookup codes.
+
+1️⃣ Directory Structure Assumption
+services/
+  service-a/
+    src/main/resources/messages_en.properties
+    src/main/resources/messages_de.properties
+  service-b/
+    src/main/resources/messages_en.properties
+    src/main/resources/messages_de.properties
+shared-domain-lookup/
+  src/main/java/com/example/domain/OrderStatus.java
+  src/main/java/com/example/domain/PaymentStatus.java
+
+
+Shared library contains all enums
+
+Each microservice has its own message bundles
+
+2️⃣ Multi-Service Enum + i18n Validator
+package com.example.i18n;
+
+import org.reflections.Reflections;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.Modifier;
+import java.nio.file.*;
+import java.util.*;
+import java.util.regex.Pattern;
+
+public class MultiServiceEnumI18nValidator {
+
+    // Supported locales
+    private static final List<String> SUPPORTED_LOCALES = Arrays.asList("en", "de");
+
+    // Package for shared enums
+    private static final String ENUM_PACKAGE = "com.example.domain";
+
+    // Key format
+    private static final Pattern KEY_PATTERN =
+            Pattern.compile("^[a-z]+\\.[a-z]+\\.[a-z0-9_]+$");
+
+    // Root directory containing all microservices
+    private static final String SERVICES_ROOT = "services";
+
+    public static void main(String[] args) throws IOException {
+        boolean hasError = false;
+
+        // 1️⃣ Dynamically scan shared enums
+        Reflections reflections = new Reflections(ENUM_PACKAGE);
+        Set<Class<? extends Enum>> enumClasses = reflections.getSubTypesOf(Enum.class);
+
+        for (Class<? extends Enum> enumClass : enumClasses) {
+            if (Modifier.isAbstract(enumClass.getModifiers())) continue;
+
+            String domain = enumClass.getSimpleName().toLowerCase();
+            Enum<?>[] constants = enumClass.getEnumConstants();
+
+            // 2️⃣ Validate each microservice
+            Files.list(Paths.get(SERVICES_ROOT))
+                    .filter(Files::isDirectory)
+                    .forEach(serviceDir -> {
+                        try {
+                            for (String locale : SUPPORTED_LOCALES) {
+                                Properties props = loadProperties(serviceDir, locale);
+
+                                for (Enum<?> constant : constants) {
+                                    String code = constant.name().toLowerCase();
+                                    String key = domain + "." + code;
+
+                                    // Naming convention
+                                    if (!KEY_PATTERN.matcher(key).matches()) {
+                                        System.err.printf("[ERROR] Invalid key format: %s in %s%n", key, serviceDir);
+                                        hasError = true;
+                                    }
+
+                                    // Missing translation
+                                    if (!props.containsKey(key)) {
+                                        System.err.printf("[ERROR] Missing translation for key '%s' in service '%s', locale '%s'%n",
+                                                key, serviceDir.getFileName(), locale);
+                                        hasError = true;
+                                    }
+                                }
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            hasError = true;
+                        }
+                    });
+        }
+
+        if (hasError) {
+            System.err.println("Multi-service i18n validation failed!");
+            System.exit(1);
+        } else {
+            System.out.println("Multi-service i18n validation passed.");
+        }
+    }
+
+    private static Properties loadProperties(Path serviceDir, String locale) throws IOException {
+        Properties props = new Properties();
+        Path propFile = serviceDir.resolve("src/main/resources/messages_" + locale + ".properties");
+        if (Files.exists(propFile)) {
+            try (InputStream is = Files.newInputStream(propFile)) {
+                props.load(is);
+            }
+        }
+        return props;
+    }
+}
+
+3️⃣ How it works
+
+Scans all enums in the shared library
+
+Iterates over all microservices in the repo
+
+Checks for each locale:
+
+Message key exists for each enum value
+
+Key follows naming convention
+
+✅ Build fails if:
+
+Missing translation in any service
+
+Invalid message key format
+
+4️⃣ Maven Integration (in CI)
+
+You can add this in a parent POM or run it via CI directly:
+
+<plugin>
+    <groupId>org.codehaus.mojo</groupId>
+    <artifactId>exec-maven-plugin</artifactId>
+    <version>3.1.0</version>
+    <executions>
+        <execution>
+            <id>validate-multi-service-enum-i18n</id>
+            <phase>validate</phase>
+            <goals>
+                <goal>java</goal>
+            </goals>
+            <configuration>
+                <mainClass>com.example.i18n.MultiServiceEnumI18nValidator</mainClass>
+                <classpathScope>compile</classpathScope>
+            </configuration>
+        </execution>
+    </executions>
+</plugin>
+
+-------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
+Even if they live in the same library, keep them conceptually distinct.
+
+common-lookups/
+├── src/main/java
+│   └── com.example.lookups
+│       ├── CountryCode.java
+│       ├── CurrencyCode.java
+│       ├── OrderStatusCode.java
+│
+├── src/main/resources
+│   └── i18n
+│       ├── lookups_en.properties
+│       ├── lookups_fr.properties
+│       └── lookups_de.properties
+
+
+Enum example:
+
+public enum OrderStatusCode {
+    CREATED,
+    APPROVED,
+    CANCELLED
+}
+
+
+Properties:
+
+OrderStatusCode.CREATED=Created
+OrderStatusCode.APPROVED=Approved
+OrderStatusCode.CANCELLED=Cancelled
+
+2. Enums must be append-only
+
+Once published:
+
+❌ Never rename enum values
+
+❌ Never change meaning
+
+✅ Only add new ones
+-----------------------------
+Translations live as data (JSON/YAML)
+
+Data artifacts are:
+
+Versioned
+
+Published
+
+Consumed by services and/or UIs at runtime or startup
+
+This decouples:
+
+Translation changes ⟂ service releases
+
+Language growth ⟂ enum changes
+
+Option 1: Artifact repository (most common & simple)
+Structure the lookup data repository
+
+Create a separate repo (or module) just for lookup data:
+
+lookup-data/
+├── order-status.yaml
+├── country.yaml
+├── currency.yaml
+└── i18n/
+    ├── en.yaml
+    ├── fr.yaml
+    └── de.yaml
+
+
+Example (order-status.yaml):
+
+OrderStatus:
+  CREATED:
+    en: Created
+    fr: Créé
+    de: Erstellt
+  APPROVED:
+    en: Approved
+    fr: Approuvé
+    de: Genehmigt
+
+
+Or per-language:
+
+# en.yaml
+OrderStatus.CREATED: Created
+OrderStatus.APPROVED: Approved
+
+Publish as a versioned artifact
+
+Package it as:
+
+Maven artifact (zip / jar)
+
+NPM package
+
+OCI artifact
+
+Raw ZIP in Artifactory / Nexus / S3
+
+Example (Maven):
+
+com.example:lookup-data:1.4.0
+
+
+Contains only:
+
+/lookups/*.yaml
+
+Consume in microservices
+
+At startup:
+
+Load YAML/JSON from classpath or external location
+
+Cache in memory
+
+Provide a lookup API
+
+Example (Spring Boot):
+
+Map<String, String> labels = lookupLoader.load("en");
+String label = labels.get("OrderStatus.CREATED");
+
+Pros
+
+✅ Simple
+✅ Works with any language
+✅ Versioned & traceable
+✅ No runtime dependency
+
+Lookup bundles should be shared data, not service-owned logic.
+
+Concrete architecture diagram (textual)
+          ┌─────────────────────┐
+          │   lookup-data repo  │
+          │  (JSON / YAML)      │
+          └─────────┬───────────┘
+                    │ published as artifact
+        ┌───────────┴───────────┐
+        │                       │
+┌───────▼───────┐       ┌───────▼────────┐
+│   Frontend     │       │ Backend (opt.) │
+│  i18n runtime  │       │ PDFs / emails  │
+└───────────────┘       └────────────────┘
+
+┌─────────────────────────────────────────┐
+│ Backend microservices                    │
+│  - enums only                            │
+│  - return codes                          │
+└─────────────────────────────────────────┘
+
+Alternative: Backend-first localization (less recommended)
+
+If you choose backend localization:
+
+Backend loads JSON/YAML
+
+Backend returns:
+
+{
+  "orderStatus": {
+    "code": "CANCELLED",
+    "label": "Cancelled"
+  }
+}
+
+
+Frontend:
+Just displays text
+
+These JSON files are:
+
+Stored in a repo
+
+Published as an artifact
+
+Or hosted via CDN
+
+3️⃣ Install React i18n tooling
+
+Using react-i18next (recommended):
+
+npm install i18next react-i18next
+
+4️⃣ Initialize i18n in React
+i18n.ts
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+
+import en from "./i18n/en.json";
+import fr from "./i18n/fr.json";
+
+i18n
+  .use(initReactI18next)
+  .init({
+    resources: {
+      en: { translation: en },
+      fr: { translation: fr }
+    },
+    lng: "en",
+    fallbackLng: "en",
+    interpolation: {
+      escapeValue: false
+    }
+  });
+
+export default i18n;
+
+Load once in main.tsx
+import "./i18n";
+
+5️⃣ Rendering enum values in React
+Utility function (important)
+export function lookup(enumName: string, value: string) {
+  return `${enumName}.${value}`;
+}
+
+React component
+import { useTranslation } from "react-i18next";
+import { lookup } from "./lookup";
+
+function OrderRow({ order }: { order: any }) {
+  const { t } = useTranslation();
+
+  return (
+    <div>
+      <span>Status: {t(lookup("OrderStatus", order.status))}</span>
+      <span>Payment: {t(lookup("PaymentMethod", order.paymentMethod))}</span>
+    </div>
+  );
+}
+
+6️⃣ Dropdowns / Selects (very common use case)
+Metadata endpoint (optional)
+GET /metadata/order-status
+
+
+Backend response:
+
+["CREATED", "APPROVED", "CANCELLED"]
+
+React dropdown
+const ORDER_STATUSES = ["CREATED", "APPROVED", "CANCELLED"];
+
+function OrderStatusSelect({ value, onChange }: any) {
+  const { t } = useTranslation();
+
+  return (
+    <select value={value} onChange={e => onChange(e.target.value)}>
+      {ORDER_STATUSES.map(status => (
+        <option key={status} value={status}>
+          {t(`OrderStatus.${status}`)}
+        </option>
+      ))}
+    </select>
+  );
+}
+
+7️⃣ Lazy-load bundles (CDN / runtime)
+
+If bundles are hosted remotely:
+
+i18n
+  .use(HttpBackend)
+  .init({
+    backend: {
+      loadPath: "/i18n/{{lng}}.json"
+    }
+  });
+
+
+Great — below is a complete Spring Boot BFF example using your requested stack:
+
+Spring Boot 4
+
+Jackson 3
+
+Java 25
+
+BFF style (Code-first, React-friendly)
+
+Global enums + JSON lookup bundles
+
+Clean separation (microservices → codes, BFF → aggregation + optional lookup APIs)
+
+I’ll keep it practical, copy-pasteable, and opinionated.
+
+1️⃣ What this Spring Boot BFF does
+
+✅ Calls downstream microservices
+✅ Returns enum codes only for normal APIs
+✅ Optionally exposes UI lookup endpoints
+✅ Loads JSON lookup bundles (generated from OpenAPI)
+❌ Does not mix business logic with localization
+
+2️⃣ Project structure
+bff/
+├── src/main/java
+│   └── com.example.bff
+│       ├── BffApplication.java
+│       ├── config/
+│       │   └── JacksonConfig.java
+│       ├── lookup/
+│       │   ├── LookupService.java
+│       │   └── LookupController.java
+│       ├── orders/
+│       │   ├── OrderClient.java
+│       │   ├── OrderController.java
+│       │   └── OrderDto.java
+│
+├── src/main/resources
+│   └── lookups/
+│       ├── en.json
+│       └── fr.json
+└── build.gradle
+
+3️⃣ Lookup JSON bundles (data artifacts)
+src/main/resources/lookups/en.json
+{
+  "OrderStatus.CREATED": "Created",
+  "OrderStatus.APPROVED": "Approved",
+  "OrderStatus.CANCELLED": "Cancelled",
+
+  "PaymentMethod.CARD": "Card",
+  "PaymentMethod.CASH": "Cash"
+}
+
+fr.json
+{
+  "OrderStatus.CREATED": "Créé",
+  "OrderStatus.APPROVED": "Approuvé",
+  "OrderStatus.CANCELLED": "Annulé",
+
+  "PaymentMethod.CARD": "Carte",
+  "PaymentMethod.CASH": "Espèces"
+}
+
+
+These files are generated + translated, not handwritten in code.
+
+4️⃣ Jackson 3 configuration (Spring Boot 4)
+JacksonConfig.java
+package com.example.bff.config;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class JacksonConfig {
+
+    @Bean
+    ObjectMapper objectMapper() {
+        return JsonMapper.builder()
+                .findAndAddModules()
+                .build();
+    }
+}
+
+
+✔ Jackson 3
+✔ Java 25 compatible
+✔ Records supported
+
+5️⃣ LookupService (core piece)
+
+This loads JSON bundles once and serves lookups efficiently.
+
+LookupService.java
+package com.example.bff.lookup;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Service;
+
+import java.io.InputStream;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+@Service
+public class LookupService {
+
+    private final ObjectMapper objectMapper;
+    private final Map<String, Map<String, String>> cache = new ConcurrentHashMap<>();
+
+    public LookupService(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
+    public String label(String enumName, String code, String lang) {
+        var map = cache.computeIfAbsent(lang, this::load);
+        return map.getOrDefault(enumName + "." + code, code);
+    }
+
+    public Map<String, String> all(String lang) {
+        return cache.computeIfAbsent(lang, this::load);
+    }
+
+    private Map<String, String> load(String lang) {
+        try (InputStream is =
+                     getClass().getResourceAsStream("/lookups/" + lang + ".json")) {
+
+            if (is == null) {
+                throw new IllegalStateException("Missing lookup bundle: " + lang);
+            }
+
+            return objectMapper.readValue(is, new TypeReference<>() {});
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to load lookups for " + lang, e);
+        }
+    }
+}
+
+
+✔ Thread-safe
+✔ Cached
+✔ Language fallback-ready
+
+6️⃣ LookupController (UI metadata endpoint)
+
+This is extremely useful for React dropdowns.
+
+LookupController.java
+package com.example.bff.lookup;
+
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/ui/lookups")
+public class LookupController {
+
+    private final LookupService lookupService;
+
+    public LookupController(LookupService lookupService) {
+        this.lookupService = lookupService;
+    }
+
+    @GetMapping("/{enumName}")
+    public List<LookupItem> lookup(
+            @PathVariable String enumName,
+            @RequestHeader(name = "Accept-Language", defaultValue = "en") String lang
+    ) {
+        return lookupService.all(lang).entrySet().stream()
+                .filter(e -> e.getKey().startsWith(enumName + "."))
+                .map(e -> new LookupItem(
+                        e.getKey().substring(enumName.length() + 1),
+                        e.getValue()
+                ))
+                .toList();
+    }
+
+    public record LookupItem(String code, String label) {}
+}
+
+Example response
+[
+  { "code": "CREATED", "label": "Created" },
+  { "code": "APPROVED", "label": "Approved" }
+]
+
+7️⃣ Order DTO (codes only!)
+OrderDto.java
+package com.example.bff.orders;
+
+public record OrderDto(
+        String orderId,
+        String status,
+        String paymentMethod
+) {}
+
+
+No localization here. Codes only.
+
+8️⃣ Downstream microservice client (example)
+OrderClient.java
+package com.example.bff.orders;
+
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClient;
+
+@Component
+public class OrderClient {
+
+    private final RestClient restClient = RestClient.create();
+
+    public OrderDto getOrder(String id) {
+        return restClient.get()
+                .uri("http://orders-service/orders/{id}", id)
+                .retrieve()
+                .body(OrderDto.class);
+    }
+}
+
+9️⃣ OrderController (BFF API)
+OrderController.java
+package com.example.bff.orders;
+
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/ui/orders")
+public class OrderController {
+
+    private final OrderClient client;
+
+    public OrderController(OrderClient client) {
+        this.client = client;
+    }
+
+    @GetMapping("/{id}")
+    public OrderDto getOrder(@PathVariable String id) {
+        return client.getOrder(id);
+    }
+}
+
+
+✔ No localization
+✔ No enum interpretation
+✔ Clean BFF boundary
+
+🔟 How React uses this BFF
+API calls
+GET /ui/orders/123
+GET /ui/lookups/OrderStatus
+
+React rendering
+t(`OrderStatus.${order.status}`)
+
+
+OR dropdown from BFF:
+
+<select>
+  {lookups.map(l =>
+    <option key={l.code}>{l.label}</option>
+  )}
+</select>
+
+1️⃣1️⃣ Why this design is correct
+
+✔ Spring Boot BFF stays presentation-aware but logic-free
+✔ Microservices remain pure domain services
+✔ i18n can change without redeploying microservices
+✔ Lookup data is generated, validated, versioned
+✔ React stays simple
+
+✅ Final Recommendation
+
+For Spring Boot 4 + Jackson 3 + Java 25:
+
+Microservices → enums + OpenAPI
+
+Generated JSON lookup bundles → shared artifacts
+
+Spring Boot BFF → aggregation + lookup metadata
+
+React → rendering + language switching
+
+If you want next, I can show:
+
+Spring Boot BFF resolving labels (Style B)
+
+Caching + ETag
+
+Multi-tenant overrides
+
+CI validation against OpenAPI
+
+Just say which one.
+
+show me all
+
+Perfect — you want a full, end-to-end setup, combining everything we discussed:
+
+Microservices with OpenAPI enums
+
+JSON lookup bundles (generated)
+
+Spring Boot 4 BFF using Jackson 3 and Java 25
+
+React frontend consuming the BFF
+
+i18n fully supported
+
+Optional dropdowns, tables, language switching
+
+I’ll give you a complete working blueprint you can copy/paste and extend.
+
+1️⃣ Microservices (source of truth)
+openapi.yaml
+openapi: 3.0.3
+info:
+  title: Order Service API
+  version: 1.0.0
+
+components:
+  schemas:
+    OrderStatus:
+      type: string
+      enum:
+        - CREATED
+        - APPROVED
+        - CANCELLED
+    PaymentMethod:
+      type: string
+      enum:
+        - CARD
+        - CASH
+
+paths:
+  /orders/{id}:
+    get:
+      summary: Get order by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orderId:
+                    type: string
+                  status:
+                    $ref: '#/components/schemas/OrderStatus'
+                  paymentMethod:
+                    $ref: '#/components/schemas/PaymentMethod'
+
+2️⃣ Generate enums → JSON skeletons
+Node.js generator (scripts/generate-lookups.js)
+import fs from "fs";
+import yaml from "js-yaml";
+
+const openapi = yaml.load(fs.readFileSync("openapi.yaml", "utf8"));
+
+const schemas = openapi.components.schemas;
+const result = {};
+
+for (const [schemaName, schema] of Object.entries(schemas)) {
+  if (schema.enum) {
+    schema.enum.forEach(value => {
+      result[`${schemaName}.${value}`] = value;
+    });
+  }
+}
+
+fs.writeFileSync("lookup-data/en.json", JSON.stringify(result, null, 2));
+fs.writeFileSync("lookup-data/fr.json", JSON.stringify(result, null, 2));
+console.log("Lookup skeletons generated.");
+
+Output (en.json)
+{
+  "OrderStatus.CREATED": "CREATED",
+  "OrderStatus.APPROVED": "APPROVED",
+  "OrderStatus.CANCELLED": "CANCELLED",
+  "PaymentMethod.CARD": "CARD",
+  "PaymentMethod.CASH": "CASH"
+}
+
+
+✅ Translators fill in labels.
+
+3️⃣ Spring Boot 4 BFF
+build.gradle dependencies
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '4.0.0'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:3.1.0'
+}
+
+BffApplication.java
+package com.example.bff;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class BffApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(BffApplication.class, args);
+    }
+}
+
+JacksonConfig.java
+package com.example.bff.config;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class JacksonConfig {
+    @Bean
+    public ObjectMapper objectMapper() {
+        return JsonMapper.builder().findAndAddModules().build();
+    }
+}
+
+LookupService.java
+package com.example.bff.lookup;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Service;
+
+import java.io.InputStream;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+@Service
+public class LookupService {
+
+    private final ObjectMapper objectMapper;
+    private final Map<String, Map<String, String>> cache = new ConcurrentHashMap<>();
+
+    public LookupService(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
+    public String label(String enumName, String code, String lang) {
+        var map = cache.computeIfAbsent(lang, this::load);
+        return map.getOrDefault(enumName + "." + code, code);
+    }
+
+    public Map<String, String> all(String lang) {
+        return cache.computeIfAbsent(lang, this::load);
+    }
+
+    private Map<String, String> load(String lang) {
+        try (InputStream is =
+                     getClass().getResourceAsStream("/lookups/" + lang + ".json")) {
+            if (is == null) throw new IllegalStateException("Missing lookup bundle: " + lang);
+            return objectMapper.readValue(is, new TypeReference<>() {});
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to load lookups for " + lang, e);
+        }
+    }
+}
+
+LookupController.java
+package com.example.bff.lookup;
+
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/ui/lookups")
+public class LookupController {
+
+    private final LookupService lookupService;
+
+    public LookupController(LookupService lookupService) {
+        this.lookupService = lookupService;
+    }
+
+    @GetMapping("/{enumName}")
+    public List<LookupItem> lookup(
+            @PathVariable String enumName,
+            @RequestHeader(name = "Accept-Language", defaultValue = "en") String lang
+    ) {
+        return lookupService.all(lang).entrySet().stream()
+                .filter(e -> e.getKey().startsWith(enumName + "."))
+                .map(e -> new LookupItem(
+                        e.getKey().substring(enumName.length() + 1),
+                        e.getValue()
+                ))
+                .toList();
+    }
+
+    public record LookupItem(String code, String label) {}
+}
+
+OrderDto.java
+package com.example.bff.orders;
+
+public record OrderDto(String orderId, String status, String paymentMethod) {}
+
+OrderClient.java (example downstream call)
+package com.example.bff.orders;
+
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+@Component
+public class OrderClient {
+
+    private final RestTemplate restTemplate = new RestTemplate();
+
+    public OrderDto getOrder(String id) {
+        return restTemplate.getForObject(
+                "http://orders-service/orders/{id}", OrderDto.class, id
+        );
+    }
+}
+
+OrderController.java
+package com.example.bff.orders;
+
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/ui/orders")
+public class OrderController {
+
+    private final OrderClient client;
+
+    public OrderController(OrderClient client) {
+        this.client = client;
+    }
+
+    @GetMapping("/{id}")
+    public OrderDto getOrder(@PathVariable String id) {
+        return client.getOrder(id);
+    }
+}
+
+4️⃣ React frontend
+Folder structure
+src/
+├─ i18n/
+│  ├─ en.json
+│  └─ fr.json
+├─ lookup/
+│  └─ lookup.ts
+├─ api/
+│  └─ orders.ts
+├─ components/
+│  ├─ OrderRow.tsx
+│  └─ OrderStatusSelect.tsx
+└─ App.tsx
+
+lookup.ts
+export function lookup(enumName: string, value?: string) {
+  return value ? `${enumName}.${value}` : "common.unknown";
+}
+
+api/orders.ts
+export type Order = {
+  orderId: string;
+  status: "CREATED" | "APPROVED" | "CANCELLED";
+  paymentMethod: "CARD" | "CASH";
+};
+
+export async function fetchOrder(): Promise<Order> {
+  const res = await fetch("/ui/orders/A123");
+  return res.json();
+}
+
+OrderRow.tsx
+import { useTranslation } from "react-i18next";
+import { lookup } from "../lookup/lookup";
+import { Order } from "../api/orders";
+
+export function OrderRow({ order }: { order: Order }) {
+  const { t } = useTranslation();
+
+  return (
+    <div>
+      <div>Status: {t(lookup("OrderStatus", order.status))}</div>
+      <div>Payment: {t(lookup("PaymentMethod", order.paymentMethod))}</div>
+    </div>
+  );
+}
+
+OrderStatusSelect.tsx
+import { useTranslation } from "react-i18next";
+import { lookup } from "../lookup/lookup";
+
+const STATUSES = ["CREATED", "APPROVED", "CANCELLED"] as const;
+
+export function OrderStatusSelect({ value, onChange }: { value: string, onChange: (v: string) => void }) {
+  const { t } = useTranslation();
+
+  return (
+    <select value={value} onChange={e => onChange(e.target.value)}>
+      {STATUSES.map(s => <option key={s}>{t(lookup("OrderStatus", s))}</option>)}
+    </select>
+  );
+}
+
+App.tsx
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { fetchOrder, Order } from "./api/orders";
+import { OrderRow } from "./components/OrderRow";
+
+export default function App() {
+  const { i18n } = useTranslation();
+  const [order, setOrder] = useState<Order | null>(null);
+
+  useEffect(() => {
+    fetchOrder().then(setOrder);
+  }, []);
+
+  return (
+    <div>
+      <button onClick={() => i18n.changeLanguage("en")}>EN</button>
+      <button onClick={() => i18n.changeLanguage("fr")}>FR</button>
+
+      {order && <OrderRow order={order} />}
+    </div>
+  );
+}
+
+✅ Summary
+
+Microservices → enum codes only (OpenAPI defines them)
+
+Node script → generate JSON skeletons → translators fill labels
+
+Spring Boot BFF → aggregates microservices + exposes lookup endpoints
+
+React → consumes codes + lookup bundles → renders i18n labels
+
+Optional dropdowns / tables / language switching
+
+CI → validate enum ↔ JSON coverage
+
+This is enterprise-grade, fully decoupled, scalable, and fits Spring Boot 4 + Jackson 3 + Java 25 + React i18n.
+
+If you want, I can also make a diagram showing the full flow from OpenAPI → BFF → React with i18n and JSON bundles. This helps teams onboard fast.
+
+Do you want me to make that diagram?
+
+OK. All microservice's lookup data is static very rarly changes but one of the microservice's lookup data has its own definition screen. I mean new data can be added dynamically. How this special lookup can be handled in terms of i18n in this ecosystem?
+
+Ah! Now we’re talking about one microservice with dynamic lookup data, while all others remain static. This is a common real-world scenario, and it changes the i18n strategy slightly. Let’s break it down carefully.
+
+1️⃣ Key facts
+
+Most lookups → static, generated once → JSON bundles → i18n labels → React renders → no backend localization required. ✅
+
+One microservice → dynamic lookup data, editable by users/admins at runtime. ❌
+
+The problem: You cannot rely on pre-generated JSON bundles for this special lookup because new entries can appear after deployment.
+
+2️⃣ Strategy
+
+We need a hybrid approach:
+
+Lookup type	Source of truth	i18n approach
+Static (most lookups)	OpenAPI enums	Pre-generated JSON bundles; React + BFF; CI validation
+Dynamic (special lookup)	Microservice DB	Backend-resolved labels; BFF exposes localized API; optional fallback to UI editing
+3️⃣ Backend changes for dynamic lookup
+3a. Store dynamic lookup entries
+
+DB table: dynamic_lookup
+
+id | code | default_label | locale | localized_label
+---|------|---------------|--------|----------------
+1  | VIP  | VIP Customer   | en     | VIP Customer
+2  | VIP  | VIP Customer   | fr     | Client VIP
+
+
+locale = null → default label
+
+localized_label → per-language translation
+
+3b. Admin screen
+
+Microservice exposes CRUD endpoints
+
+BFF can optionally expose UI-friendly aggregated lookup endpoint with localization
+
+4️⃣ BFF handling
+
+Static lookups → loaded from JSON bundles as before
+
+Dynamic lookups → fetched from microservice DB, possibly cached in memory
+
+Example BFF endpoint
+@GetMapping("/ui/lookups/special")
+public List<LookupItem> dynamicLookup(
+    @RequestHeader(name = "Accept-Language", defaultValue = "en") String lang
+) {
+    return dynamicLookupService.getAll(lang);
+}
+
+Service logic
+public List<LookupItem> getAll(String lang) {
+    List<DynamicLookup> entries = repository.findAll();
+    return entries.stream()
+        .map(e -> new LookupItem(
+            e.getCode(),
+            e.getLabelForLocale(lang) // fallback to default_label
+        ))
+        .toList();
+}
+
+
+✔ React can call this endpoint dynamically
+✔ New entries appear instantly
+✔ Language switching supported
+
+5️⃣ React consumption
+
+Same lookup() helper works for static lookups
+
+For dynamic lookup:
+
+async function fetchSpecialLookup(lang: string) {
+  const res = await fetch(`/ui/lookups/special`, {
+    headers: { "Accept-Language": lang }
+  });
+  return res.json(); // [{code, label}]
+}
+
+
+Can populate dropdowns, filters, tables dynamically
+
+Supports locale switching
+
+6️⃣ Optional caching / optimization
+
+Cache dynamic lookup in BFF for 10-60 seconds if reads are heavy
+
+Use ETag or Last-Modified headers for React to avoid repeated fetching
+
+7️⃣ Mental model of the ecosystem
+OpenAPI enums (static)  → generate JSON → BFF loads → React renders
+Dynamic lookup DB (special) → BFF fetch + optional cache → React fetches dynamically
+
+
+
+
+
