@@ -1659,6 +1659,8 @@ Step 1: Versioned Base Entity
 import jakarta.persistence.*;
 
 @MappedSuperclass
+@Getter
+@Setter
 public abstract class VersionedEntity<ID> {
 
     @Id
@@ -1669,11 +1671,6 @@ public abstract class VersionedEntity<ID> {
     private Long version; // optimistic locking
 
     private Long fencingToken; // monotonic token for fencing
-
-    public ID getId() { return id; }
-    public Long getVersion() { return version; }
-    public Long getFencingToken() { return fencingToken; }
-    public void setFencingToken(Long fencingToken) { this.fencingToken = fencingToken; }
 }
 Step 2: Generic FencingLockService
 import jakarta.persistence.EntityManager;
@@ -1728,93 +1725,4 @@ public class FencingLockService {
         return current == null ? 1L : current + 1;
     }
 }
-Notes:
 
-This service does not load entities — the caller uses its own JpaRepository.
-
-Works for any entity extending VersionedEntity.
-
-Deeply nested aggregates are safe if cascaded (CascadeType.ALL) and manipulated within the same transaction.
-
-Step 3: Example Service Layer Using Repository
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-@Service
-public class ResourceService {
-
-    private final FencingLockService lockService;
-    private final ResourceRepository resourceRepository;
-
-    public ResourceService(FencingLockService lockService, ResourceRepository resourceRepository) {
-        this.lockService = lockService;
-        this.resourceRepository = resourceRepository;
-    }
-
-    /**
-     * Same-transaction update using generic lock service
-     */
-    @Transactional
-    public void updateNestedResource(Long resourceId, String newValue) {
-        Resource resource = resourceRepository.findById(resourceId)
-                .orElseThrow(() -> new IllegalArgumentException("Resource not found"));
-
-        boolean locked = false;
-        try {
-            // 1️⃣ Try to acquire lock
-            locked = lockService.tryLock(resource);
-            if (!locked) {
-                throw new ConcurrentModificationException("Resource is locked by another transaction");
-            }
-
-            // 2️⃣ Mutate aggregate graph (parent → child → grandchild)
-            resource.getNestedEntities().forEach(n -> n.setValue(newValue));
-            resource.setName("Updated_" + newValue);
-
-            // 3️⃣ Save entity graph
-            resourceRepository.save(resource);
-
-        } finally {
-            // 4️⃣ Release lock regardless of success/failure
-            if (locked) {
-                lockService.releaseLock(resource);
-            }
-        }
-    }
-}
-✅ Safety Analysis
-Concurrent updates:
-
-tryLock + @Version ensures only one transaction can acquire the lock.
-
-TOCTOU prevention:
-
-Fencing token is incremented before mutation.
-
-Flush after tryLock ensures DB sees latest version.
-
-Deeply nested aggregates:
-
-Safe if cascades are properly set (CascadeType.ALL).
-
-Lock release in finally:
-
-Ensures token/lock is finalized even if exceptions occur.
-
-Repository-agnostic:
-
-Any entity with its own JpaRepository can use the service.
-
-This pattern is safe for all same-transaction updates and covers all edge cases for attached entities.
-
-It does not handle detached/offline clients, but that can be implemented separately using token validation + conditional update if needed.
-
-If you want, I can also provide a diagram showing the full “tryLock → mutate → save → releaseLock” flow with optimistic locking and fencing tokens — it makes it very clear why TOCTOU is prevented.
-
-Do you want me to do that?
-
-
-
-
-No file chosenNo file chosen
-ChatGPT can make mistakes. Check important info.

@@ -1,0 +1,70 @@
+import jakarta.persistence.*;
+
+@MappedSuperclass
+@Getter
+@Setter
+public abstract class VersionedEntity<ID> {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private ID id;
+
+    @Version
+    private Long version; // optimistic locking
+
+    private Long fencingToken; // monotonic token for fencing
+}
+
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.OptimisticLockException;
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Service;
+
+import java.util.ConcurrentModificationException;
+
+@Service
+public class FencingLockService {
+
+    private final EntityManager entityManager;
+
+    public FencingLockService(EntityManager entityManager) {
+        this.entityManager = entityManager;
+    }
+
+    /**
+     * Try to acquire a lock on an attached entity.
+     * @return true if lock acquired, false if another transaction modified it
+     */
+    @Transactional
+    public <T extends VersionedEntity<?>> boolean tryLock(T entity) {
+        if (entity == null) throw new IllegalArgumentException("Entity cannot be null");
+
+        try {
+            // Acquire lock: increment fencing token
+            entity.setFencingToken(nextToken(entity.getFencingToken()));
+
+            // Merge + flush triggers optimistic lock
+            entityManager.merge(entity);
+            entityManager.flush();
+            return true;
+
+        } catch (OptimisticLockException e) {
+            return false; // concurrent modification detected
+        }
+    }
+
+    /**
+     * Release lock explicitly (always in finally block)
+     */
+    @Transactional
+    public <T extends VersionedEntity<?>> void releaseLock(T entity) {
+        // For optimistic locking, release = flush + merge
+        entityManager.merge(entity);
+        entityManager.flush();
+    }
+
+    private Long nextToken(Long current) {
+        return current == null ? 1L : current + 1;
+    }
+}
