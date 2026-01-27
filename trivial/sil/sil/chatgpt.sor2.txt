@@ -1,0 +1,33 @@
+My entities have id generated like tihs:
+    @Id
+    @UuidGenerator(style = UuidGenerator.Style.VERSION_7)
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+and i want to use id for equals/hashcode and it must not be null (If it is null before persisting and set after persist, this may cuase some problems)
+
+How can i write a wrapper which uses hibernate VERSION_7 generator under the hood and use it like this:
+    @Id
+    private UUID id = UUIDWrapper.generateUUID();
+
+Are you sure hibernate uses this. Bu this is incubating with hibernate 7.2.1. What if hibernate decides to use another library in the future? Is not there another way to use it through wrapper hibernate classes?
+
+        <dependency>
+            <groupId>com.github.f4b6a3</groupId>
+            <artifactId>uuid-creator</artifactId>
+            <version>4.7.1</version> <!-- pick a current version -->
+        </dependency>
+
+import com.github.f4b6a3.uuid.UuidCreator; import java.util.UUID;
+public final class UUIDWrapper { private UUIDWrapper() {}
+// returns a time-ordered UUID (UUIDv7-like)
+public static UUID generateUUID() {
+    return UuidCreator.getTimeOrdered(); // time-ordered (v7-style) UUID
+}
+}
+
+
+How to inject current hibernate session into Interceptor using hibernate 7.2.1
+How to do db changes in the same transaction using hibernate Interceptor 7.2.1
+
+In springboot/jpa universe is it possible to give each transaction a unique id so that trace the tx in app logs
+I need to trace when a transaction is created and when it is committed by looking app logs in a springboot 4 hibernate 7.2.1 application. How should i arrange log levels of related classes
