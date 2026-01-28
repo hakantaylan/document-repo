@@ -1,0 +1,134 @@
+@MappedSuperclass
+@EntityListeners(MyEventListener.class)
+public abstract class BaseEntity implements OutboxAggregate {
+
+    @Id
+    @UuidGenerator(style = UuidGenerator.Style.VERSION_7)
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
+
+    public UUID getId() {
+        return id;
+    }
+}
+
+import com.example.outbox.outbox.OutboxAggregate;
+import jakarta.persistence.Entity;
+
+@Entity
+public class MyOrder extends BaseEntity implements OutboxAggregate {
+
+
+    private String status;
+
+    public MyOrder() {
+        this.status = "NEW";
+    }
+
+    public void ship() {
+        this.status = "SHIPPED";
+    }
+
+    public String getStatus() {
+        return status;
+    }
+}
+
+import com.example.outbox.config.SpringContext;
+import com.example.outbox.outbox.OutboxAggregate;
+import com.example.outbox.outbox.OutboxEntity;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreRemove;
+import jakarta.persistence.PreUpdate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import tools.jackson.databind.json.JsonMapper;
+
+public class MyEventListener {
+
+    private Logger logger = LoggerFactory.getLogger(MyEventListener.class);
+    private JsonMapper jsonMapper = JsonMapper.builder().build();
+
+    @PrePersist
+    public void preInsert(BaseEntity instance) {
+        logger.debug("JPA preInsert");
+        SpringContext.publishEvent(convert(instance, "CREATED"));
+    }
+
+    @PreUpdate
+    public void preUpdate(BaseEntity instance) {
+        logger.debug("JPA preUpdate");
+        SpringContext.publishEvent(convert(instance, "UPDATED"));
+    }
+
+    @PreRemove
+    public void preRemove(BaseEntity instance) {
+        logger.debug("JPA preRemove");
+	SpringContext.publishEvent(convert(instance, "DELETED"));
+
+    }
+
+    private OutboxEntity convert(OutboxAggregate aggregate, String eventType) {
+        OutboxEntity event = new OutboxEntity(aggregate.getClass().getSimpleName(), aggregate.getId(), eventType, "");
+        event.setPayload(jsonMapper.writeValueAsString(aggregate));
+        return event;
+    }
+
+}
+
+@Component
+public class SpringContext implements ApplicationContextAware {
+    private static ApplicationContext context;
+
+    @Override
+    public void setApplicationContext(ApplicationContext ac) throws BeansException {
+        context = ac;
+    }
+
+    public static <T> T getBean(Class<T> clazz) {
+        return context.getBean(clazz);
+    }
+
+    public static void publishEvent(Object event) {
+        context.publishEvent(event);
+    }
+}
+
+@Service
+public class OrderService {
+
+    private final OrderRepository repository;
+
+    public OrderService(OrderRepository repository) {
+        this.repository = repository;
+    }
+
+    @Transactional
+    public void createAndShip() {
+        MyOrder myOrder = new MyOrder();
+        repository.save(myOrder);
+        myOrder.ship();
+    }
+
+}
+
+This approach does not work. it can't catch the second change (update) made by myOrder.ship(); Second change is not reflected. onPreUpdate jpa listener works, event is fired but transactional listener does not get it???
+Spring manages both changes in same transaction. I don't get it how?
+
+When i look at applicaiton logs
+26-01-28 Wed 10:54:49.410 DEBUG 7128 [    main] JpaTransactionManager                    : Found thread-bound EntityManager [SessionImpl(772863845<open>)] for JPA transaction
+26-01-28 Wed 10:54:49.411 DEBUG 7128 [    main] JpaTransactionManager                    : Participating in existing transaction
+26-01-28 Wed 10:54:49.417 DEBUG 7128 [    main] MyEventListener                          : JPA preInsert
+26-01-28 Wed 10:54:49.465 DEBUG 7128 [    main] JpaTransactionManager                    : Found thread-bound EntityManager [SessionImpl(772863845<open>)] for JPA transaction
+26-01-28 Wed 10:54:49.466 DEBUG 7128 [    main] JpaTransactionManager                    : Participating in existing transaction
+26-01-28 Wed 10:54:49.466 DEBUG 7128 [    main] JpaTransactionManager                    : Initiating transaction commit
+26-01-28 Wed 10:54:49.467 DEBUG 7128 [    main] JpaTransactionManager                    : Committing JPA transaction on EntityManager [SessionImpl(772863845<open>)]
+26-01-28 Wed 10:54:49.469 DEBUG 7128 [    main] MyEventListener                          : JPA preUpdate
+
+PreUpdate fires after transaction commit initiates in this case. How spring make that change in the same transaction but it fires preupdate jpa event listener after tx commit initiating
+
+
+Everytime I asked you about this question you answer me collect changes using hibernate listeners or jpa entity lifecycles listeners and use springBoot's transaction syncronisation methods to commit those changes before transaction commit. Guess what. Hibernate listeners and spring transaction syncronisation solution does not align. Even jpa life cycle events does not align with it as i gave you an example above. Doing db opretaions is not suggested on hibernate's flush/preflush listener. How to capture all changes in a transactional method and insert outbox events regarding those changes before tx commits)
+
+
+timing/ordering problem between JPA/Hibernate flush lifecycle, Spring transaction commit processing and Spring's application event / transactional-event machinery
