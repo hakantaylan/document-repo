@@ -747,10 +747,10 @@ false)
 
     /**
      * to override the default ObjectMapper (and XmlMapper)
-     * @return custom Jackson2ObjectMapperBuilderCustomizer
+     * @return custom JsonMapperBuilderCustomizer
      */
     @Bean
-    public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer() {
+    public JsonMapperBuilderCustomizer jsonCustomizer() {
         return builder -&gt; builder.
                 serializationInclusion(JsonInclude.Include.NON_NULL)
                 .featuresToEnable(MapperFeature.SORT_PROPERTIES_ALPHABETICA=
@@ -1534,7 +1534,7 @@ ths</strong>:</p>
 </li>
 <li data-start=3D"493" data-end=3D"535">
 <p data-start=3D"496" data-end=3D"535"><code data-start=3D"496" data-end=3D=
-"535">Jackson2ObjectMapperBuilderCustomizer</code></p>
+"535">JsonMapperBuilderCustomizer</code></p>
 </li>
 <li data-start=3D"536" data-end=3D"569">
 <p data-start=3D"539" data-end=3D"569">Direct <code data-start=3D"546" data=
@@ -1633,7 +1633,7 @@ p>
 </ul>
 <hr data-start=3D"1632" data-end=3D"1635">
 <h3 data-start=3D"1637" data-end=3D"1684">3=EF=B8=8F=E2=83=A3 <code data-st=
-art=3D"1645" data-end=3D"1684">Jackson2ObjectMapperBuilderCustomizer</code>=
+art=3D"1645" data-end=3D"1684">JsonMapperBuilderCustomizer</code>=
 </h3>
 <p data-start=3D"1685" data-end=3D"1722"><strong data-start=3D"1685" data-e=
 nd=3D"1696">Status:</strong> =E2=9C=85 <em data-start=3D"1699" data-end=3D"=
@@ -2039,7 +2039,7 @@ nd=3D"2199">DeserializationFeature.*</code></p>
 </ul>
 <hr data-start=3D"2201" data-end=3D"2204">
 <h1 data-start=3D"2206" data-end=3D"2251">3=EF=B8=8F=E2=83=A3 <code data-st=
-art=3D"2212" data-end=3D"2251">Jackson2ObjectMapperBuilderCustomizer</code>=
+art=3D"2212" data-end=3D"2251">JsonMapperBuilderCustomizer</code>=
 </h1>
 <h3 data-start=3D"2253" data-end=3D"2262">=E2=9D=8C Old</h3>
 <pre class=3D"overflow-visible! px-0!" data-start=3D"2263" data-end=3D"2453=
