@@ -1,0 +1,35 @@
+SQL Sorgularını 3 Saniyeden 50 Milisaniyeye Düşürmek 🚀
+
+Bir veritabanı sorgusunu optimize etmek, sadece indeks eklemekten ibaret değildir. Milyonlarca satırlık "gerçek hayat" verilerinde nelerin fark yarattığını tüm kritik noktalarla özetledim.
+
+İşte veritabanı performansını uçuran 10 altın kural:
+
+🔹 1. İndekslemede "Covering Index" Gücü Sadece WHERE koşulundaki kolonu indekslemek yetmez. Eğer SELECT ettiğiniz kolonları da indekse dahil ederseniz (Include), veritabanı asıl tabloya hiç gitmeden (heap fetch yapmadan) sonucu döner.
+🔹 2. SELECT * Yasaklı Bölge "İleride lazım olur" diye tüm kolonları çekmeyin. Bu, Covering Index kullanımını imkansız kılar ve Network I/O'yu şişirir.
+🔹 3. Fonksiyon kullanımdan kaçının (Sargable Queries) İndeksli kolonda fonksiyon kullanmayın. ❌ WHERE YEAR(date) = 2023 (İndeks çalışmaz, Full Scan yapar) ✅ WHERE date BETWEEN '2023-01-01' AND '2023-12-31' (İndeks çalışır)
+🔹 4. Sayfalamada "OFFSET" Tuzağı Büyük tablolarda OFFSET 1.000.000 demek, veritabanına "1 milyon satırı oku ve çöpe at" demektir. Bunun yerine Keyset Pagination (Seek Method) kullanın: "Son görülen ID'den sonrasını getir."
+🔹 5. EXISTS vs. IN Savaşı Efsanelerin aksine modern optimizer'lar ikisini de iyi yönetir. Ancak kural şudur:
+Küçük, statik listeler için IN kullanın.
+Correlated Subquery (ilişkili alt sorgu) varsa EXISTS genellikle daha performanslıdır çünkü ilk eşleşmede durur.
+🔹 6. JOIN vs. Subquery Veri olmayanları bulurken (NOT IN), performans katili olabilir. Bunun yerine LEFT JOIN ... WHERE FOREIGNKEY IS NULL (Anti-Join) kalıbını tercih edin. Genellikle daha iyi optimize edilir.
+🔹 7. Cardinality ve Selectivity (Seçicilik) WHERE bloğuna koşul yazarken, en çok satırı eleyecek (en seçici) koşulu başa yazın. Status='Active' (Düşük seçicilik) yerine Email='...' (Yüksek seçicilik) önce çalışmalı.
+🔹 8. Büyük Tablolar İçin: Partitioning 50 milyon satırlık Orders tablonuz varsa, indeks bile yavaş kalabilir. Tabloyu tarihe göre (ör: Aylık) Partition (Bölümleme) yaparak fiziksel olarak parçalara ayırın. Sorgu sadece ilgili parçayı tarasın.
+🔹 9. Toplu İşlemler (Batching) Döngü içinde tek tek UPDATE veya INSERT yapmayın (N+1 Problemi). Veritabanına tek seferde, toplu (Batch) işlem gönderin.
+🔹 10. Tahmin Etme, Kanıtla: EXPLAIN ANALYZE Her veritabanının bir "Query Planner"ı (beyni) vardır. Sorgunuzu yazdıktan sonra mutlaka EXPLAIN ile maliyetine bakın. Full Table Scan mi yapıyor, yoksa indeksi mi kullanıyor?
+
+💡 Bonus: Okuma yükünü dağıtmak için Read Replicas ve sık sorgulanan veriler için Redis gibi önbellek mekanizmalarını mimariye dahil etmeyi unutmayın.
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+Google'ın çıkardığı Code Wiki'yi yeni inceleme fırsatı bulabildim.
+Peki ne yapıyor?
+Herhangi bir public GitHub reposunu alıyor, Gemini ile baştan sona tarıyor ve size interaktif, her zaman güncel bir wiki oluşturuyor.
+Yani:
+→ Mimari diyagramlar otomatik oluşuyor
+→ Her PR merge edildikten sonra dokümantasyon kendini yeniliyor
+→ Takıldığınız yerde code wiki üzerinden codebase'inize soru soruyorsunuz, cevabı direkt kodla birlikte veriyor
+→ Yeni bir projeye dahil olduğunuzda günlerce kod okumak yerine dakikalar içinde sistemi anlıyorsunuz
+
+En güzel kısmı: Repoyu clone'lamadan, kurulum yapmadan, direkt codewiki.google üzerinden kullanabiliyorsunuz.
+
+Private repolar için de Gemini CLI extension yolda — şu an waitlist açık.
+
+Geliştirici olarak şunu söyleyebilirim: AI artık sadece kod yazmıyor, kodu anlamamıza da yardımcı oluyor. Ve bu oyunun kurallarını değiştiriyor
