@@ -14,7 +14,7 @@ Correlated Subquery (ilişkili alt sorgu) varsa EXISTS genellikle daha performan
 🔹 6. JOIN vs. Subquery Veri olmayanları bulurken (NOT IN), performans katili olabilir. Bunun yerine LEFT JOIN ... WHERE FOREIGNKEY IS NULL (Anti-Join) kalıbını tercih edin. Genellikle daha iyi optimize edilir.
 🔹 7. Cardinality ve Selectivity (Seçicilik) WHERE bloğuna koşul yazarken, en çok satırı eleyecek (en seçici) koşulu başa yazın. Status='Active' (Düşük seçicilik) yerine Email='...' (Yüksek seçicilik) önce çalışmalı.
 🔹 8. Büyük Tablolar İçin: Partitioning 50 milyon satırlık Orders tablonuz varsa, indeks bile yavaş kalabilir. Tabloyu tarihe göre (ör: Aylık) Partition (Bölümleme) yaparak fiziksel olarak parçalara ayırın. Sorgu sadece ilgili parçayı tarasın.
-🔹 9. Toplu İşlemler (Batching) Döngü içinde tek tek UPDATE veya INSERT yapmayın (N+1 Problemi). Veritabanına tek seferde, toplu (Batch) işlem gönderin.
+🔹 9. Toplu İşlemler (Batching) Döngü içinde tek tek UPDATE veya INSERT yapmayın. Veritabanına tek seferde, toplu (Batch) işlem gönderin.
 🔹 10. Tahmin Etme, Kanıtla: EXPLAIN ANALYZE Her veritabanının bir "Query Planner"ı (beyni) vardır. Sorgunuzu yazdıktan sonra mutlaka EXPLAIN ile maliyetine bakın. Full Table Scan mi yapıyor, yoksa indeksi mi kullanıyor?
 
 💡 Bonus: Okuma yükünü dağıtmak için Read Replicas ve sık sorgulanan veriler için Redis gibi önbellek mekanizmalarını mimariye dahil etmeyi unutmayın.
