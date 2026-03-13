@@ -1,3 +1,0 @@
-Caused by: jakarta.persistence.PersistenceException: Unable to build Hibernate SessionFactory  [persistence unit: default] ; nested exception is org.hibernate.metamodel.UnsupportedMappingException: To-one attribute (com.example.troop.entity.Troop.parent) cannot be mapped as LAZY as its associated entity is defined with @SoftDelete
-	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:428) ~[spring-orm-7.0.3.jar:7.0.3]
-	at or
