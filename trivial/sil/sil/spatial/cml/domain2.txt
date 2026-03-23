@@ -1,0 +1,183 @@
+// PersonAddress-secured-java-perms.cml
+context PersonContext {
+
+  meta {
+    // Statik Java izin sınıfı (fully-qualified class name)
+    permissionsClass: "com.example.security.Permissions"
+
+    // authService çağrı şablonu (codegen kullanacak).
+    // %s => permission expression (ör. Permissions.PERSON_UPDATE)
+    authServiceInvocationTemplate: "authService.checkPermission(%s)"
+
+    // Not: Principal resolution AuthService içerisinde yapılır; generator/principalResolver'a gerek yok.
+  }
+
+  aggregate Person {
+    id: UUID
+    firstName: String
+    lastName: String
+    email: String?
+    status: Enum { DRAFT, PUBLISHED } = DRAFT
+    addresses: Address[*]
+    createdAt: DateTime
+    updatedAt: DateTime
+  }
+
+  entity Address {
+    id: UUID
+    street: String
+    city: String
+    postalCode: String?
+    country: String = "TR"
+    createdAt: DateTime
+    updatedAt: DateTime
+  }
+
+  relation Person.addresses 1 -> Address[*] {
+    owner = Person
+    cascadeDelete = false
+  }
+
+  type PersonInput {
+    firstName: String!
+    lastName: String!
+    email: String?
+  }
+
+  type PersonUpdate {
+    firstName: String?
+    lastName: String?
+    email: String?
+  }
+
+  type AddressInput {
+    street: String!
+    city: String!
+    postalCode: String?
+    country: String?
+  }
+
+  type AddressUpdate {
+    street: String?
+    city: String?
+    postalCode: String?
+    country: String?
+  }
+
+  // OPERATIONS
+  operations {
+
+    createPerson(input: PersonInput) -> Person
+      description: "Yeni bir Person oluşturur. Oluşan kayıt DRAFT statüsünde olur."
+      requires: permission = PERSON_CREATE
+      post: result.status == DRAFT
+
+    readPerson(id: UUID) -> Person
+      description: "Person ve ilişkili adresleri döner."
+      // read için requires yok => no auth call
+
+    updatePerson(id: UUID, update: PersonUpdate) -> Person
+      description: "Sadece DRAFT statüsündeki kayıtlar güncellenebilir."
+      requires: permission = PERSON_UPDATE
+      pre: Person(id).status == DRAFT
+
+    deletePerson(id: UUID)
+      description: "Sadece DRAFT statüsündeki kayıtlar silinebilir."
+      requires: permission = PERSON_DELETE
+      pre: Person(id).status == DRAFT
+
+    publishPerson(id: UUID) -> Person
+      description: "Person kaydını PUBLISHED yapar. PUBLISHED olan kayıt daha sonra değiştirilemez veya silinemez."
+      requires: permission = PERSON_PUBLISH
+      pre: Person(id).status == DRAFT
+      effect: Person(id).status = PUBLISHED
+      emits: PersonPublishedEvent
+
+    createAddress(personId: UUID, input: AddressInput) -> Address
+      description: "Belirtilen personId için yeni bir Address oluşturur. Person'un DRAFT olması gerekir."
+      requires: permission = ADDRESS_CREATE
+      pre: Person(personId).status == DRAFT
+
+    readAddress(personId: UUID, addressId: UUID) -> Address
+      description: "Belirtilen adresi döner."
+      // read için requires yok
+
+    updateAddress(personId: UUID, addressId: UUID, update: AddressUpdate) -> Address
+      description: "Sadece sahibi olan Person DRAFT ise adres güncellenebilir."
+      requires: permission = ADDRESS_UPDATE
+      pre: Person(personId).status == DRAFT
+
+    deleteAddress(personId: UUID, addressId: UUID)
+      description: "Sadece sahibi olan Person DRAFT ise adres silinebilir."
+      requires: permission = ADDRESS_DELETE
+      pre: Person(personId).status == DRAFT
+
+  } // end operations
+
+events {
+    PersonCreatedEvent { personId: UUID, occurredAt: DateTime }
+    PersonPublishedEvent { personId: UUID, occurredAt: DateTime }
+    PersonUpdatedEvent { personId: UUID, occurredAt: DateTime }
+    PersonDeletedEvent { personId: UUID, occurredAt: DateTime }
+    AddressCreatedEvent { personId: UUID, addressId: UUID, occurredAt: DateTime }
+    AddressUpdatedEvent { personId: UUID, addressId: UUID, occurredAt: DateTime }
+    AddressDeletedEvent { personId: UUID, addressId: UUID, occurredAt: DateTime }
+  }
+
+  invariants {
+    invariant noModificationsAfterPublish:
+      for all p in Person where p.status == PUBLISHED:
+        not exists op in {updatePerson, deletePerson, createAddress, updateAddress, deleteAddress}
+          such that op.references(p.id)
+
+    invariant addressHasPerson:
+      for all a in Address:
+        exists p in Person such that a in p.addresses
+  }
+
+  // Samples (unchanged)
+  samples {
+    PersonSampleDraft: Person {
+      id: "11111111-aaaa-1111-aaaa-111111111111"
+      firstName: "Mehmet"
+      lastName: "Yılmaz"
+      email: "mehmet.yilmaz@example.com"
+      status: DRAFT
+      createdAt: "2026-01-10T09:00:00Z"
+      updatedAt: "2026-01-10T09:00:00Z"
+      addresses: [
+        Address {
+          id: "22222222-bbbb-2222-bbbb-222222222222"
+          street: "Atatürk Cd. No:1"
+          city: "İstanbul"
+          postalCode: "34000"
+          country: "TR"
+          createdAt: "2026-01-10T09:00:00Z"
+          updatedAt: "2026-01-10T09:00:00Z"
+        }
+      ]
+    }
+
+    PersonSamplePublished: Person {
+      id: "33333333-cccc-3333-cccc-333333333333"
+      firstName: "Ayşe"
+      lastName: "Kara"
+      email: "ayse.kara@example.com"
+      status: PUBLISHED
+      createdAt: "2025-12-01T08:00:00Z"
+      updatedAt: "2025-12-05T10:00:00Z"
+      addresses: [
+        Address {
+          id: "44444444-dddd-4444-dddd-444444444444"
+          street: "Cumhuriyet Blv. No:10"
+          city: "Ankara"
+          postalCode: "06000"
+          country: "TR"
+          createdAt: "2025-12-01T08:00:00Z"
+          updatedAt: "2025-12-01T08:00:00Z"
+        }
+      ]
+    }
+  }
+
+} // end context

@@ -1,0 +1,216 @@
+// SimpleCrudApp.searchable.cml
+// CML enhanced with searchable/filter metadata and repository base class hint
+
+context SimpleApp {
+
+  meta {
+    // Fully-qualified Java class that contains static permission constants
+    permissionsClass: "com.example.security.Permissions"
+
+    // Template used by generator to emit auth check: format with permission expression
+    // Example produced call: authService.checkPermission(Permissions.PERSON_QUERY)
+    authServiceInvocationTemplate: "authService.checkPermission(%s)"
+
+    // Repository base interface to extend instead of JpaRepository
+    // Generator should produce: public interface PersonRepository extends com.example.repository.base.BaseRepository<Person, UUID>, JpaSpecificationExecutor<Person> { }
+    repositoryBaseInterface: "com.example.repository.base.BaseRepository"
+
+    // Optional: which Specification executor interface to include
+    specificationExecutorInterface: "org.springframework.data.jpa.repository.JpaSpecificationExecutor"
+
+    // Default pagination settings if query.page/size absent
+    defaultPageSize: 20
+  }
+
+  // Entities (relational style: Address references personId)
+  // Field-level searchable metadata in brackets:
+  //  [searchable=true, defaultMatch=startsWith|contains|equals, caseInsensitive=true|false, operator=in|eq|like|range, path="join.path", joinType=LEFT|INNER, fetch=true|false]
+  entity Person {
+    id: UUID [searchable=true, operator=eq]
+    firstName: String [searchable=true, defaultMatch=startsWith, caseInsensitive=true]
+    lastName: String [searchable=true, defaultMatch=contains, caseInsensitive=true]
+    email: String? [searchable=true, defaultMatch=equals, caseInsensitive=false]
+    status: Enum { DRAFT, PUBLISHED } = DRAFT [searchable=true, operator=in]
+    createdAt: DateTime [searchable=true, operator=range]
+    updatedAt: DateTime [searchable=true, operator=range]
+  }
+
+  entity Address {
+    id: UUID
+    personId: UUID           // foreign key to Person.id
+    street: String [searchable=true, defaultMatch=contains, caseInsensitive=true, path="addresses.street", joinType=LEFT]
+    city: String [searchable=true, defaultMatch=equals, caseInsensitive=true, path="addresses.city", joinType=LEFT]
+    postalCode: String? [searchable=true, defaultMatch=equals, path="addresses.postalCode", joinType=LEFT]
+    country: String = "TR" [searchable=true, defaultMatch=equals, path="addresses.country", joinType=LEFT]
+    createdAt: DateTime
+    updatedAt: DateTime
+  }
+
+  // DTOs returned by read/query operations
+  type AddressDto {
+    id: UUID
+    street: String
+    city: String
+    postalCode: String?
+    country: String
+  }
+
+  type PersonDto {
+    id: UUID
+    firstName: String
+    lastName: String
+    email: String?
+    status: Enum { DRAFT, PUBLISHED }
+    addresses: AddressDto[*]?
+    createdAt: DateTime
+    updatedAt: DateTime
+  }
+
+  // Query/filter types
+  // PersonQuery fields correspond to searchable fields above.
+  // For range operators use from/to pairs (e.g. createdFrom/createdTo)
+  type PersonQuery {
+    // Person attributes (optional filters)
+    firstName: String?             // defaultMatch: startsWith (see metadata)
+    lastName: String?
+    email: String?
+    status: Enum { DRAFT, PUBLISHED }?
+
+    // Date ranges
+    createdFrom: DateTime?
+    createdTo: DateTime?
+    updatedFrom: DateTime?
+    updatedTo: DateTime?
+
+    // Address filters (optional): generator will join Address if any are present
+    addressCity: String?
+    addressPostalCode: String?
+    addressCountry: String?
+
+    // Pagination & sorting
+    page: Int?           // 0-based page index
+    size: Int?           // page size
+    sort: String?        // e.g. "firstName,asc" or "createdAt,desc"
+  }
+
+  type PersonQueryResult {
+    items: PersonDto[*]
+    totalElements: Int
+    totalPages: Int
+    page: Int
+    size: Int
+  }
+
+  // DTO / input types for create/update
+  type PersonInput {
+    firstName: String!
+    lastName: String!
+    email: String?
+  }
+
+  type PersonUpdate {
+    firstName: String?
+    lastName: String?
+    email: String?
+  }
+
+  type AddressInput {
+    personId: UUID!
+    street: String!
+    city: String!
+    postalCode: String?
+    country: String?
+  }
+
+  type AddressUpdate {
+    street: String?
+    city: String?
+    postalCode: String?
+    country: String?
+  }
+
+  // Operations mapped to REST controller actions.
+  operations {
+
+    // PERSON
+    createPerson(input: PersonInput) -> Person
+      description: "Create a new Person (starts as DRAFT)."
+      requires: permission = PERSON_CREATE
+      post: result.status == DRAFT
+
+    readPerson(id: UUID) -> PersonDto
+      description: "Get person by id. Returns DTO. Requires PERSON_QUERY permission."
+      requires: permission = PERSON_QUERY
+
+    updatePerson(id: UUID, update: PersonUpdate) -> Person
+      description: "Update only if Person.status == DRAFT."
+      requires: permission = PERSON_UPDATE
+      pre: Person(id).status == DRAFT
+
+    deletePerson(id: UUID)
+      description: "Delete only if Person.status == DRAFT."
+      requires: permission = PERSON_DELETE
+      pre: Person(id).status == DRAFT
+
+    publishPerson(id: UUID) -> Person
+      description: "Publish a Person (make immutable thereafter)."
+      requires: permission = PERSON_PUBLISH
+      pre: Person(id).status == DRAFT
+      effect: Person(id).status = PUBLISHED
+
+    // QUERY: search persons by attributes and/or address info
+    queryPersons(query: PersonQuery) -> PersonQueryResult
+      description: "Query persons by attributes and/or address fields. Supports pagination & sorting. Requires PERSON_QUERY permission."
+      requires: permission = PERSON_QUERY
+
+    // ADDRESS (flat, personId FK)
+    createAddress(input: AddressInput) -> Address
+      description: "Create address for given personId (Person must be DRAFT)."
+      requires: permission = ADDRESS_CREATE
+      pre: Person(input.personId).status == DRAFT
+
+    readAddress(id: UUID) -> Address
+      description: "Get address by id."
+
+    updateAddress(id: UUID, update: AddressUpdate) -> Address
+      description: "Update address. Implicit ownership/checks should be enforced in service."
+      requires: permission = ADDRESS_UPDATE
+
+    deleteAddress(id: UUID)
+      description: "Delete address."
+      requires: permission = ADDRESS_DELETE
+  }
+
+  // minimal sample data (optional)
+  samples {
+    SamplePersonDraft: Person {
+      id: "11111111-aaaa-1111-aaaa-111111111111"
+      firstName: "Mehmet"
+      lastName: "Yılmaz"
+      email: "mehmet@example.com"
+      status: DRAFT
+      createdAt: "2026-01-10T09:00:00Z"
+      updatedAt: "2026-01-10T09:00:00Z"
+    }
+
+    SampleAddress: Address {
+      id: "22222222-bbbb-2222-bbbb-222222222222"
+      personId: "11111111-aaaa-1111-aaaa-111111111111"
+      street: "Atatürk Cd. No:1"
+      city: "İstanbul"
+      postalCode: "34000"
+      country: "TR"
+      createdAt: "2026-01-10T09:00:00Z"
+      updatedAt: "2026-01-10T09:00:00Z"
+    }
+  }
+
+  // Optional invariants
+  invariants {
+    invariant noModAfterPublish:
+      for all p in Person where p.status == PUBLISHED:
+        not exists op in { updatePerson, deletePerson, createAddress, updateAddress, deleteAddress }
+          such that op.references(p.id)
+  }
+
+} // end context

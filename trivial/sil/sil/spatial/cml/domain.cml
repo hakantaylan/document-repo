@@ -1,0 +1,16 @@
+boundedContext PersonBC { description "Person ve Address aggregate'lerini içerir. Person birden fazla Address'e sahip (OneToMany)."
+aggregate PersonAgg { entity Person { id : UUID firstName : String lastName : String birthDate : Date nationalId : String state : PersonState addresses : Address[*] }
+valueObject Address {
+  id : UUID
+  street : String
+  city : String
+  postalCode : String
+  country : String
+}
+
+enum PersonState {
+  DRAFT
+  PUBLISHED
+}
+} }
+notes { "İş kuralı: İlk kayıt DRAFT olarak kaydedilir. Yalnızca ROLE_EDITOR olan kullanıcılar DRAFT kayıtları görebilir/güncelleyebilir/silebilir/publish edebilir. ROLE_USER yalnızca PUBLISHED kayıtları görebilir." }
