@@ -1,0 +1,7 @@
+where t.id in ((select acl.id from ACL_ITEM acl where acl.unit_id = 5) union all (select acl.id from ACL_ITEM acl join troop_childs tc on tc.parent_id = acl.unit_id where acl.type = 1 and tc.unit_id = 5) union all (select acl.id from ACL_ITEM acl join school_cars sc on sc.car_id = acl.unit_id where acl.type = 2 and sc.unit_id = 5) )
+
+TROOP_CHILDS
+unit_id, parent_id
+
+SCHOOL_CARS
+ID, unit_id, car_id

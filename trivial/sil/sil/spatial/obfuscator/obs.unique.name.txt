@@ -6,3 +6,6 @@ I can give you:
 🔥 call-site renaming verifier (ensures everything is applied)
 
 Just say: “check apply pass”
+
+
+static methods and classes and inner classes should be handled correctly
