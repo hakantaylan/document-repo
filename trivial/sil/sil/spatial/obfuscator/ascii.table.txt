@@ -1,8 +1,0 @@
-+------------------------------+---------------------------------------+
-| Feature                      | Free plan         | Pro/Business plan |
-+------------------------------+---------------------------------------+
-| Tab completion               | 200 or 2000 ?     | unlimited         |
-| Fast request (Premium model) | 50 (with GPT 4.1) | 500               |
-| Fast request (Free model)    | 500               | unlimited.        |
-| Slow request                 | <not documented>  | unlimited         |
-+------------------------------+---------------------------------------+
