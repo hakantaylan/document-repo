@@ -42,3 +42,37 @@ public static <T extends BaseAclEntity> Specification<T> hasAclAccess(Long unitI
         return cb.exists(sq);
     };
 }
+
+🏆 8. Final "Perfect Index Set"
+Minimum (portable, safe)
+-- ACL collection table
+CREATE INDEX idx_acl_parent_type_unit
+ON acl (parent_id, type, unit_id);
+
+-- TroopChild
+CREATE INDEX idx_tc_parent_unit
+ON troop_child (parent_id, unit_id);
+
+-- SchoolCar
+CREATE INDEX idx_sc_car_unit
+ON school_car (car_id, unit_id);
+🚀 Maximum performance (PostgreSQL / advanced DBs)
+-- ACL partial indexes
+CREATE INDEX idx_acl_single
+ON acl (parent_id, unit_id)
+WHERE type = 'SINGLE';
+
+CREATE INDEX idx_acl_corporate
+ON acl (parent_id, unit_id)
+WHERE type = 'CORPORATE';
+
+CREATE INDEX idx_acl_mac
+ON acl (parent_id, unit_id)
+WHERE type = 'MAC';
+
+-- Supporting tables
+CREATE INDEX idx_tc_parent_unit
+ON troop_child (parent_id, unit_id);
+
+CREATE INDEX idx_sc_car_unit
+ON school_car (car_id, unit_id);
