@@ -5,3 +5,40 @@ unit_id, parent_id
 
 SCHOOL_CARS
 ID, unit_id, car_id
+
+
+public static <T extends BaseAclEntity> Specification<T> hasAclAccess(Long unitId) {
+    return (root, query, cb) -> {
+        query.distinct(true);
+
+        Subquery<Long> sq = query.subquery(Long.class);
+        From<?, ?> corrRoot = sq.correlate(root);
+
+        Join<?, AclItem> acl = corrRoot.join("acl");
+
+        Root<TroopChild> tc = sq.from(TroopChild.class);
+        Root<SchoolCar> sc = sq.from(SchoolCar.class);
+
+        Predicate p1 = cb.and(
+                cb.equal(acl.get("unitId"), unitId),
+                cb.equal(acl.get("type"), AclType.SINGLE)
+        );
+
+        Predicate p2 = cb.and(
+                cb.equal(acl.get("type"), AclType.CORPORATE),
+                cb.equal(tc.get("parentId"), acl.get("unitId")),
+                cb.equal(tc.get("unitId"), unitId)
+        );
+
+        Predicate p3 = cb.and(
+                cb.equal(acl.get("type"), AclType.MAC),
+                cb.equal(sc.get("carId"), acl.get("unitId")),
+                cb.equal(sc.get("unitId"), unitId)
+        );
+
+        sq.select(cb.literal(1L));
+        sq.where(cb.or(p1, p2, p3));
+
+        return cb.exists(sq);
+    };
+}
