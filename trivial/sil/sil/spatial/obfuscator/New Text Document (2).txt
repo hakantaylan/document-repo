@@ -1,0 +1,48 @@
+Now obfuscation works but deobfuscation has some problems. Some usages are not deobfuscated successfully
+
+```
+@Component
+public class DeliveryLocationToTermsMapper {
+
+    public DeliveryTermsResponse toResponse(DeliveryLocation location) {
+        return new DeliveryTermsResponse(location.getCity(), location.getDistrict(), location.getPrice());
+    }
+
+    public List<DeliveryTermsResponse> toResponse(List<DeliveryLocation> locations) {
+        return locations.stream().map(zone -> new DeliveryTermsResponse(zone.getFLotus138(), zone.getFPoppy139(), zone.getFOrchid140())).toList();
+    }
+}
+
+    private void calculateProgramaticallyByUsingSpheroid(Parent parent) {
+        for (Location te : parent.getLastVersion().getFLily168()) {
+            for (Destination destination : te.getDestinationList()) {
+                System.out.println("DMPI Distance");
+                System.out.println(destination.getDangerZoneDistance());
+                //                System.out.println("------------------------------------");
+                for (DangerZone dangerZone : parent.getLastVersion().getFViolet169()) {
+                    double min = -1;
+                    Coordinate[] coordinates = DistanceOp.nearestPoints(destination.getPoint(), dangerZone.getShape());
+                    GeodeticCalculator gc = new GeodeticCalculator();
+                    GeometryFactory factory = new GeometryFactory(new PrecisionModel(), 4326);
+                    Point p0 = factory.createPoint(coordinates[0]);
+                    Point p1 = factory.createPoint(coordinates[1]);
+                    //                    org.geolatte.geom.Point<?> from = JTS.from(p0);
+                    gc.setStartingGeographicPoint(p0.getX(), p0.getY());
+                    gc.setDestinationGeographicPoint(p1.getX(), p1.getY());
+                    System.out.println(gc.getOrthodromicDistance());
+                }
+                System.out.println("----------------------------------------------------------");
+            }
+        }
+    }
+```
+
+
+make it 100% accurate with lambda type inference (like IntelliJ) instead of fallback heuristics
+Fix mappedBy issues for JPA relations
+I can help you handle:
+
+🔥 Lombok @Builder parameter mapping perfectly
+🔥 record canonical constructors
+🔥 overloaded constructors disambiguation
+🔥 immutable objects (no setters)
