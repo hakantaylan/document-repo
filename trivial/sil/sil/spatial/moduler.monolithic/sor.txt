@@ -1,0 +1,78 @@
+I want to write a base JpaRespoitory for my springboot 4 java 25 project. for all findAll methods (findAll(), findAll(specification), findAll(page)) i need to do two phase fetch in order to prevent HHH000104 problem. For second fetch I need to use same entity graph defined on findAll methods. How can I achieve this?
+
+
+
+@Configuration
+@EnableScheduling
+public class SchedulerConfig {
+
+    @Bean
+    public TaskScheduler taskScheduler() {
+        ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+        scheduler.setPoolSize(5); // Number of parallel scheduled tasks
+        scheduler.setThreadNamePrefix("scheduled-task-");
+        scheduler.setRemoveOnCancelPolicy(true);   -> İptal edilen tasklar kuyruktan da silinsin mi? (CompletableFuture-Zcancel)
+        scheduler.setAwaitTerminationSeconds(60);
+        scheduler.setWaitForTasksToCompleteOnShutdown(true);
+        return scheduler;
+    }
+}
+
+
+make your executors/schedulers Spring beans and let them shut down on context close — but configure them to wait for running tasks to finish (and optionally force after a timeout). For ThreadPoolTaskExecutor and ThreadPoolTaskScheduler Spring provides convenient setters; for raw ExecutorService use a @PreDestroy method that calls shutdown() + awaitTermination(...).
+Examples
+ThreadPoolTaskExecutor (recommended for @Async)
+use setWaitForTasksToCompleteOnShutdown(true)
+setAwaitTerminationSeconds(timeout)
+Java config:
+@Bean
+public ThreadPoolTaskExecutor taskExecutor() {
+    ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+    executor.setCorePoolSize(10);
+    executor.setMaxPoolSize(50);
+    executor.setQueueCapacity(100);
+    executor.setThreadNamePrefix("my-exec-");
+    // important for graceful shutdown:
+    executor.setWaitForTasksToCompleteOnShutdown(true);
+    executor.setAwaitTerminationSeconds(30); // wait up to 30s
+    return executor;
+}
+When the ApplicationContext closes the executor bean will be destroyed and Spring will wait up to the await termination seconds for tasks to finish. If tasks still run they’re interrupted.
+ThreadPoolTaskScheduler (for @Scheduled or scheduled tasks)
+similar API: setWaitForTasksToCompleteOnShutdown, setAwaitTerminationSeconds
+@Bean
+public ThreadPoolTaskScheduler taskScheduler() {
+    ThreadPoolTaskScheduler scheduler = new ThreadPoolTaskScheduler();
+    scheduler.setPoolSize(5);
+    scheduler.setThreadNamePrefix("my-sched-");
+    scheduler.setWaitForTasksToCompleteOnShutdown(true);
+    scheduler.setAwaitTerminationSeconds(30);
+    scheduler.setRemoveOnCancelPolicy(true); // optional: remove cancelled tasks from queue
+    return scheduler;
+}
+Manual ExecutorService (if you create it yourself) Use a @PreDestroy or DisposableBean to shut it down cleanly:
+private final ExecutorService executor = Executors.newFixedThreadPool(10);
+
+@PreDestroy
+public void shutdownExecutor() {
+    executor.shutdown(); // stop accepting new tasks
+    try {
+        if (!executor.awaitTermination(30, TimeUnit.SECONDS)) {
+            executor.shutdownNow(); // cancel running tasks
+        }
+    } catch (InterruptedException e) {
+        executor.shutdownNow();
+        Thread.currentThread().interrupt();
+    }
+}
+Boot lifecycle / web server shutdown If you need overall graceful shutdown for HTTP requests as well, Spring Boot supports graceful shutdown of the webserver (server.shutdown=graceful in properties) and you can tune spring.lifecycle.timeout-per-shutdown-phase. That complements executor shutdown so running requests and async tasks get a chance to complete.
+Notes / best practices
+Prefer making executors/schedulers beans and use the built-in setters rather than manually calling shutdown unless you created them manually.
+Choose a reasonable await timeout and handle InterruptedException properly (restore interrupt flag).
+If tasks are long-running or non-interruptible, plan for a forced shutdown path (shutdownNow) and for task-level checks for interruption.
+For scheduled tasks, setRemoveOnCancelPolicy(true) if you expect many cancellations and want them removed from the queue.
+If you want, tell me which type of executor you’re using (@Async, @Scheduled, raw ExecutorService, webserver requests) and I’ll give a tailored example for your Spring Boot 4 project
+
+
+I am using spring modulith latest version. One module needs to use other module's entitiy for a @OneToMany jpa relation. How can I do that?
+Let me clarify a bit more. These entities like Person and Address. One module's entity shoul keep a OneToMany relation with other's. And keeping just ids and loading them with callin other module's services is too cumbersome
