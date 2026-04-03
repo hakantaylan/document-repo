@@ -1,0 +1,27 @@
+Your Spring Boot app creates thousands of objects per request. You just never noticed.
+
+A simple GET /api/users/123 triggers all of this behind the scenes:
+
+→ Tomcat creates HttpServletRequest + HttpServletResponse objects
+→ Spring Security creates SecurityContext for auth check
+→ Every servlet filter wraps the request in a new decorator object
+→ Hibernate creates proxy objects for every lazy-loaded entity
+→ Dirty checking — Hibernate snapshots every field of every entity to compare later
+→ Jackson creates intermediate nodes during JSON serialization
+→ Every String concatenation in logs creates a new String object
+→ AOP proxy for @Transactional wraps your service in another object
+
+One request. Thousands of framework objects. You wrote 10 lines. The framework created the rest.
+
+At low traffic, you never notice. GC handles it quietly.
+
+At 1,000 RPS → millions of short-lived objects per second. Young gen fills fast. GC runs every few milliseconds. p99 latency spikes. Throughput drops 10-20%. No errors. No exceptions. Just slower.
+
+How to reduce it:
+→ Return DTOs, not entities — avoids proxy creation + dirty checking
+→ @Transactional(readOnly=true) for reads — skips dirty checking entirely
+→ log.info("User {}", id) not log.info("User " + id) — avoids String garbage
+→ Primitives over boxed types — int not Integer
+→ Tune young gen: -XX:NewRatio=2
+
+The fastest code isn't the code that runs fastest. It's the code that creates the least garbage.
