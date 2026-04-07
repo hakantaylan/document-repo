@@ -76,3 +76,14 @@ If you want, tell me which type of executor you’re using (@Async, @Scheduled, 
 
 I am using spring modulith latest version. One module needs to use other module's entitiy for a @OneToMany jpa relation. How can I do that?
 Let me clarify a bit more. These entities like Person and Address. One module's entity shoul keep a OneToMany relation with other's. And keeping just ids and loading them with callin other module's services is too cumbersome
+
+
+I am planning to develop a project that has 4 microservices with spring boot 4. I need to deploy them sometimes separately and sometimes I need to bundle 2 of them together in 2 deployments. (One jar will be produced for two microservices, total 2 jar for 4 microvercie and 2 separate deployments) How can I do that?
+
+Is this possible: If I bundled two of them together (and by saying bundled I mean I generate one jar for two microservices) they should communicate by direct method call and if I separate them they should switch to service to service communication (for example rest)
+
+I want to use rest for inter process communication between microservices. These microservices probably be deployed in same virtual machine. Can I by pass network and make those communicate. I mean they both call each other's service through localhost:port-number/blabla but communication will be shortcutted through one of the tcp/ip layers
+
+Does docker or kubernetes by pass http communication with out going down to physical network (loopback) (assuming microservices deployed on same node)
+
+what is loopback? Explain loopback optimization? What knf of loopbac koptimization does docker and kubernetes do?
